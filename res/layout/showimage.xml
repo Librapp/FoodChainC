@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/showimg_relative_7"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:background="@drawable/all_title" >
+        <!-- 回退按钮 -->
+        <Button
+            android:id="@+id/showimg_title_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/pb_top_btn"
+            android:contentDescription="@string/app_name"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/back"
+            android:textColor="@android:color/darker_gray" />
+        <!-- 功能按钮 -->
+        <Button
+            android:id="@+id/showimg_title_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/pb_top_btn"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/save"
+            android:textColor="@android:color/darker_gray" />
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/showimg_frame_7"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <RelativeLayout
+            android:id="@+id/showimg_relative_8"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            <ImageView
+                android:id="@+id/showimg_img"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:contentDescription="@string/app_name"
+                android:padding="5dp"
+                android:paddingBottom="28dp"
+                android:scaleType="fitCenter" />
+        </RelativeLayout>
+        <ImageButton
+            android:id="@+id/showimg_rotateleft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            android:paddingBottom="8dp"
+            android:paddingLeft="100dp"
+            android:src="@drawable/rotate_left_" />
+        <ImageButton
+            android:id="@+id/showimg_img_rotateright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            android:paddingBottom="8dp"
+            android:paddingRight="100dp"
+            android:src="@drawable/rotate_right_" />
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/cooker_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="fill"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            android:src="@drawable/seat_icon_default" />
+        <TextView
+            android:id="@+id/cooker_name"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray"
+            android:text="@string/name"
+            android:textColor="@android:color/white" />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/cooker_status"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="top|left"
+        android:maxLines="2"
+        android:text="@string/status"
+        android:textColor="@android:color/black" />
+</LinearLayout>

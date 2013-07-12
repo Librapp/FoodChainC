@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/privatem_relative_about1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/mainpage_bg_top"
+        android:orientation="horizontal" >
+        <ImageButton
+            android:id="@+id/privatem_title_back "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/new_back_btn_" />
+        <Button
+            android:id="@+id/privatem_title_btn "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/mainpage_btn_bg_"
+            android:text="@string/refresh"
+            android:textColor="@android:color/white"
+            android:textSize="13dp" />
+        <TextView
+            android:id="@+id/privatem_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:text="@string/message"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/privatem_list"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_above="@+id/privatem_count_layout"
+        android:layout_below="@+id/privatem_relative_about1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:paddingBottom="10dp" />
+    <FrameLayout
+        android:id="@+id/privatem_count_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_above="@+id/privatem_relative_buttom1" >
+        <EditText
+            android:id="@+id/privatem_input"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/comment_rf_bg"
+            android:gravity="left|top"
+            android:inputType="text"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp" />
+        <LinearLayout
+            android:id="@+id/privatem_layout_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="7dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/comment_count_bg"
+            android:clickable="true"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/privatem_input_txtcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:paddingTop="1dp"
+                android:textColor="@android:color/white"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/privatem_count_chacha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="2dp"
+                android:src="@drawable/comment_count_cleantext" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/pm_layout_pic"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="left|bottom"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="8dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+            <ImageView
+                android:id="@+id/pm_choosed_pic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center" />
+            <ImageView
+                android:id="@+id/pm_count_chacha_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="right|top"
+                android:src="@drawable/comment_count_cleantext" />
+        </RelativeLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/privatem_relative_buttom1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical" >
+        <RelativeLayout
+            android:id="@+id/privatem_relative_buttom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/comment_rf_bottom_bg"
+            android:orientation="vertical"
+            android:paddingBottom="12dp" >
+            <!-- 表情 -->
+            <ImageButton
+                android:id="@+id/privatem_input_brow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:paddingTop="5dp"
+                android:src="@drawable/comment_func_emotion_small" />
+            <!-- 图片 -->
+            <ImageButton
+                android:id="@+id/privatem_input_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/privatem_input_brow"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingTop="2dp"
+                android:src="@drawable/comment_func_pic" />
+            <!-- 短语 -->
+            <ImageButton
+                android:id="@+id/privatem_input_phrase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/privatem_input_pic"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:paddingLeft="22dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/phrase_" />
+            <!-- 语音 -->
+            <ImageButton
+                android:id="@+id/privatem_input_audioinput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/privatem_input_phrase"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:src="@drawable/comment_func_audioinput" />
+            <!-- 发送 -->
+            <ImageButton
+                android:id="@+id/privatem_input_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:src="@drawable/comment_func_send" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/privatem_relative_emotion"
+            android:layout_width="fill_parent"
+            android:layout_height="180dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:visibility="gone" >
+            <GridView
+                android:id="@+id/privatem_grid_emotion"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:columnWidth="15dp"
+                android:gravity="center"
+                android:horizontalSpacing="20dp"
+                android:numColumns="7"
+                android:padding="0dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="20dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/privatem_relative_phrase"
+            android:layout_width="fill_parent"
+            android:layout_height="180dp"
+            android:background="@android:color/black"
+            android:orientation="vertical"
+            android:visibility="gone" >
+            <ListView
+                android:id="@+id/privatem_list_phrase"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#ddffffff"
+                android:cacheColorHint="@android:color/transparent" />
+        </RelativeLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/p_bg_pic_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#00000000"
+        android:clickable="true"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/ed_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white" >
+        <Button
+            android:id="@+id/ed_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="3dp"
+            android:background="@drawable/back"
+            android:padding="3dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/employee_detail" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ed_up_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ed_title_layout"
+        android:layout_margin="3dp"
+        android:background="@android:color/white" >
+        <ImageView
+            android:id="@+id/ed_headpic"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="3dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            android:src="@drawable/user_headpic_default" />
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ed_headpic"
+            android:gravity="left"
+            android:orientation="vertical" >
+            <TableRow>
+                <TextView
+                    android:id="@+id/ed_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name" />
+                <TextView
+                    android:id="@+id/ed_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id" />
+            </TableRow>
+            <TableRow>
+                <ImageView
+                    android:id="@+id/ed_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/boy" />
+                <TextView
+                    android:id="@+id/ed_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/level" />
+            </TableRow>
+            <TextView
+                android:id="@+id/ed_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/position" />
+        </TableLayout>
+        <TextView
+            android:id="@+id/ed_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/status"
+            android:textSize="30dp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ed_middle_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ed_up_layout"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal" >
+        <Button
+            android:id="@+id/ed_call"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:text="@string/call" />
+        <Button
+            android:id="@+id/ed_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:text="@string/sendmessage" />
+        <Button
+            android:id="@+id/ed_duty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:text="@string/duty" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/ed_middle_layout"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        android:orientation="vertical" >
+        <TabHost
+            android:id="@+id/ed_tab"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top" />
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top" >
+                <ListView
+                    android:id="@+id/ed_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </FrameLayout>
+        </TabHost>
+    </LinearLayout>
+</RelativeLayout>

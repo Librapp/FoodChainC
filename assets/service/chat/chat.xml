@@ -1,0 +1,178 @@
+<!--============================================================
+Title: UPnP AV Content Directory Service (CDS) Template
+
+Purpose:
+To identify the required/optional actions and state variables
+and the required allowed values defined by this service type.
+
+Note:
+This file uses tabs (not spaces) for block indentation.
+Any updates to this file should maintain this convention.
+This includes disabling any automatic tab-to-space conversion
+feature provided by your editor. 
+================================================================-->
+<scpd>
+	<serviceStateTable>
+
+		<stateVariable>
+			<name>Intro</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>string</dataType>
+		</stateVariable>
+		
+		<stateVariable>
+			<name>Seat</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>string</dataType>
+		</stateVariable>
+		
+		<stateVariable>
+			<name>SeatId</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>int</dataType>
+		</stateVariable>
+		
+		<stateVariable>
+			<name>CustomerId</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>int</dataType>
+		</stateVariable>
+		
+		<stateVariable>
+			<name>Date</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>int</dataType>
+		</stateVariable>
+		
+		<stateVariable>
+			<name>Result</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>boolean</dataType>
+		</stateVariable>
+		
+		<stateVariable>
+			<name>Menu</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>string</dataType>
+		</stateVariable>
+		
+		<stateVariable>
+			<name>Bill</name>
+			<sendEventsAttribute>no</sendEventsAttribute>
+			<dataType>string</dataType>
+		</stateVariable>
+		
+	</serviceStateTable>
+
+	<actionList>
+		<!-- 取得所有聊天信息 -->
+		<action>
+			<name>GetAllChat</name>
+			<argumentList>
+				<argument>
+					<name>AllChat</name>
+					<direction>out</direction>
+					<relatedStateVariable>AllChat</relatedStateVariable>
+				</argument>
+			</argumentList>
+		</action>
+		
+		<!-- 取得所有评论信息 -->
+		<action>
+			<name>GetAllComment</name>
+			<argumentList>
+				<argument>
+					<name>AllComment</name>
+					<direction>out</direction>
+					<relatedStateVariable>AllComment</relatedStateVariable>
+				</argument>
+			</argumentList>
+		</action>
+		
+		<!-- 取得某个菜的评论信息 -->
+		<action>
+			<name>SetSeat</name>
+			<argumentList>
+				<argument>
+					<name>CustomerId</name>
+					<direction>in</direction>
+					<relatedStateVariable>CustomerId</relatedStateVariable>
+				</argument>
+				<argument>
+					<name>SeatId</name>
+					<direction>in</direction>
+					<relatedStateVariable>SeatId</relatedStateVariable>
+				</argument>
+			</argumentList>
+			<argumentList>
+				<argument>
+					<name>Result</name>
+					<direction>out</direction>
+					<relatedStateVariable>Result</relatedStateVariable>
+				</argument>
+			</argumentList>
+		</action>
+		
+		<!-- 取得菜单 -->
+		<action>
+			<name>GetMenu</name>
+			<argumentList>
+				<argument>
+					<name>Date</name>
+					<direction>in</direction>
+					<relatedStateVariable>Date</relatedStateVariable>
+				</argument>
+				<argument>
+					<name>GetMenu</name>
+					<direction>out</direction>
+					<relatedStateVariable>Menu</relatedStateVariable>
+				</argument>
+			</argumentList>
+		</action>
+		
+		<!-- 下订单 -->
+		<action>
+			<name>SetBill</name>
+			<argumentList>
+				<argument>
+					<name>Date</name>
+					<direction>in</direction>
+					<relatedStateVariable>Date</relatedStateVariable>
+				</argument>
+				<argument>
+					<name>CustomerId</name>
+					<direction>in</direction>
+					<relatedStateVariable>CustomerId</relatedStateVariable>
+				</argument>
+				<argument>
+					<name>SetBill</name>
+					<direction>in</direction>
+					<relatedStateVariable>Bill</relatedStateVariable>
+				</argument>
+				<argument>
+					<name>Result</name>
+					<direction>out</direction>
+					<relatedStateVariable>Result</relatedStateVariable>
+				</argument>
+			</argumentList>
+		</action>
+		
+		<!-- 买单 -->
+		<action>
+			<name>GetBill</name>
+			<argumentList>
+				<argument>
+					<name>CustomerId</name>
+					<direction>in</direction>
+					<relatedStateVariable>CustomerId</relatedStateVariable>
+				</argument>
+				<argument>
+					<name>GetBill</name>
+					<direction>out</direction>
+					<relatedStateVariable>Bill</relatedStateVariable>
+				</argument>
+			</argumentList>
+		</action>
+
+	</actionList>
+</scpd>

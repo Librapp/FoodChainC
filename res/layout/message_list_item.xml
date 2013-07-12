@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+    <!-- 评论人头像 -->
+    <ImageView
+        android:id="@+id/ml_user_pic"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/app_name"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/lr_pt_item_bg" />
+    <!-- 原内容 -->
+    <RelativeLayout
+        android:id="@+id/ml_old"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/ml_user_pic"
+        android:background="@drawable/p_conmment_content_bg"
+        android:orientation="vertical" >
+        <!-- 评论人用户名 -->
+        <TextView
+            android:id="@+id/ml_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ml_user_pic"
+            android:paddingLeft="5dp"
+            android:paddingTop="0dp"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+        <!-- 评论人头像下面线 -->
+        <ImageView
+            android:id="@+id/ml_user_pic_line_long"
+            android:layout_width="250dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ml_user_name"
+            android:background="@drawable/lr_pt_item_line"
+            android:contentDescription="@string/app_name"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:src="@drawable/lr_pt_item_line" />
+        <TextView
+            android:id="@+id/ml_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ml_direction"
+            android:paddingTop="0dp"
+            android:text="@string/from"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+        <!-- 评论内容 -->
+        <TextView
+            android:id="@+id/ml_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ml_user_pic_line_long"
+            android:layout_toRightOf="@+id/ml_user_pic"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+        <!-- 评论中的图片 -->
+        <ImageView
+            android:id="@+id/ml_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/ml_content"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/ml_user_pic"
+            android:contentDescription="@string/app_name"
+            android:paddingBottom="15dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="15dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <!-- 发表时间 -->
+    <ImageButton
+        android:id="@+id/ml_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/ml_sendtime"
+        android:contentDescription="@string/app_name"
+        android:paddingTop="6dp"
+        android:src="@drawable/ml_haspic"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/ml_sendtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="5dp"
+        android:paddingTop="15dp"
+        android:text="@string/time"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+</RelativeLayout>

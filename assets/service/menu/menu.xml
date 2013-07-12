@@ -1,0 +1,86 @@
+<scpd>
+    <serviceStateTable>
+        <stateVariable>
+            <name>
+MenuData
+            </name>
+            <sendEventsAttribute>
+no
+            </sendEventsAttribute>
+            <dataType>
+String
+            </dataType>
+        </stateVariable>
+        <stateVariable>
+            <name>
+MenuType
+            </name>
+            <sendEventsAttribute>
+no
+            </sendEventsAttribute>
+            <dataType>
+int
+            </dataType>
+            <allowedValueList>
+                <allowedValue>
+0
+                </allowedValue>
+                <allowedValue>
+1
+                </allowedValue>
+                <allowedValue>
+2
+                </allowedValue>
+                <allowedValue>
+3
+                </allowedValue>
+                <allowedValue>
+4
+                </allowedValue>
+                <allowedValue>
+5
+                </allowedValue>
+                <allowedValue>
+6
+                </allowedValue>
+                <allowedValue>
+7
+                </allowedValue>
+            </allowedValueList>
+            <defaultValue>
+0
+            </defaultValue>
+        </stateVariable>
+    </serviceStateTable>
+    <actionList>
+        <action>
+            <name>
+GetMenu
+            </name>
+            <argumentList>
+                <argument>
+                    <name>
+Menu
+                    </name>
+                    <direction>
+out
+                    </direction>
+                    <relatedStateVariable>
+MenuData
+                    </relatedStateVariable>
+                </argument>
+                <argument>
+                    <name>
+CurrentType
+                    </name>
+                    <direction>
+in
+                    </direction>
+                    <relatedStateVariable>
+MenuType
+                    </relatedStateVariable>
+                </argument>
+            </argumentList>
+        </action>
+    </actionList>
+</scpd>
