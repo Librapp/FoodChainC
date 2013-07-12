@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 public class MessageParser extends JSONParser {
 
-	@Override
 	protected boolean parse(String s) {
 		JSONObject jData = null;
 		int id = -1;

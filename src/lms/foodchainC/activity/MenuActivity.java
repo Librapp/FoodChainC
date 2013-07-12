@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import lms.foodchainC.R;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.MenuRequest;
-import lms.foodchainC.net.ResDetailParser;
 import lms.foodchainC.netUtil.NetUtil;
 import lms.foodchainC.util.DialogUtil;
 import lms.foodchainC.widget.MenuAdapter;
@@ -111,8 +111,7 @@ public class MenuActivity extends SlidingFragmentActivity implements
 			String result = NetUtil.executeGet(getApplicationContext(),
 					new MenuRequest(1).make(),
 					RestaurantData.current().localUrl);
-			String msg = new ResDetailParser().parse(result,
-					RestaurantData.current());
+			String msg = JSONParser.caseStyleDataParse(result, styleList);
 			return null;
 		}
 

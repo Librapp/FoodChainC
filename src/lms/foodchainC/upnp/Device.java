@@ -105,7 +105,6 @@ import java.util.Calendar;
 import lms.foodchainC.data.MessageData;
 import lms.foodchainC.data.Self;
 import lms.foodchainC.net.NetMessageType;
-import lms.foodchainC.net.ResDetailResponse;
 import lms.foodchainC.service.MessageService;
 
 import org.cybergarage.http.HTTP;
@@ -1487,14 +1486,10 @@ public class Device extends org.cybergarage.upnp.Device implements
 			byte[] dataBytes;
 			if (!method.equals("")) {
 				httpRes.setStatusCode(HTTPStatus.OK);
-				if (method.equals(NetMessageType.RESDETAIL)) {
-					dataBytes = new ResDetailResponse().make().getBytes();
-					httpRes.setContent(dataBytes);
-					httpReq.post(httpRes);
-				} else if (method.equals(NetMessageType.MESSAGE)) {
+				if (method.equals(NetMessageType.MESSAGE)) {
 					MessageData ms = new MessageData();
 					ms.content = data.optString("content");
-					ms.time = Calendar.getInstance().getTime().toLocaleString();
+					ms.time = Calendar.getInstance().getTime().toString();
 					ms.pic = data.optString("pic");
 					ms.url = data.optString("url");
 					JSONObject user = data.optJSONObject("user");

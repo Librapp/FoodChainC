@@ -10,7 +10,7 @@ import lms.foodchainC.data.EmployeeData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.Self;
-import lms.foodchainC.net.ResDetailParser;
+import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.ResDetailRequest;
 import lms.foodchainC.netUtil.NetUtil;
 import lms.foodchainC.upnp.ControlPoint;
@@ -201,7 +201,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		String result = NetUtil.executeGet(getApplicationContext(),
 				new ResDetailRequest().make(),
 				RestaurantData.current().localUrl);
-		String msg = new ResDetailParser().parse(result,
+		String msg = JSONParser.restaurantInfoParse(result,
 				RestaurantData.current());
 		if (msg.equals(""))
 			sendBroadcast(new Intent(NEW_DEVICES_FOUND));

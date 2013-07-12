@@ -24,7 +24,7 @@ public class SeatData {
 	// 桌号
 	public String tableId;
 	// 座位号
-	public String seatId;
+	public String id;
 	// 顾客姓名
 	public String customerName;
 	// 图标
@@ -47,7 +47,7 @@ public class SeatData {
 
 	public SeatData(String seatId, String tableId, String styleId, int status,
 			int customerId, String customerName, String bookTime) {
-		this.seatId = seatId;
+		this.id = seatId;
 		this.tableId = tableId;
 		this.state = status;
 		this.styleId = styleId;
@@ -61,8 +61,8 @@ public class SeatData {
 		if (j < 10) {
 			id = "0" + id;
 		}
-		this.seatId = t.tableId + id;
-		this.tableId = t.tableId;
+		this.id = t.id + id;
+		this.tableId = t.id;
 		this.styleId = t.styleId;
 	}
 }

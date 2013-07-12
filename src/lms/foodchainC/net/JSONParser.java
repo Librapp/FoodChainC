@@ -1,5 +1,17 @@
 package lms.foodchainC.net;
 
+import java.util.ArrayList;
+
+import lms.foodchainC.data.CaseData;
+import lms.foodchainC.data.CaseStyleData;
+import lms.foodchainC.data.CaseTimeData;
+import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.data.SeatData;
+import lms.foodchainC.data.TableData;
+import lms.foodchainC.data.TableStyle;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -8,9 +20,159 @@ import org.json.JSONObject;
  * @description JSONParser
  * 
  */
-public abstract class JSONParser {
-	public String msg = "";
-	public JSONObject data;
+public class JSONParser {
+	public static String msg = "";
 
-	protected abstract boolean parse(String s);
+	/** 解析CaseStyleData */
+	public static String caseStyleDataParse(String result, CaseStyleData csd) {
+		msg = "";
+		try {
+			JSONObject data = new JSONObject(result);
+			csd.id = data.optInt("id");
+			csd.name = data.optString("name");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
+	/** 解析CaseStyleData */
+	public static String caseTimeDataParse(String result, CaseTimeData ctd) {
+		msg = "";
+		try {
+			JSONObject data = new JSONObject(result);
+			ctd.id = data.optInt("id");
+			ctd.name = data.optString("name");
+			ctd.startTime = data.optString("startTime");
+			ctd.endTime = data.optString("endTime");
+			ctd.weekday = data.optInt("weekday");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
+	/** 解析CaseData */
+	public static String caseDataParse(String result, CaseData cd) {
+		msg = "";
+		try {
+			JSONObject data = new JSONObject(result);
+			cd.id = data.optInt("id");
+			cd.caseId = data.optInt("caseId");
+			cd.billId = data.optInt("billId");
+			cd.family = data.optInt("family");
+			cd.cookerId = data.optInt("cookerId");
+			cd.waiterId = data.optInt("waiterId");
+			cd.type = data.optInt("type");
+			cd.state = data.optInt("state");
+			cd.style = data.optInt("style");
+			cd.cookTime = data.optInt("cookTime");
+			cd.orderId = data.optInt("orderId");
+			cd.name = data.optString("name");
+			cd.picPath = data.optString("picPath");
+			cd.intro = data.optString("intro");
+			cd.orderTime = data.optString("orderTime");
+			cd.waitTime = data.optString("waitTime");
+			cd.message = data.optString("message");
+			cd.mark = data.optDouble("mark");
+			cd.price = data.optDouble("price");
+			cd.special = data.optDouble("special");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
+	public static String restaurantInfoParse(String result,
+			RestaurantData current) {
+		msg = "";
+		try {
+			JSONObject data = new JSONObject(result);
+			current.name = data.optString("name");
+			current.headPic = data.optString("headPic");
+			current.address = data.optString("address");
+			current.tel = data.optString("tel");
+			current.sms = data.optString("sms");
+			current.opentime = data.optString("opentime");
+			current.email = data.optString("email");
+			current.id = data.optString("id");
+			current.credit = data.optInt("credit");
+			current.state = data.optInt("state");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
+	public static String hallInfoParse(String result,
+			ArrayList<TableStyle> tableStyleList) {
+		msg = "";
+		try {
+			JSONArray data = new JSONArray(result);
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject item = data.getJSONObject(i);
+				TableStyle ts = new TableStyle();
+				msg = tableStyleDataParse(item.toString(), ts);
+
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
+	public static String tableStyleDataParse(String result, TableStyle ts) {
+		msg = "";
+		try {
+			JSONObject data = new JSONObject(result);
+			ts.id = data.optString("id");
+			ts.icon = data.optString("icon");
+			ts.pic = data.optString("pic");
+			ts.seatCount = data.optInt("seatCount");
+			ts.tableCount = data.optInt("tableCount");
+			JSONArray array = data.optJSONArray("tableList");
+			ArrayList<TableData> list = new ArrayList<TableData>();
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject item = array.getJSONObject(i);
+				TableData td = new TableData();
+				msg = tableDataParse(item.toString(), td);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
+	private static String tableDataParse(String result, TableData td) {
+		msg = "";
+		try {
+			JSONObject data = new JSONObject(result);
+			td.id = data.optString("id");
+			td.icon = data.optString("icon");
+			td.seatCount = data.optInt("seatCount");
+			JSONArray array = data.optJSONArray("seatList");
+			ArrayList<SeatData> list = new ArrayList<SeatData>();
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject item = array.getJSONObject(i);
+				SeatData sd = new SeatData();
+				msg = seatDataParse(item.toString(), sd);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
+	private static String seatDataParse(String string, SeatData sd) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

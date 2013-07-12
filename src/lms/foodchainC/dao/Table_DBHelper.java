@@ -79,7 +79,7 @@ public class Table_DBHelper extends Base_DBHelper {
 		Cursor cursor = null;
 		try {
 			db = getReadableDatabase();
-			selectArgs = new String[] { table.tableId };
+			selectArgs = new String[] { table.id };
 			cursor = db.query(TABLESTYLEDATA, null, "tableId=?", selectArgs,
 					null, null, null);
 			if (cursor != null && cursor.moveToNext()) {
@@ -110,7 +110,7 @@ public class Table_DBHelper extends Base_DBHelper {
 		Cursor cursor = null;
 		try {
 			db = getReadableDatabase();
-			selectArgs = new String[] { seat.seatId };
+			selectArgs = new String[] { seat.id };
 			cursor = db.query(SEATDATA, null, "seatId=? ", selectArgs, null,
 					null, null);
 
@@ -237,7 +237,7 @@ public class Table_DBHelper extends Base_DBHelper {
 		Cursor cursor = null;
 		List<SeatData> list = new ArrayList<SeatData>();
 		try {
-			selectArgs = new String[] { table.tableId };
+			selectArgs = new String[] { table.id };
 			cursor = db.query(SEATDATA, null, "tableId=? ", selectArgs, null,
 					null, null);
 
@@ -308,7 +308,7 @@ public class Table_DBHelper extends Base_DBHelper {
 			return;
 		try {
 			ContentValues values = new ContentValues();
-			values.put("seatId", s.seatId);
+			values.put("seatId", s.id);
 			values.put("tableId", s.tableId);
 			values.put("styleId", s.styleId);
 			values.put("customerName", s.customerName);
@@ -330,7 +330,7 @@ public class Table_DBHelper extends Base_DBHelper {
 			return false;
 		try {
 			ContentValues values = new ContentValues();
-			values.put("tableId", s.tableId);
+			values.put("tableId", s.id);
 			values.put("styleId", s.styleId);
 			values.put("state", s.state);
 			values.put("seatCount", s.seatCount);
@@ -393,8 +393,8 @@ public class Table_DBHelper extends Base_DBHelper {
 			db.beginTransaction();
 			ContentValues values = new ContentValues();
 
-			String[] whereArgs = { s.seatId };
-			values.put("id", s.seatId);
+			String[] whereArgs = { s.id };
+			values.put("id", s.id);
 			values.put("tableId", s.tableId);
 			values.put("styleId", s.styleId);
 			values.put("state", s.state);
@@ -418,7 +418,7 @@ public class Table_DBHelper extends Base_DBHelper {
 		try {
 			db.beginTransaction();
 			ContentValues values = new ContentValues();
-			selectArgs = new String[] { t.tableId };
+			selectArgs = new String[] { t.id };
 			values.put("customerName", t.customerName);
 			values.put("customerId", t.customerId);
 			values.put("bookTime", t.bookTime);

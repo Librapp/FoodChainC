@@ -26,7 +26,7 @@ public class TableData {
 	// 座位
 	private List<SeatData> seat;
 	// 桌号
-	public String tableId;
+	public String id;
 	// 类型
 	public String styleId;
 	// 预定时间
@@ -55,14 +55,14 @@ public class TableData {
 		} else if (i < 100) {
 			id = "0" + id;
 		}
-		this.tableId = ts.id + id;
+		this.id = ts.id + id;
 		this.styleId = ts.id;
 		this.seatCount = ts.seatCount;
 	}
 
 	public TableData(String tableId, String styleId, int seatCount, int state,
 			int customerId, String customerName, String bookTime) {
-		this.tableId = tableId;
+		this.id = tableId;
 		this.styleId = styleId;
 		this.seatCount = seatCount;
 		this.state = state;

@@ -26,15 +26,15 @@ public class CaseData {
 	// 等待时间
 	public String waitTime;
 	// 评分
-	public float mark = 5;
+	public double mark = 5;
 	// 消息
 	public String message;
 	// 订单编号
 	public int billId;
 	// 价格
-	public float price = 10f;
+	public double price = 10;
 	// 特价
-	public float special = 0f;
+	public double special = 0;
 	// 菜系
 	public int family = 0;
 	// 厨师

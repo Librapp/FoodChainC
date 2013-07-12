@@ -1,10 +1,13 @@
 package lms.foodchainC.activity;
 
+import java.util.ArrayList;
+
 import lms.foodchainC.R;
 import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.data.TableStyle;
 import lms.foodchainC.fragment.HallFragment;
 import lms.foodchainC.fragment.MenuFragment;
-import lms.foodchainC.net.ResDetailParser;
+import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.ResDetailRequest;
 import lms.foodchainC.netUtil.NetUtil;
 import lms.foodchainC.service.DlnaService;
@@ -33,6 +36,7 @@ public class RestaurantActivity extends FragmentActivity implements
 		OnClickListener {
 	private final int MENU = 0;
 	private final int HALL = 1;
+	private ArrayList<TableStyle> tableStyleList;
 	private HallFragment restaurantFragment;
 	private MenuFragment menuFragment;
 	private RelativeLayout loading;
@@ -61,20 +65,13 @@ public class RestaurantActivity extends FragmentActivity implements
 	}
 
 	protected void getHallInfo() {
-		new Thread(new Runnable() {
+		String result = NetUtil.executeGet(getApplicationContext(),
+				new ResDetailRequest().make(), NetUtil.LOCALHOST);
+		String msg = JSONParser.hallInfoParse(result, tableStyleList);
+		if (msg.equals("")) {
 
-			@Override
-			public void run() {
-				String result = NetUtil.executeGet(getApplicationContext(),
-						new ResDetailRequest().make(), NetUtil.LOCALHOST);
-				String msg = new ResDetailParser().parse(result,
-						RestaurantData.current());
-				if (msg.equals("")) {
-
-				} else
-					DialogUtil.alertToast(getApplicationContext(), msg);
-			}
-		});
+		} else
+			DialogUtil.alertToast(getApplicationContext(), msg);
 	}
 
 	private void search() {
