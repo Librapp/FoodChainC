@@ -8,8 +8,8 @@ import lms.foodchainC.data.TableStyle;
 import lms.foodchainC.fragment.HallFragment;
 import lms.foodchainC.fragment.MenuFragment;
 import lms.foodchainC.net.JSONParser;
-import lms.foodchainC.net.ResDetailRequest;
-import lms.foodchainC.netUtil.NetUtil;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.service.DlnaService;
 import lms.foodchainC.util.DialogUtil;
 import android.content.BroadcastReceiver;
@@ -66,7 +66,7 @@ public class RestaurantActivity extends FragmentActivity implements
 
 	protected void getHallInfo() {
 		String result = NetUtil.executeGet(getApplicationContext(),
-				new ResDetailRequest().make(), NetUtil.LOCALHOST);
+				JSONRequest.hallInfoRequest(), NetUtil.LOCALHOST);
 		String msg = JSONParser.hallInfoParse(result, tableStyleList);
 		if (msg.equals("")) {
 

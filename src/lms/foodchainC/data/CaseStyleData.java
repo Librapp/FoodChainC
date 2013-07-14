@@ -14,6 +14,9 @@ public class CaseStyleData {
 	public int id;
 	public String name;
 	ArrayList<CaseData> list;
+	public String startTime;
+	public String endTime;
+	public int weekday;
 
 	public CaseStyleData() {
 

@@ -6,8 +6,8 @@ import lms.foodchainC.R;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.net.JSONParser;
-import lms.foodchainC.net.MenuRequest;
-import lms.foodchainC.netUtil.NetUtil;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.util.DialogUtil;
 import lms.foodchainC.widget.MenuAdapter;
 import android.os.AsyncTask;
@@ -28,10 +28,8 @@ public class MenuActivity extends SlidingFragmentActivity implements
 		OnClickListener, OnPageChangeListener, OnItemClickListener {
 
 	private ArrayList<CaseStyleData> styleList;
-	private ArrayList<CaseStyleData> timeList;
 	private ViewPager viewPager;
 	private GetMenuTask getMenuTask;
-	private int currentPage = 0;
 	private int currentFlag = 0;
 	private final int STYLE = 1;
 	private final int TIME = 0;
@@ -109,9 +107,9 @@ public class MenuActivity extends SlidingFragmentActivity implements
 		@Override
 		protected String doInBackground(Object... params) {
 			String result = NetUtil.executeGet(getApplicationContext(),
-					new MenuRequest(1).make(),
+					JSONRequest.menuRequest(),
 					RestaurantData.current().localUrl);
-			String msg = JSONParser.caseStyleDataParse(result, styleList);
+			String msg = JSONParser.caseStyleListParse(result, styleList);
 			return null;
 		}
 
@@ -139,7 +137,6 @@ public class MenuActivity extends SlidingFragmentActivity implements
 
 	@Override
 	public void onPageSelected(int arg0) {
-		currentPage = arg0;
 	}
 
 	@Override

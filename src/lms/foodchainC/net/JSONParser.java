@@ -1,10 +1,12 @@
 package lms.foodchainC.net;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
-import lms.foodchainC.data.CaseTimeData;
+import lms.foodchainC.data.MessageData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.SeatData;
 import lms.foodchainC.data.TableData;
@@ -23,13 +25,21 @@ import org.json.JSONObject;
 public class JSONParser {
 	public static String msg = "";
 
-	/** 解析CaseStyleData */
-	public static String caseStyleDataParse(String result, CaseStyleData csd) {
+	/** 解析CaseStyleDataList */
+	public static String caseStyleListParse(String result,
+			ArrayList<CaseStyleData> list) {
 		msg = "";
 		try {
-			JSONObject data = new JSONObject(result);
-			csd.id = data.optInt("id");
-			csd.name = data.optString("name");
+			JSONArray array = new JSONArray(result);
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject item = array.getJSONObject(i);
+				CaseStyleData csd = new CaseStyleData();
+				msg = caseStyleDataParse(item.toString(), csd);
+				if (msg.equals(""))
+					list.add(csd);
+				else
+					return msg;
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -38,15 +48,15 @@ public class JSONParser {
 	}
 
 	/** 解析CaseStyleData */
-	public static String caseTimeDataParse(String result, CaseTimeData ctd) {
+	public static String caseStyleDataParse(String result, CaseStyleData csd) {
 		msg = "";
 		try {
 			JSONObject data = new JSONObject(result);
-			ctd.id = data.optInt("id");
-			ctd.name = data.optString("name");
-			ctd.startTime = data.optString("startTime");
-			ctd.endTime = data.optString("endTime");
-			ctd.weekday = data.optInt("weekday");
+			csd.id = data.optInt("id");
+			csd.name = data.optString("name");
+			csd.startTime = data.optString("startTime");
+			csd.endTime = data.optString("endTime");
+			csd.weekday = data.optInt("weekday");
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -86,6 +96,7 @@ public class JSONParser {
 		return msg;
 	}
 
+	/** 解析restaurantInfo */
 	public static String restaurantInfoParse(String result,
 			RestaurantData current) {
 		msg = "";
@@ -108,6 +119,7 @@ public class JSONParser {
 		return msg;
 	}
 
+	/** 解析hallInfo */
 	public static String hallInfoParse(String result,
 			ArrayList<TableStyle> tableStyleList) {
 		msg = "";
@@ -126,6 +138,7 @@ public class JSONParser {
 		return msg;
 	}
 
+	/** 解析tableStyleData */
 	public static String tableStyleDataParse(String result, TableStyle ts) {
 		msg = "";
 		try {
@@ -141,7 +154,12 @@ public class JSONParser {
 				JSONObject item = array.getJSONObject(i);
 				TableData td = new TableData();
 				msg = tableDataParse(item.toString(), td);
+				if (msg.equals(""))
+					list.add(td);
+				else
+					return msg;
 			}
+			ts.setTable(list);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -149,7 +167,8 @@ public class JSONParser {
 		return msg;
 	}
 
-	private static String tableDataParse(String result, TableData td) {
+	/** 解析tableData */
+	public static String tableDataParse(String result, TableData td) {
 		msg = "";
 		try {
 			JSONObject data = new JSONObject(result);
@@ -162,7 +181,12 @@ public class JSONParser {
 				JSONObject item = array.getJSONObject(i);
 				SeatData sd = new SeatData();
 				msg = seatDataParse(item.toString(), sd);
+				if (msg.equals(""))
+					list.add(sd);
+				else
+					return msg;
 			}
+			td.setSeat(list);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -170,9 +194,58 @@ public class JSONParser {
 		return msg;
 	}
 
-	private static String seatDataParse(String string, SeatData sd) {
-		// TODO Auto-generated method stub
-		return null;
+	/** 解析seatData */
+	private static String seatDataParse(String result, SeatData sd) {
+		msg = "";
+
+		return msg;
+	}
+
+	/** 解析messageData */
+	public static String messageDataParse(String result, MessageData md) {
+		msg = "";
+		int id = -1;
+		int type = -1;
+		String content = "";
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		try {
+			JSONObject jData = new JSONObject(result);
+			id = jData.getInt("id");
+			type = jData.getInt("type");
+			content = jData.getString("content");
+			MessageData c = new MessageData();
+			c.content = content;
+			c.time = sdf.format(d);
+			// switch (type) {
+			// case 0:
+			// Self.current().getCustomer().get(Self.current().cMap.get(id))
+			// .getMessage().add(c);
+			// break;
+			// case 1:
+			// Self.current().getWaiter().get(Self.current().wMap.get(id))
+			// .getMessage().add(c);
+			// break;
+			// case 2:
+			// Self.current().getCooker()
+			// .get(Self.current().cookerMap.get(id)).getMessage()
+			// .add(c);
+			// break;
+			// case 3:
+			// Self.current().getCustomer().get(Self.current().cMap.get(id));
+			// break;
+			// case 4:
+			// Self.current().getCustomer().get(Self.current().cMap.get(id))
+			// .getMessage().add(c);
+			// break;
+			// default:
+			// break;
+			// }
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
 	}
 
 }

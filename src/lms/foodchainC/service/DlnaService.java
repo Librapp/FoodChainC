@@ -11,8 +11,8 @@ import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.Self;
 import lms.foodchainC.net.JSONParser;
-import lms.foodchainC.net.ResDetailRequest;
-import lms.foodchainC.netUtil.NetUtil;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.upnp.ControlPoint;
 import lms.foodchainC.util.DialogUtil;
 import lms.foodchainC.util.FileInfoUtils;
@@ -199,7 +199,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		RestaurantData.current().localUrl = "http://"
 				+ dev.getInterfaceAddress() + ":4004";
 		String result = NetUtil.executeGet(getApplicationContext(),
-				new ResDetailRequest().make(),
+				JSONRequest.restaurantInfoRequest(),
 				RestaurantData.current().localUrl);
 		String msg = JSONParser.restaurantInfoParse(result,
 				RestaurantData.current());

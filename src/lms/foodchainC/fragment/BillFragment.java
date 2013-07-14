@@ -6,7 +6,7 @@ import lms.foodchainC.R;
 import lms.foodchainC.data.BillData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.net.JSONRequest;
-import lms.foodchainC.netUtil.NetUtil;
+import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.widget.BillAdapter;
 import android.content.Context;
 import android.os.AsyncTask;

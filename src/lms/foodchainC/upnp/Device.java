@@ -104,7 +104,7 @@ import java.util.Calendar;
 
 import lms.foodchainC.data.MessageData;
 import lms.foodchainC.data.Self;
-import lms.foodchainC.net.NetMessageType;
+import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.service.MessageService;
 
 import org.cybergarage.http.HTTP;
@@ -1486,7 +1486,7 @@ public class Device extends org.cybergarage.upnp.Device implements
 			byte[] dataBytes;
 			if (!method.equals("")) {
 				httpRes.setStatusCode(HTTPStatus.OK);
-				if (method.equals(NetMessageType.MESSAGE)) {
+				if (method.equals(JSONRequest.MESSAGE)) {
 					MessageData ms = new MessageData();
 					ms.content = data.optString("content");
 					ms.time = Calendar.getInstance().getTime().toString();

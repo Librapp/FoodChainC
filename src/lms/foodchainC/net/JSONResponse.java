@@ -1,5 +1,6 @@
 package lms.foodchainC.net;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -10,9 +11,16 @@ import org.json.JSONObject;
  * @description 请求响应基类
  * @changeLog
  */
-public abstract class JSONResponse {
-	protected JSONObject data = new JSONObject();
+public class JSONResponse {
+	private static JSONObject data = new JSONObject();
 
-	public abstract String make();
+	public static String make() {
+		try {
+			data.put("msg", "成功");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return data.toString();
+	};
 
 }

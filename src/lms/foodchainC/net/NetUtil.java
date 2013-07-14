@@ -1,4 +1,4 @@
-package lms.foodchainC.netUtil;
+package lms.foodchainC.net;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
