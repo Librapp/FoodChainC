@@ -1494,7 +1494,7 @@ public class Device extends org.cybergarage.upnp.Device implements
 					ms.url = data.optString("url");
 					JSONObject user = data.optJSONObject("user");
 					ms.userName = user.optString("userName");
-					ms.sId = user.optString("sId");
+					ms.sId = user.optInt("sId");
 					ms.userPic = user.optString("userPic");
 					ms.rId = Self.current().id;
 					if (MessageService.insertMessage(ms))

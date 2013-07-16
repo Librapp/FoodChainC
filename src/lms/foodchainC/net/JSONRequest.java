@@ -16,10 +16,11 @@ public class JSONRequest {
 	public static final String MESSAGE = "message";
 	private static final String CASEDETAIL = "caseDetail";
 
-	public static String menuRequest() {
+	public static String menuRequest(int styleId) {
 		JSONObject holder = new JSONObject();
 		try {
 			holder.put(METHOD, MENU);
+			holder.put("styleId", styleId);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -50,6 +51,16 @@ public class JSONRequest {
 		JSONObject holder = new JSONObject();
 		try {
 			holder.put(METHOD, RESTAURANTINFO);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return holder.toString();
+	}
+
+	public static String menuDataRequest() {
+		JSONObject holder = new JSONObject();
+		try {
+			holder.put(METHOD, MENU);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

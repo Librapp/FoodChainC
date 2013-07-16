@@ -130,7 +130,7 @@ public class Message_DBHelper extends Base_DBHelper {
 		Cursor cursor = null;
 		try {
 			db = getReadableDatabase();
-			selectArgs = new String[] { c.id, c.id };
+			selectArgs = new String[] { c.id + "", c.id + "" };
 			cursor = db.query(MESSAGEDATA, null, "sId=? OR rId=?", selectArgs,
 					null, null, "id");
 			if (cursor != null) {
@@ -150,8 +150,8 @@ public class Message_DBHelper extends Base_DBHelper {
 							.getColumnIndex("userName"));
 					m.userPic = cursor.getString(cursor
 							.getColumnIndex("userPic"));
-					m.sId = cursor.getString(cursor.getColumnIndex("sId"));
-					m.rId = cursor.getString(cursor.getColumnIndex("rId"));
+					m.sId = cursor.getInt(cursor.getColumnIndex("sId"));
+					m.rId = cursor.getInt(cursor.getColumnIndex("rId"));
 					list.add(m);
 				}
 				c.setMessage(list);

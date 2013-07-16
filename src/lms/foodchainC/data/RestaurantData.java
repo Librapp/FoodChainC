@@ -41,6 +41,8 @@ public class RestaurantData extends UserData {
 	private List<CustomerData> customer;
 	// 原料
 	private List<MaterialData> materials;
+	/** 是否是局域网 */
+	public boolean isLocal;
 
 	private static RestaurantData current;
 
@@ -49,7 +51,6 @@ public class RestaurantData extends UserData {
 	}
 
 	public RestaurantData(Device d) {
-		this.id = d.getUDN();
 		this.name = d.getFriendlyName();
 		this.headPic = d.getLocation() + d.getIcon(0).getURL();
 	}

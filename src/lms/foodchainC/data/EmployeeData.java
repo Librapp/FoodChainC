@@ -35,7 +35,6 @@ public class EmployeeData extends UserData {
 	}
 
 	public EmployeeData(Device d, int position) {
-		this.id = d.getUDN();
 		this.name = d.getFriendlyName();
 		this.headPic = d.getLocation() + d.getIcon(0).getURL();
 		this.position = position;

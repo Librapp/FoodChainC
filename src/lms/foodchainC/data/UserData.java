@@ -11,7 +11,7 @@ import org.cybergarage.upnp.Device;
 public class UserData {
 	private static UserData current;
 	// ID
-	public String id = "";
+	public int id = 0;
 	// 用户名
 	public String name = "";
 	// 头像

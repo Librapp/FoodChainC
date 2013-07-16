@@ -23,9 +23,9 @@ public class MessageData {
 	/** 用户头像 */
 	public String userPic;
 	/** 发送用户Id */
-	public String sId;
+	public int sId;
 	/** 接收用户Id */
-	public String rId;
+	public int rId;
 	// 消息id
 	public int id;
 	/** 来源 0发1收 */

@@ -36,7 +36,7 @@ public class SharePerformanceUtil {
 		SharedPreferences spn = context.getSharedPreferences(
 				OtherData.ONLINESETTING, Context.MODE_PRIVATE);
 		// 系统分配
-		Self.current().id = spn.getString("id", "");
+		Self.current().id = spn.getInt("id", 0);
 		Self.current().credit = spn.getInt("credit", 0);
 		Self.current().point = spn.getInt("point", 0);
 	}
@@ -45,7 +45,7 @@ public class SharePerformanceUtil {
 		SharedPreferences spn = context.getSharedPreferences(
 				OtherData.ONLINESETTING, Context.MODE_PRIVATE);
 		Editor ed = spn.edit();
-		ed.putString("id", Self.current().id);
+		ed.putInt("id", Self.current().id);
 		ed.putInt("credit", Self.current().credit);
 		ed.putInt("point", Self.current().point);
 		ed.commit();

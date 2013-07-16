@@ -33,7 +33,7 @@ public class CustomerData extends UserData {
 	// 黑名单
 	private List<RestaurantData> blackList;
 
-	public CustomerData(String name, String id, int gender, int credit,
+	public CustomerData(String name, int id, int gender, int credit,
 			String address, String tel, int status, String seatId,
 			String tableId) {
 		this.name = name;
@@ -48,7 +48,6 @@ public class CustomerData extends UserData {
 	}
 
 	public CustomerData(Device d) {
-		this.id = d.getUDN();
 		this.name = d.getFriendlyName();
 	}
 

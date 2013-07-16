@@ -6,6 +6,7 @@ import java.util.Date;
 
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
+import lms.foodchainC.data.MenuData;
 import lms.foodchainC.data.MessageData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.SeatData;
@@ -25,12 +26,12 @@ import org.json.JSONObject;
 public class JSONParser {
 	public static String msg = "";
 
-	/** 解析CaseStyleDataList */
-	public static String caseStyleListParse(String result,
-			ArrayList<CaseStyleData> list) {
+	/** 解析MenuData */
+	public static String menuDataParse(String result, MenuData menu) {
 		msg = "";
 		try {
 			JSONArray array = new JSONArray(result);
+			ArrayList<CaseStyleData> list = new ArrayList<CaseStyleData>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject item = array.getJSONObject(i);
 				CaseStyleData csd = new CaseStyleData();
@@ -40,6 +41,8 @@ public class JSONParser {
 				else
 					return msg;
 			}
+			menu.restaurantId = RestaurantData.current().id;
+			menu.setList(list);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -109,7 +112,7 @@ public class JSONParser {
 			current.sms = data.optString("sms");
 			current.opentime = data.optString("opentime");
 			current.email = data.optString("email");
-			current.id = data.optString("id");
+			current.id = data.optInt("id");
 			current.credit = data.optInt("credit");
 			current.state = data.optInt("state");
 		} catch (JSONException e) {
