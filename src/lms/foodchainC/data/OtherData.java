@@ -69,7 +69,8 @@ public class OtherData {
 	public static final String LOCALSETTING = "localSetting";
 	// 网络数据
 	public static final String ONLINESETTING = "onlineSetting";
-
+	/** 缓存餐厅信息 */
+	public static final String TEMPRESID = "tempResInfo";
 	// 设备类型
 	public static final String CUSTOMERDEVICETYPE = "urn:schemas-upnp-org:device:Customer";
 	public static final String WAITERDEVICETYPE = "urn:schemas-upnp-org:device:Waiter";

@@ -1,5 +1,6 @@
 package lms.foodchainC.widget;
 
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,4 +14,5 @@ public class ViewHolder {
 	public TextView text3;
 	public TextView text4;
 	public TextView text5;
+	public ImageButton btn;
 }

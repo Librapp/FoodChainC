@@ -18,7 +18,7 @@ public class Message_DBHelper extends Base_DBHelper {
 	private String MESSAGEDATA = "message";
 
 	public Message_DBHelper(Context context) {
-		super(context, "fcr_customer.db", null, 1);
+		super(context, "fcc_customer.db", null, 1);
 		// TODO Auto-generated constructor stub
 	}
 

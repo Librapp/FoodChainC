@@ -61,13 +61,6 @@ public class CaseData {
 	public int orderId;
 	// 是否是新创建
 	public boolean isNew = false;
-	/** 星期几 */
-	public int weekday = 0;
-	public static final int MORNING = 1;
-	public static final int NOON = 2;
-	public static final int NIGHT = 3;
-	/** 时段 MORNING NOON NIGHT */
-	public int time = 0;
 	// 评论
 	private List<CommentData> comment;
 	// 原料
@@ -134,8 +127,6 @@ public class CaseData {
 		this.style = style;
 		this.special = special;
 		this.state = state;
-		this.weekday = weekday;
-		this.time = time;
 	}
 
 	public static CaseData current() {

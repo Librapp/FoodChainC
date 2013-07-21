@@ -98,4 +98,5 @@
     <string name="manage">管理</string>
     <string name="friend">好友</string>
     <string name="restaurant">餐厅</string>
+    <string name="nodata">加载失败，点此重试</string>
 </resources>

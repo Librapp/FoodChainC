@@ -7,7 +7,9 @@ import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.util.DialogUtil;
+import lms.foodchainC.widget.CaseAddListener;
 import lms.foodchainC.widget.MenuAdapter;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -17,28 +19,19 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 public class MenuFragment extends ListFragment {
-	private ListView list;
 	private CaseStyleData csd;
 	private Case_DBHelper cdb;
 	private MenuAdapter ma;
 	private GetMenuTask getMenuTask;
+	private CaseAddListener mListener;
 
-	private int styleId;
-
-	/**
-	 * When creating, retrieve this instance's number from its arguments.
-	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		styleId = getArguments() != null ? getArguments().getInt("styleId") : 0;
 		csd = new CaseStyleData();
-		csd.id = styleId;
+		csd.id = getArguments().getInt("styleId");
 	}
 
-	/**
-	 * The Fragment's UI is just a simple text view showing its instance number.
-	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -58,18 +51,24 @@ public class MenuFragment extends ListFragment {
 		}
 	}
 
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		mListener = (CaseAddListener) activity;
+	}
+
 	private void getMenu() {
 		if (getMenuTask != null) {
 			getMenuTask.cancel(true);
 			getMenuTask = null;
 		}
 		getMenuTask = new GetMenuTask();
-		getMenuTask.execute(styleId);
+		getMenuTask.execute(csd.id);
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-
+		mListener.caseAdd(csd.getList().get(position).id);
 	}
 
 	private class GetMenuTask extends AsyncTask<Integer, Integer, String> {

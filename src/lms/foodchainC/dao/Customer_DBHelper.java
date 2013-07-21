@@ -11,10 +11,9 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
  */
 public class Customer_DBHelper extends Base_DBHelper {
 	private String TEMPCUSTOMER = "TempCustomer";
-	private String VIPCUSTOMER = "VipCustomer";
 
 	public Customer_DBHelper(Context context, CursorFactory factory, int version) {
-		super(context, "fcr_customer.db", factory, version);
+		super(context, "fcc_customer.db", factory, version);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -35,19 +34,12 @@ public class Customer_DBHelper extends Base_DBHelper {
 		if (db == null) {
 			db = getWritableDatabase();
 		}
-		db.execSQL(createVIPCustomerTable());
 		db.execSQL(createTempCustomerTable());
 	}
 
 	/** 生成临时顾客表 */
 	private String createTempCustomerTable() {
 		return CREATE + TEMPCUSTOMER + " (" + "styleId varchar(3)"
-				+ ",seatCount int(2)" + ",tableCount int(2)" + ")";
-	}
-
-	/** 生成会员表 */
-	private String createVIPCustomerTable() {
-		return CREATE + VIPCUSTOMER + " (" + "styleId varchar(3)"
 				+ ",seatCount int(2)" + ",tableCount int(2)" + ")";
 	}
 

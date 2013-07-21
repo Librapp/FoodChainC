@@ -24,7 +24,7 @@ public class Table_DBHelper extends Base_DBHelper {
 	private final String SEATDATA = "seatData";
 
 	public Table_DBHelper(Context context) {
-		super(context, "fcr_table.db", null, VERSION);
+		super(context, "fcc_table.db", null, VERSION);
 		// writeThread.start();
 	}
 

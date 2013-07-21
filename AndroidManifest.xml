@@ -30,7 +30,8 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock" >
         <!-- 基本页 -->
         <activity
             android:name=".activity.BaseActivity"
@@ -70,7 +71,6 @@
             android:name=".activity.MenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="adjustPan|stateUnspecified" >
         </activity>
         <!-- 员工页 -->

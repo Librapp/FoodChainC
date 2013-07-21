@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.MenuData;
@@ -26,8 +27,13 @@ import org.json.JSONObject;
 public class JSONParser {
 	public static String msg = "";
 
-	/** 解析MenuData */
-	public static String menuDataParse(String result, MenuData menu) {
+	/**
+	 * 解析MenuData
+	 * 
+	 * @param cdb
+	 */
+	public static String menuDataParse(String result, MenuData menu,
+			Case_DBHelper cdb) {
 		msg = "";
 		try {
 			JSONArray array = new JSONArray(result);
@@ -36,9 +42,10 @@ public class JSONParser {
 				JSONObject item = array.getJSONObject(i);
 				CaseStyleData csd = new CaseStyleData();
 				msg = caseStyleDataParse(item.toString(), csd);
-				if (msg.equals(""))
+				if (msg.equals("")) {
 					list.add(csd);
-				else
+					cdb.createCaseStyle(csd);
+				} else
 					return msg;
 			}
 			menu.restaurantId = RestaurantData.current().id;
