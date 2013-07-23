@@ -4,7 +4,7 @@
 
 *.pydevproject
 .project
-project
+project.*
 .metadata
 bin/
 gen/
