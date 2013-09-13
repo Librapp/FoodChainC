@@ -26,9 +26,11 @@ public class TableData {
 	// 座位
 	private List<SeatData> seat;
 	// 桌号
-	public String id;
+	public String id = "";
+	/** 饭店ID */
+	public String restaurantId = "";
 	// 类型
-	public String styleId;
+	public String styleId = "";
 	// 预定时间
 	public String bookTime;
 	// 图标
@@ -48,7 +50,7 @@ public class TableData {
 
 	}
 
-	public TableData(TableStyle ts, int i) {
+	public TableData(TableStyleData ts, int i) {
 		String id = i + "";
 		if (i < 10) {
 			id = "00" + id;

@@ -1,65 +1,106 @@
 package lms.foodchainC.activity;
 
 import lms.foodchainC.R;
+import lms.foodchainC.fragment.ManageFragment;
+import lms.foodchainC.fragment.MessageFragment;
+import lms.foodchainC.fragment.SearchFragment;
 import lms.foodchainC.service.DlnaService;
-import lms.foodchainC.util.DialogUtil;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener {
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+/**
+ * @author 李梦思
+ * @version 1.0
+ * @description 主界面
+ * @createTime 2013-3-28
+ */
+public class MainActivity extends SherlockFragmentActivity implements
+		TabListener {
+	private long lastTime = 0;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		initView();
-	}
 
-	private void initView() {
-		// TODO Auto-generated method stub
-		findViewById(R.id.search).setOnClickListener(this);
-		findViewById(R.id.restaurant).setOnClickListener(this);
-		findViewById(R.id.bill).setOnClickListener(this);
-		findViewById(R.id.message).setOnClickListener(this);
+		final ActionBar bar = getSupportActionBar();
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
+
+		bar.addTab(bar.newTab().setText(R.string.search).setTabListener(this));
+		bar.addTab(bar.newTab().setText(R.string.manage).setTabListener(this));
+		bar.addTab(bar.newTab().setText(R.string.message).setTabListener(this));
+		bar.getTabAt(0).select();
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.search:
-			startService(new Intent(DlnaService.SEARCH_DEVICE));
-			break;
-		case R.id.restaurant:
-			startActivity(new Intent(this, RestaurantActivity.class));
-			break;
-		case R.id.bill:
-
-			break;
-		case R.id.message:
-
-			break;
-		default:
-			break;
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		if (tab.getText().equals(getResources().getString(R.string.search))) {
+			Fragment frag = getSupportFragmentManager().findFragmentByTag(
+					getResources().getString(R.string.search));
+			if (frag == null) {
+				frag = new SearchFragment();
+				ft.replace(R.id.frame, frag,
+						getResources().getString(R.string.search));
+			} else
+				ft.attach(frag);
+		} else if (tab.getText().equals(
+				getResources().getString(R.string.manage))) {
+			Fragment frag = getSupportFragmentManager().findFragmentByTag(
+					getResources().getString(R.string.manage));
+			if (frag == null) {
+				frag = new ManageFragment();
+				ft.replace(R.id.frame, frag,
+						getResources().getString(R.string.manage));
+			} else
+				ft.attach(frag);
+		} else if (tab.getText().equals(
+				getResources().getString(R.string.message))) {
+			Fragment frag = getSupportFragmentManager().findFragmentByTag(
+					getResources().getString(R.string.message));
+			if (frag == null) {
+				frag = new MessageFragment();
+				ft.replace(R.id.frame, frag,
+						getResources().getString(R.string.message));
+			} else
+				ft.attach(frag);
 		}
 	}
 
-	private long lastTime = 0;
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			long currentTime = System.currentTimeMillis();
 			if (currentTime - lastTime >= 0 && currentTime - lastTime <= 2000) {
+				stopService(new Intent(this, DlnaService.class));
 				return super.onKeyDown(keyCode, event);
 			} else {
-				DialogUtil.alertToast(getApplicationContext(), "再按一次退出");
+				Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
 				lastTime = currentTime;
 			}
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
 }

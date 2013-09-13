@@ -5,7 +5,7 @@ import java.util.List;
 
 import lms.foodchainC.data.SeatData;
 import lms.foodchainC.data.TableData;
-import lms.foodchainC.data.TableStyle;
+import lms.foodchainC.data.TableStyleData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -51,14 +51,16 @@ public class Table_DBHelper extends Base_DBHelper {
 
 	/** 生成餐桌类型表 */
 	private String createTableStyleDataTable() {
-		return CREATE + TABLESTYLEDATA + " (" + "styleId varchar"
-				+ ",seatCount integer" + ",tableCount integer" + ")";
+		return CREATE + TABLESTYLEDATA + " (" + "styleId varchar,"
+				+ "restaurantId varchar," + "seatCount integer,"
+				+ "tableCount integer" + ")";
 	}
 
 	/** 生成餐桌表 */
 	private String createTableDataTable() {
 		return CREATE + TABLEDATA + " (" + "tableId varchar"
-				+ ",styleId varchar" + ",state integer" + ",seatCount integer"
+				+ ",styleId varchar" + ",restaurantId varchar"
+				+ ",state integer" + ",seatCount integer"
 				+ ",customerId integer" + ",customerName varchar"
 				+ ",icon varchar" + ",bookTime varchar" + ")";
 	}
@@ -66,7 +68,8 @@ public class Table_DBHelper extends Base_DBHelper {
 	/** 生成座位表 */
 	private String createSeatDataTable() {
 		return CREATE + SEATDATA + " (" + "seatId varchar" + ",tableId varchar"
-				+ ",styleId varchar" + ",state integer" + ",customerId integer"
+				+ ",styleId varchar" + ",restaurantId varchar"
+				+ ",state integer" + ",customerId integer"
 				+ ",customerName varchar" + ",icon varchar"
 				+ ",bookTime varchar" + ")";
 	}
@@ -110,7 +113,7 @@ public class Table_DBHelper extends Base_DBHelper {
 		Cursor cursor = null;
 		try {
 			db = getReadableDatabase();
-			selectArgs = new String[] { seat.id };
+			selectArgs = new String[] { seat.seatId };
 			cursor = db.query(SEATDATA, null, "seatId=? ", selectArgs, null,
 					null, null);
 
@@ -141,9 +144,9 @@ public class Table_DBHelper extends Base_DBHelper {
 
 	// ------------------------------------------------------------- 获取一组对象
 	/** 获取餐桌类型列表 */
-	public List<TableStyle> getTableStyleDataList() {
+	public List<TableStyleData> getTableStyleDataList() {
 		Cursor cursor = null;
-		List<TableStyle> list = new ArrayList<TableStyle>();
+		List<TableStyleData> list = new ArrayList<TableStyleData>();
 		try {
 			db = getReadableDatabase();
 			cursor = db.query(TABLESTYLEDATA, null, null, null, null, null,
@@ -151,7 +154,7 @@ public class Table_DBHelper extends Base_DBHelper {
 
 			if (cursor != null) {
 				while (cursor.moveToNext()) {
-					TableStyle tableStyle = new TableStyle(
+					TableStyleData tableStyle = new TableStyleData(
 							cursor.getString(cursor.getColumnIndex("styleId")),
 							cursor.getInt(cursor.getColumnIndex("tableCount")),
 							cursor.getInt(cursor.getColumnIndex("seatCount")));
@@ -170,7 +173,7 @@ public class Table_DBHelper extends Base_DBHelper {
 	}
 
 	/** 获取餐桌类型详情 */
-	public boolean getTableStyleDetail(TableStyle tableStyle) {
+	public boolean getTableStyleDetail(TableStyleData tableStyle) {
 		Cursor cursor = null;
 		try {
 			db = getReadableDatabase();
@@ -178,7 +181,7 @@ public class Table_DBHelper extends Base_DBHelper {
 			cursor = db.query(TABLESTYLEDATA, null, "styleId=? ", selectArgs,
 					null, null, null);
 			if (cursor != null && cursor.moveToNext()) {
-				tableStyle = new TableStyle(cursor.getString(cursor
+				tableStyle = new TableStyleData(cursor.getString(cursor
 						.getColumnIndex("styleId")), cursor.getInt(cursor
 						.getColumnIndex("tableCount")), cursor.getInt(cursor
 						.getColumnIndex("seatCount")));
@@ -197,7 +200,7 @@ public class Table_DBHelper extends Base_DBHelper {
 	}
 
 	/** 根据餐桌类型获取餐桌 */
-	public boolean getTableDataByTableStyle(TableStyle ts) {
+	public boolean getTableDataByTableStyle(TableStyleData ts) {
 		Cursor cursor = null;
 		List<TableData> list = new ArrayList<TableData>();
 		try {
@@ -308,7 +311,7 @@ public class Table_DBHelper extends Base_DBHelper {
 			return;
 		try {
 			ContentValues values = new ContentValues();
-			values.put("seatId", s.id);
+			values.put("seatId", s.seatId);
 			values.put("tableId", s.tableId);
 			values.put("styleId", s.styleId);
 			values.put("customerName", s.customerName);
@@ -357,7 +360,7 @@ public class Table_DBHelper extends Base_DBHelper {
 	}
 
 	/** 插入单个餐桌类型 */
-	public boolean insertTableStyle(TableStyle s) {
+	public boolean insertTableStyle(TableStyleData s) {
 		if (db == null)
 			db = getWritableDatabase();
 		try {
@@ -370,6 +373,7 @@ public class Table_DBHelper extends Base_DBHelper {
 			List<TableData> list = new ArrayList<TableData>();
 			for (int i = 0; i < s.tableCount; i++) {
 				TableData t = new TableData(s, i);
+				t.restaurantId = s.restaurantId;
 				insertTableData(t);
 				list.add(t);
 			}
@@ -393,10 +397,7 @@ public class Table_DBHelper extends Base_DBHelper {
 			db.beginTransaction();
 			ContentValues values = new ContentValues();
 
-			String[] whereArgs = { s.id };
-			values.put("id", s.id);
-			values.put("tableId", s.tableId);
-			values.put("styleId", s.styleId);
+			String[] whereArgs = { s.seatId };
 			values.put("state", s.state);
 			values.put("customerName", s.customerName);
 			values.put("customerId", s.customerId);
@@ -437,7 +438,7 @@ public class Table_DBHelper extends Base_DBHelper {
 	}
 
 	/** 修改餐桌类型 */
-	public boolean upgradeTableStyle(TableStyle ts) {
+	public boolean upgradeTableStyle(TableStyleData ts) {
 		if (deleteSeatDataByStyle(ts) && insertTableStyle(ts))
 			return true;
 		else
@@ -446,7 +447,7 @@ public class Table_DBHelper extends Base_DBHelper {
 
 	// --------------------------------------------------------- 删除数据
 	/** 根据类型删除 */
-	public boolean deleteSeatDataByStyle(TableStyle ts) {
+	public boolean deleteSeatDataByStyle(TableStyleData ts) {
 		try {
 			db = getWritableDatabase();
 			db.beginTransaction();

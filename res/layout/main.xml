@@ -1,41 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <Button
-            android:id="@+id/restaurant"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            android:text="@string/restaurant" />
-        <Button
-            android:id="@+id/bill"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            android:text="@string/bill" />
-        <Button
-            android:id="@+id/search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            android:text="@string/search" />
-        <Button
-            android:id="@+id/message"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            android:text="@string/message" />
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </RelativeLayout>

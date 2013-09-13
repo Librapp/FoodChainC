@@ -10,15 +10,15 @@ package lms.foodchainC.data;
  */
 public class MaterialData {
 	// ID
-	public int id;
+	public int materialId = 0;
 	// 名字
-	public String name;
+	public String name = "猪肉";
 	// 单位
-	public String unit;
+	public String unit = "g";
 	// 每单位单价
-	public float price;
+	public float price = 0;
 	// 库存
-	public int count;
+	public float count = 0;
 
 	public static MaterialData current = new MaterialData();
 
@@ -26,8 +26,9 @@ public class MaterialData {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MaterialData(int id, String name, String unit, float price, int count) {
-		this.id = id;
+	public MaterialData(int materialId, String name, String unit, float price,
+			float count) {
+		this.materialId = materialId;
 		this.name = name;
 		this.unit = unit;
 		this.price = price;

@@ -10,6 +10,7 @@ import lms.foodchainC.data.EmployeeData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.Self;
+import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.net.NetUtil;
@@ -44,6 +45,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 
 	public static final String NEW_DEVICES_FOUND = "newDeviceFound";
 	public static final String SEARCH_DEVICE = "search_device";
+
 	private final IBinder binder = new DlnaServiceBinder();
 	private ControlPoint c;
 	// CP有没有启动
@@ -204,9 +206,21 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		String msg = JSONParser.restaurantInfoParse(result,
 				RestaurantData.current());
 		if (msg.equals(""))
-			sendBroadcast(new Intent(NEW_DEVICES_FOUND));
+			sendBroadcast(new Intent(NEW_DEVICES_FOUND).putExtra("type",
+					OtherData.RESTAURANTDEVICETYPE));
 		else
 			DialogUtil.alertToast(getApplicationContext(), msg);
+	}
+
+	public String getHallInfo(ArrayList<TableStyleData> tableStyleList) {
+		String result = NetUtil.executeGet(getApplicationContext(),
+				JSONRequest.hallInfoRequest(),
+				RestaurantData.current().localUrl);
+		String msg = JSONParser.hallInfoParse(result, tableStyleList);
+		if (msg.equals("")) {
+			// TODO 存储
+		}
+		return msg;
 	}
 
 	@Override

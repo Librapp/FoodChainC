@@ -99,4 +99,10 @@
     <string name="friend">好友</string>
     <string name="restaurant">餐厅</string>
     <string name="nodata">加载失败，点此重试</string>
+    <string name="search_case">搜索菜肴</string>
+    <string name="search_restaurant">搜索餐厅</string>
+    <string name="current_tip">附近的饭店</string>
+    <string name="result_tip">搜索结果</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
 </resources>

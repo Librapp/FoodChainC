@@ -17,11 +17,11 @@ import android.database.sqlite.SQLiteDatabase;
 public class Case_DBHelper extends Base_DBHelper {
 
 	private static int VERSION = 1;
+	private final String CASEDATA = "caseData";
 	private final String STYLEDATA = "styleData";
-	private final String MENUDATA = "menuData";
 
 	public Case_DBHelper(Context context) {
-		super(context, "fcc_case.db", null, VERSION);
+		super(context, "fcr_case.db", null, VERSION);
 	}
 
 	@Override
@@ -32,32 +32,32 @@ public class Case_DBHelper extends Base_DBHelper {
 
 	/** 生成表 */
 	private void createTable() {
+		db.execSQL(createCaseDataTable());
 		db.execSQL(createStyleDataTable());
-		db.execSQL(createMenuDataTable());
 
 	}
 
-	/** 生成菜单表 */
-	private String createMenuDataTable() {
-		return CREATE + MENUDATA + " (" + "id integer" + ",caseId integer"
+	/** 生成菜肴表 */
+	private String createCaseDataTable() {
+		return CREATE + CASEDATA + " (" + AUTO_KEY + ",caseId integer"
 				+ ",name varchar" + ",price float" + ",pic varchar"
-				+ ",cookTime integer" + ",intro varchar" + ",style integer"
-				+ ",special float" + ",state integer" + ")";
+				+ ",intro varchar" + ",cookTime integer" + ",style integer"
+				+ ",family integer" + ")";
 	}
 
 	/** 生成自定义类型表 */
 	private String createStyleDataTable() {
-		return CREATE + STYLEDATA + " (" + "id integer" + ",name varchar" + ")";
+		return CREATE + STYLEDATA + " (" + AUTO_KEY + ",name varchar" + ")";
 	}
 
-	/** 获取菜单菜详情 */
-	public boolean getMenuCase(CaseData c) {
+	/** 获取详情 */
+	public boolean getCaseDetail(CaseData c) {
 		Cursor cursor = null;
 		try {
 			db = getReadableDatabase();
-			selectArgs = new String[] { c.name };
-			cursor = db.query(MENUDATA, null, "name=?", selectArgs, null, null,
-					null);
+			selectArgs = new String[] { c.name, c.id + "", c.caseId + "" };
+			cursor = db.query(CASEDATA, null, "name=? OR id=? OR caseId=?",
+					selectArgs, null, null, null);
 			if (cursor != null && cursor.moveToNext()) {
 				c.id = cursor.getInt(cursor.getColumnIndex("id"));
 				c.caseId = cursor.getInt(cursor.getColumnIndex("caseId"));
@@ -67,8 +67,7 @@ public class Case_DBHelper extends Base_DBHelper {
 				c.picPath = cursor.getString(cursor.getColumnIndex("pic"));
 				c.cookTime = cursor.getInt(cursor.getColumnIndex("cookTime"));
 				c.style = cursor.getInt(cursor.getColumnIndex("style"));
-				c.special = cursor.getFloat(cursor.getColumnIndex("special"));
-				c.state = cursor.getInt(cursor.getColumnIndex("state"));
+				c.family = cursor.getInt(cursor.getColumnIndex("family"));
 				c.isNew = false;
 				return true;
 			} else
@@ -111,7 +110,7 @@ public class Case_DBHelper extends Base_DBHelper {
 		try {
 			db = getReadableDatabase();
 			selectArgs = new String[] { csd.id + "" };
-			cursor = db.query(MENUDATA, null, "style=?", selectArgs, null,
+			cursor = db.query(CASEDATA, null, "style=?", selectArgs, null,
 					null, null);
 			ArrayList<CaseData> caseList = new ArrayList<CaseData>();
 			if (cursor != null) {
@@ -150,9 +149,8 @@ public class Case_DBHelper extends Base_DBHelper {
 			cursor = db.query(STYLEDATA, null, "name=?", selectArgs, null,
 					null, null);
 			if (cursor.moveToNext()) {
-				csd = new CaseStyleData(cursor.getInt(cursor
-						.getColumnIndex("id")), cursor.getString(cursor
-						.getColumnIndex("name")));
+				csd.id = cursor.getInt(cursor.getColumnIndex("id"));
+				csd.name = cursor.getString(cursor.getColumnIndex("name"));
 			}
 			return true;
 		} catch (Exception e) {
@@ -161,12 +159,11 @@ public class Case_DBHelper extends Base_DBHelper {
 		}
 	}
 
-	/** 创建新菜单菜 */
-	public boolean createMenuCase(CaseData c) {
+	/** 创建新菜 */
+	public boolean createCase(CaseData c) {
 		db = getWritableDatabase();
 		try {
 			ContentValues values = new ContentValues();
-			values.put("id", c.id);
 			values.put("caseId", c.caseId);
 			values.put("name", c.name);
 			values.put("price", c.price);
@@ -174,10 +171,9 @@ public class Case_DBHelper extends Base_DBHelper {
 			values.put("intro", c.intro);
 			values.put("cookTime", c.cookTime);
 			values.put("style", c.style);
-			values.put("special", c.special);
-			values.put("state", c.state);
+			values.put("family", c.family);
 			db.beginTransaction();
-			db.insert(MENUDATA, null, values);
+			db.insert(CASEDATA, null, values);
 			db.setTransactionSuccessful();
 			return true;
 		} catch (Exception e) {
@@ -197,6 +193,91 @@ public class Case_DBHelper extends Base_DBHelper {
 			db.beginTransaction();
 			db.insert(STYLEDATA, null, values);
 			db.setTransactionSuccessful();
+			getCaseStyleDataByName(c);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			db.endTransaction();
+		}
+	}
+
+	/** 修改已有菜 */
+	public boolean upgradeCase(CaseData c) {
+		db = getWritableDatabase();
+		try {
+			ContentValues values = new ContentValues();
+			values.put("caseId", c.caseId);
+			values.put("name", c.name);
+			values.put("price", c.price);
+			values.put("pic", c.picPath);
+			values.put("intro", c.intro);
+			values.put("cookTime", c.cookTime);
+			values.put("type", c.type);
+			values.put("style", c.style);
+			values.put("family", c.family);
+			selectArgs = new String[] { c.id + "" };
+			db.beginTransaction();
+			db.update(CASEDATA, values, "id=?", selectArgs);
+			db.setTransactionSuccessful();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			db.endTransaction();
+		}
+	}
+
+	/** 修改类型菜 */
+	public boolean upgradeStyleCase(CaseData c) {
+		db = getWritableDatabase();
+		try {
+			ContentValues values = new ContentValues();
+			values.put("state", c.state);
+			selectArgs = new String[] { c.id + "" };
+			db.beginTransaction();
+			db.update(STYLEDATA, values, "id=?", selectArgs);
+			db.setTransactionSuccessful();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			db.endTransaction();
+		}
+	}
+
+	/** 删除已有菜 */
+	public boolean deleteCase(CaseData c) {
+		if (db == null)
+			db = getWritableDatabase();
+		try {
+			selectArgs = new String[] { c.id + "" };
+			db.beginTransaction();
+			db.delete(CASEDATA, "id=?", selectArgs);
+			db.setTransactionSuccessful();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			db.endTransaction();
+		}
+	}
+
+	/** 删除类型 */
+	public boolean deleteCaseStyle(CaseStyleData c) {
+		db = getWritableDatabase();
+		try {
+			selectArgs = new String[] { c.id + "" };
+			db.beginTransaction();
+			db.delete(STYLEDATA, "id=?", selectArgs);
+			ContentValues values = new ContentValues();
+			values.put("style", 0);
+			db.update(CASEDATA, null, "style=?", selectArgs);
+			db.setTransactionSuccessful();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -212,10 +293,4 @@ public class Case_DBHelper extends Base_DBHelper {
 		// TODO Auto-generated method stub
 
 	}
-
-	/** 全部删除 */
-	public void delateAll() {
-		db.delete(MENUDATA, null, null);
-	}
-
 }

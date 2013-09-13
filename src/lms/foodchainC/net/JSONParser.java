@@ -7,12 +7,11 @@ import java.util.Date;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
-import lms.foodchainC.data.MenuData;
 import lms.foodchainC.data.MessageData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.SeatData;
 import lms.foodchainC.data.TableData;
-import lms.foodchainC.data.TableStyle;
+import lms.foodchainC.data.TableStyleData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,8 +31,7 @@ public class JSONParser {
 	 * 
 	 * @param cdb
 	 */
-	public static String menuDataParse(String result, MenuData menu,
-			Case_DBHelper cdb) {
+	public static String menuDataParse(String result, Case_DBHelper cdb) {
 		msg = "";
 		try {
 			JSONArray array = new JSONArray(result);
@@ -48,8 +46,6 @@ public class JSONParser {
 				} else
 					return msg;
 			}
-			menu.restaurantId = RestaurantData.current().id;
-			menu.setList(list);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -131,15 +127,14 @@ public class JSONParser {
 
 	/** 解析hallInfo */
 	public static String hallInfoParse(String result,
-			ArrayList<TableStyle> tableStyleList) {
+			ArrayList<TableStyleData> tableStyleList) {
 		msg = "";
 		try {
 			JSONArray data = new JSONArray(result);
 			for (int i = 0; i < data.length(); i++) {
 				JSONObject item = data.getJSONObject(i);
-				TableStyle ts = new TableStyle();
+				TableStyleData ts = new TableStyleData();
 				msg = tableStyleDataParse(item.toString(), ts);
-
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -149,7 +144,7 @@ public class JSONParser {
 	}
 
 	/** 解析tableStyleData */
-	public static String tableStyleDataParse(String result, TableStyle ts) {
+	public static String tableStyleDataParse(String result, TableStyleData ts) {
 		msg = "";
 		try {
 			JSONObject data = new JSONObject(result);
@@ -207,22 +202,33 @@ public class JSONParser {
 	/** 解析seatData */
 	private static String seatDataParse(String result, SeatData sd) {
 		msg = "";
-
+		try {
+			JSONObject data = new JSONObject(result);
+			sd.seatId = data.optString("seatId");
+			sd.tableId = data.optString("tableId");
+			sd.styleId = data.optString("styleId");
+			sd.state = data.optInt("state");
+			sd.customerId = data.optInt("customerId");
+			sd.customerName = data.optString("customerName");
+			sd.customerPic = data.optString("customerPic");
+			sd.customerURL = data.optString("customerURL");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
 		return msg;
 	}
 
 	/** 解析messageData */
 	public static String messageDataParse(String result, MessageData md) {
 		msg = "";
-		int id = -1;
-		int type = -1;
 		String content = "";
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		try {
 			JSONObject jData = new JSONObject(result);
-			id = jData.getInt("id");
-			type = jData.getInt("type");
+			jData.getInt("id");
+			jData.getInt("type");
 			content = jData.getString("content");
 			MessageData c = new MessageData();
 			c.content = content;

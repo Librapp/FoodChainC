@@ -31,12 +31,8 @@ public class RestaurantData extends UserData {
 	private List<EmployeeData> cooker;
 	// 保洁员
 	private List<EmployeeData> cleaner;
-	// 座位
-	private List<SeatData> seat;
 	// 桌子类型列表
-	private List<TableStyle> tableStyle;
-	// 桌子列表
-	private List<TableData> table;
+	private List<TableStyleData> tableStyle;
 	// 顾客
 	private List<CustomerData> customer;
 	// 原料
@@ -78,14 +74,6 @@ public class RestaurantData extends UserData {
 		return cooker;
 	}
 
-	public void setSeat(List<SeatData> seat) {
-		this.seat = seat;
-	}
-
-	public List<SeatData> getSeat() {
-		return seat;
-	}
-
 	public void setCustomer(List<CustomerData> customer) {
 		this.customer = customer;
 	}
@@ -94,20 +82,12 @@ public class RestaurantData extends UserData {
 		return customer;
 	}
 
-	public void setTableStyle(List<TableStyle> tableStyle) {
+	public void setTableStyle(List<TableStyleData> tableStyle) {
 		this.tableStyle = tableStyle;
 	}
 
-	public List<TableStyle> getTableStyle() {
+	public List<TableStyleData> getTableStyle() {
 		return tableStyle;
-	}
-
-	public void setTable(List<TableData> table) {
-		this.table = table;
-	}
-
-	public List<TableData> getTable() {
-		return table;
 	}
 
 	public void setCleaner(List<EmployeeData> cleaner) {

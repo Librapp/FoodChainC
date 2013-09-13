@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import lms.foodchainC.R;
 import lms.foodchainC.data.RestaurantData;
-import lms.foodchainC.data.TableStyle;
+import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.fragment.HallFragment;
 import lms.foodchainC.fragment.MenuFragment;
 import lms.foodchainC.net.JSONParser;
@@ -36,7 +36,7 @@ public class RestaurantActivity extends FragmentActivity implements
 		OnClickListener {
 	private final int MENU = 0;
 	private final int HALL = 1;
-	private ArrayList<TableStyle> tableStyleList;
+	private ArrayList<TableStyleData> tableStyleList;
 	private HallFragment restaurantFragment;
 	private MenuFragment menuFragment;
 	private RelativeLayout loading;
@@ -110,6 +110,6 @@ public class RestaurantActivity extends FragmentActivity implements
 
 	@Override
 	public void onClick(View v) {
-		startActivity(new Intent(this, MenuActivity.class));
+
 	}
 }

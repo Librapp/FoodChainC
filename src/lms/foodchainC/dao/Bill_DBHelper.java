@@ -22,7 +22,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 	private final String ORDERDATA = "orderData";
 
 	public Bill_DBHelper(Context context) {
-		super(context, "fcr_bill.db", null, VERSION);
+		super(context, "fcc_bill.db", null, VERSION);
 	}
 
 	@Override

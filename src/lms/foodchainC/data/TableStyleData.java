@@ -9,11 +9,13 @@ import java.util.List;
  * @description 桌子类型数据类
  * 
  */
-public class TableStyle {
+public class TableStyleData {
 	// 有多少张桌子
 	public int tableCount = 10;
 	// 桌子有多少座位
 	public int seatCount = 4;
+	/** 饭店ID */
+	public String restaurantId = "";
 	// 类型Id
 	public String id = "A1";
 	// 图标
@@ -25,13 +27,13 @@ public class TableStyle {
 	// 是否为新建
 	public boolean isNew = false;
 
-	public TableStyle(String id, int tableCount, int seatCount) {
+	public TableStyleData(String id, int tableCount, int seatCount) {
 		this.id = id;
 		this.seatCount = seatCount;
 		this.tableCount = tableCount;
 	}
 
-	public TableStyle() {
+	public TableStyleData() {
 
 	}
 
