@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import lms.foodchainC.R;
 import lms.foodchainC.data.CaseData;
+import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.service.DlnaService;
 import lms.foodchainC.widget.WifiScanAdapter;
@@ -176,15 +177,27 @@ public class SearchFragment extends Fragment implements OnClickListener,
 
 	@Override
 	public void onResume() {
+		receiver = new BroadcastReceiver() {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if (intent.getStringExtra("type").equals(
+						OtherData.RESTAURANTDEVICETYPE)) {
+					String name = intent.getStringExtra("name");
+					String address = intent.getStringExtra("address");
+					// TODO 获取餐厅信息
+				}
+			}
+		};
 		getActivity().registerReceiver(receiver,
 				new IntentFilter(DlnaService.NEW_DEVICES_FOUND));
 		switch (netType) {
 		case ConnectivityManager.TYPE_MOBILE:
-			if (wifiManager.isWifiEnabled()) {
-				nearbyList.setAdapter(new WifiScanAdapter(getActivity(),
-						wifiManager.getScanResults()));
-				nearbyLayout.setVisibility(View.VISIBLE);
-			}
+			// if (wifiManager.isWifiEnabled()) {
+			// nearbyList.setAdapter(new WifiScanAdapter(getActivity(),
+			// wifiManager.getScanResults()));
+			// nearbyLayout.setVisibility(View.VISIBLE);
+			// }
 			break;
 		default:
 			break;

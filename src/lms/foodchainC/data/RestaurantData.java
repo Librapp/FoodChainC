@@ -41,6 +41,7 @@ public class RestaurantData extends UserData {
 	public boolean isLocal;
 
 	private static RestaurantData current;
+	private static RestaurantData local;
 
 	public RestaurantData() {
 
@@ -56,6 +57,13 @@ public class RestaurantData extends UserData {
 			current = new RestaurantData();
 		}
 		return current;
+	}
+
+	public static RestaurantData local() {
+		if (local == null) {
+			local = new RestaurantData();
+		}
+		return local;
 	}
 
 	public void setWaiter(List<EmployeeData> waiter) {

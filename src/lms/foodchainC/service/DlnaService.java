@@ -192,9 +192,28 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			EmployeeData c = new EmployeeData(dev, EmployeeData.COOKER);
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
-			RestaurantData.current().device = dev;
-			getResDetail(dev);
+			Intent intent = new Intent(NEW_DEVICES_FOUND);
+			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
+			intent.putExtra("name", dev.getFriendlyName());
+			intent.putExtra("address", "http://" + dev.getInterfaceAddress()
+					+ ":4004");
+			sendBroadcast(intent);
+			// RestaurantData.current().device = dev;
+			// getResDetail(dev);
 		}
+	}
+
+	private void getLocalResInfo() {
+		String result = NetUtil.executeGet(getApplicationContext(),
+				JSONRequest.restaurantInfoRequest(),
+				RestaurantData.current().localUrl);
+		String msg = JSONParser.restaurantInfoParse(result,
+				RestaurantData.current());
+		if (msg.equals(""))
+			sendBroadcast(new Intent(NEW_DEVICES_FOUND).putExtra("type",
+					OtherData.RESTAURANTDEVICETYPE));
+		else
+			DialogUtil.alertToast(getApplicationContext(), msg);
 	}
 
 	private void getResDetail(Device dev) {
