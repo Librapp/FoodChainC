@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.provider.MediaStore;
 
 /**
@@ -21,29 +20,17 @@ public class PicUtils {
 
 	private Context c;
 	private Activity a;
+	public static final int PHOTO = 1;
+	public static final int CAMERA = 2;
+	public static final int PHOTORESULT = 3;
+
+	public static final int PIC_SIZE_LIMITE_W = 150;
+	public static final int PIC_SIZE_LIMITE_H = 150;
+	public static final String IMAGE_UNSPECIFIED = "image/*";
 
 	public PicUtils(Context c, Activity a) {
 		this.c = c;
 		this.a = a;
-	}
-
-	public String getAbsoluteImagePath(Uri uri) {
-		String imagePath = "";
-		String[] proj = { MediaStore.Images.Media.DATA };
-		Cursor cursor = a.managedQuery(uri, proj, // Which columns to return
-				null, // WHERE clause; which rows to return (all rows)
-				null, // WHERE clause selection arguments (none)
-				null); // Order-by clause (ascending by name)
-
-		if (cursor != null) {
-			int column_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			if (cursor.getCount() > 0 && cursor.moveToFirst()) {
-				imagePath = cursor.getString(column_index);
-			}
-		}
-
-		return imagePath;
 	}
 
 	public Bitmap loadImgThumbnail(String imgName, int kind) {

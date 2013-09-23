@@ -203,19 +203,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		}
 	}
 
-	private void getLocalResInfo() {
-		String result = NetUtil.executeGet(getApplicationContext(),
-				JSONRequest.restaurantInfoRequest(),
-				RestaurantData.current().localUrl);
-		String msg = JSONParser.restaurantInfoParse(result,
-				RestaurantData.current());
-		if (msg.equals(""))
-			sendBroadcast(new Intent(NEW_DEVICES_FOUND).putExtra("type",
-					OtherData.RESTAURANTDEVICETYPE));
-		else
-			DialogUtil.alertToast(getApplicationContext(), msg);
-	}
-
 	private void getResDetail(Device dev) {
 		RestaurantData.current().localUrl = "http://"
 				+ dev.getInterfaceAddress() + ":4004";

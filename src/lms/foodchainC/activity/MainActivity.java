@@ -1,7 +1,7 @@
 package lms.foodchainC.activity;
 
 import lms.foodchainC.R;
-import lms.foodchainC.fragment.ManageFragment;
+import lms.foodchainC.fragment.BillFragment;
 import lms.foodchainC.fragment.MessageFragment;
 import lms.foodchainC.fragment.SearchFragment;
 import lms.foodchainC.service.DlnaService;
@@ -37,7 +37,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
 
 		bar.addTab(bar.newTab().setText(R.string.search).setTabListener(this));
-		bar.addTab(bar.newTab().setText(R.string.manage).setTabListener(this));
+		bar.addTab(bar.newTab().setText(R.string.bill).setTabListener(this));
 		bar.addTab(bar.newTab().setText(R.string.message).setTabListener(this));
 		bar.getTabAt(0).select();
 	}
@@ -53,14 +53,14 @@ public class MainActivity extends SherlockFragmentActivity implements
 						getResources().getString(R.string.search));
 			} else
 				ft.attach(frag);
-		} else if (tab.getText().equals(
-				getResources().getString(R.string.manage))) {
+		} else if (tab.getText()
+				.equals(getResources().getString(R.string.bill))) {
 			Fragment frag = getSupportFragmentManager().findFragmentByTag(
-					getResources().getString(R.string.manage));
+					getResources().getString(R.string.bill));
 			if (frag == null) {
-				frag = new ManageFragment();
+				frag = new BillFragment();
 				ft.replace(R.id.frame, frag,
-						getResources().getString(R.string.manage));
+						getResources().getString(R.string.bill));
 			} else
 				ft.attach(frag);
 		} else if (tab.getText().equals(

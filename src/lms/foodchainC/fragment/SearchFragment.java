@@ -8,6 +8,9 @@ import lms.foodchainC.R;
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.net.JSONParser;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.service.DlnaService;
 import lms.foodchainC.widget.WifiScanAdapter;
 import android.content.BroadcastReceiver;
@@ -21,6 +24,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -59,11 +63,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	private ImageButton clean;
 	private ArrayList<CaseData> caseResult;
 	private ArrayList<RestaurantData> resResult;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
+	private GetLocalResInfoTask getLocalResInfoTask;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -183,9 +183,9 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			public void onReceive(Context context, Intent intent) {
 				if (intent.getStringExtra("type").equals(
 						OtherData.RESTAURANTDEVICETYPE)) {
-					String name = intent.getStringExtra("name");
 					String address = intent.getStringExtra("address");
-					// TODO 获取餐厅信息
+					getLocalResInfoTask = new GetLocalResInfoTask();
+					getLocalResInfoTask.execute(address);
 				}
 			}
 		};
@@ -203,6 +203,31 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			break;
 		}
 		super.onResume();
+	}
+
+	private class GetLocalResInfoTask extends AsyncTask<Object, String, String> {
+
+		@Override
+		protected String doInBackground(Object... params) {
+			String result = NetUtil.executeGet(getActivity()
+					.getApplicationContext(), JSONRequest
+					.restaurantInfoRequest(), RestaurantData.local().localUrl);
+			String msg = JSONParser.restaurantInfoParse(result,
+					RestaurantData.local());
+			return msg;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result.equals("")) {
+				// TODO
+				// FragmentTransaction ft = getFragmentManager()
+				// .beginTransaction();
+				// ft.replace(R.id.frame, new HallFragment());
+				// ft.commit();
+			}
+			super.onPostExecute(result);
+		}
 	}
 
 	@Override

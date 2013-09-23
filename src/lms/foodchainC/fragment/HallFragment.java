@@ -118,9 +118,11 @@ public class HallFragment extends Fragment implements OnPageChangeListener {
 			return styleList;
 		}
 
-		protected void onPostExecute() {
+		@Override
+		protected void onPostExecute(ArrayList<TableStyleData> styleList) {
 			mfa = new HallFragAdapter(getChildFragmentManager());
 			pager.setAdapter(mfa);
+			super.onPreExecute();
 		};
 
 	}
