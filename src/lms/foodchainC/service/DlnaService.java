@@ -1,7 +1,6 @@
 package lms.foodchainC.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +18,6 @@ import lms.foodchainC.util.DialogUtil;
 import lms.foodchainC.util.FileInfoUtils;
 
 import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.DeviceList;
 import org.cybergarage.upnp.RootDescription;
 import org.cybergarage.upnp.device.DeviceChangeListener;
 import org.cybergarage.upnp.device.SearchResponseListener;
@@ -28,7 +26,11 @@ import org.cybergarage.util.Debug;
 import org.cybergarage.xml.Node;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
@@ -44,7 +46,7 @@ import android.util.Log;
 public class DlnaService extends Service implements DeviceChangeListener {
 
 	public static final String NEW_DEVICES_FOUND = "newDeviceFound";
-	public static final String SEARCH_DEVICE = "search_device";
+	public static final String SEARCH_DEVICE = "search_FC_device";
 
 	private final IBinder binder = new DlnaServiceBinder();
 	private ControlPoint c;
@@ -74,6 +76,16 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		});
 		thread.start();
 		initControlPoint();
+		final WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+		registerReceiver(new BroadcastReceiver() {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED) {
+					// multicastSearch();
+				}
+			}
+		}, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
 	}
 
 	@Override
@@ -143,15 +155,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	}
 
 	public void multicastSearch() {
-
-		if (Debug.isOn()) {
-			DeviceList deviceList = c.getDeviceList();
-			Iterator iterator = deviceList.iterator();
-			while (iterator.hasNext()) {
-				Device next = (Device) iterator.next();
-				System.out.println(next.getFriendlyName());
-			}
-		}
 		new Thread(new Runnable() {
 
 			@Override

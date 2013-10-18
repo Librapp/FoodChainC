@@ -165,10 +165,10 @@ public class CaseDetailActivity extends Activity implements OnClickListener {
 					break;
 				}
 
-				if (MenuService.getCaseDetail(CaseData.current())) {
-					Toast.makeText(this, "与已有菜名重复", Toast.LENGTH_SHORT).show();
-					break;
-				}
+				// if (MenuService.getCaseDetail(CaseData.current())) {
+				// Toast.makeText(this, "与已有菜名重复", Toast.LENGTH_SHORT).show();
+				// break;
+				// }
 
 				try {
 					CaseData.current().price = Float.parseFloat(priceEd
@@ -197,10 +197,10 @@ public class CaseDetailActivity extends Activity implements OnClickListener {
 				}
 
 				CaseData.current().mark = mark.getRating();
-				if (CaseData.current().isNew)
-					MenuService.createCase(CaseData.current());
-				else
-					MenuService.upgradeCase(CaseData.current());
+				// if (CaseData.current().isNew)
+				// MenuService.createCase(CaseData.current());
+				// else
+				// MenuService.upgradeCase(CaseData.current());
 				setResult(RESULT_OK);
 			}
 			isEdit = !isEdit;

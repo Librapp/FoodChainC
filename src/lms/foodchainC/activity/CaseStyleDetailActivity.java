@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * @author 李梦思
@@ -59,12 +58,12 @@ public class CaseStyleDetailActivity extends Activity implements
 		csd = new CaseStyleData();
 		csd.id = getIntent().getIntExtra("id", 0);
 		csd.name = getIntent().getStringExtra("name");
-		if (MenuService.getCaseStyleData(csd)) {
-			name.setText(csd.name);
-		} else {
-			setResult(RESULT_CANCELED);
-			finish();
-		}
+		// if (MenuService.getCaseStyleData(csd)) {
+		// name.setText(csd.name);
+		// } else {
+		// setResult(RESULT_CANCELED);
+		// finish();
+		// }
 		ma = new MenuAdapter(this, csd.getList());
 		listView.setAdapter(ma);
 		listView.setOnItemLongClickListener(this);
@@ -122,11 +121,11 @@ public class CaseStyleDetailActivity extends Activity implements
 		case DELETE:
 			CaseData c = new CaseData();
 			c.id = currentItem;
-			if (MenuService.deleteCase(c)) {
-				// TODO 刷新
-				Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
-			} else
-				Toast.makeText(this, "删除失败", Toast.LENGTH_SHORT).show();
+			// if (MenuService.deleteCase(c)) {
+			// // TODO 刷新
+			// Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+			// } else
+			// Toast.makeText(this, "删除失败", Toast.LENGTH_SHORT).show();
 			return true;
 		default:
 			return super.onContextItemSelected(item);

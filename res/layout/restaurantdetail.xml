@@ -141,12 +141,12 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/seatcount" />
+                android:text="@string/tablecount" />
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/tablecount" />
+                android:text="@string/seatcount" />
         </LinearLayout>
         <FrameLayout
             android:layout_width="fill_parent"

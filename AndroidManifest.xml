@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="11"
         android:targetSdkVersion="18" />
     <supports-screens android:normalScreens="true" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -162,7 +162,7 @@
             android:enabled="true"
             android:exported="false" >
             <intent-filter>
-                <action android:name="search_device" />
+                <action android:name="search_FC_device" />
             </intent-filter>
         </service>
         <service

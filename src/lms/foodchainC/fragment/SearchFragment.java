@@ -1,7 +1,5 @@
 package lms.foodchainC.fragment;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import lms.foodchainC.R;
@@ -12,17 +10,12 @@ import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.service.DlnaService;
-import lms.foodchainC.widget.WifiScanAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * @author 李梦思
@@ -47,7 +41,7 @@ import android.widget.ListView;
  * @createTime 2013-9-11
  */
 public class SearchFragment extends Fragment implements OnClickListener,
-		TextWatcher, OnDismissListener, OnItemClickListener {
+		TextWatcher, OnItemClickListener {
 	private final int CASE = 1;
 	private final int RESTAURANT = 0;
 	private int searchType = RESTAURANT;
@@ -58,7 +52,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	private WifiManager wifiManager;
 	private LinearLayout nearbyLayout;
 	private ListView resultList;
-	private ListView nearbyList;
+	private TextView currentRes;
 	private EditText edit;
 	private ImageButton clean;
 	private ArrayList<CaseData> caseResult;
@@ -78,6 +72,18 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		wifiManager = (WifiManager) getActivity().getSystemService(
 				Context.WIFI_SERVICE);
 		initView();
+		receiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if (intent.getStringExtra("type").equals(
+						OtherData.RESTAURANTDEVICETYPE)) {
+					RestaurantData.local().name = intent.getStringExtra("name");
+					RestaurantData.local().localUrl = intent
+							.getStringExtra("address");
+					currentRes.setText(RestaurantData.local().name);
+				}
+			}
+		};
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -91,8 +97,8 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		edit.addTextChangedListener(this);
 		nearbyLayout = (LinearLayout) getView().findViewById(
 				R.id.current_layout);
-		nearbyList = (ListView) getView().findViewById(R.id.nearbylist);
-		nearbyList.setOnItemClickListener(this);
+		currentRes = (TextView) getView().findViewById(R.id.current_res);
+		currentRes.setOnClickListener(this);
 		resultList = (ListView) getView().findViewById(R.id.resultlist);
 		resultList.setOnItemClickListener(this);
 	}
@@ -112,9 +118,18 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		case R.id.search_clean:
 			edit.setText("");
 			break;
+		case R.id.current_res:
+			getLocalResDetail();
+			break;
 		default:
 			break;
 		}
+	}
+
+	/** 获取局域网内餐厅信息 */
+	private void getLocalResDetail() {
+		getLocalResInfoTask = new GetLocalResInfoTask();
+		getLocalResInfoTask.execute(RestaurantData.local().localUrl);
 	}
 
 	private void search() {
@@ -177,31 +192,8 @@ public class SearchFragment extends Fragment implements OnClickListener,
 
 	@Override
 	public void onResume() {
-		receiver = new BroadcastReceiver() {
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				if (intent.getStringExtra("type").equals(
-						OtherData.RESTAURANTDEVICETYPE)) {
-					String address = intent.getStringExtra("address");
-					getLocalResInfoTask = new GetLocalResInfoTask();
-					getLocalResInfoTask.execute(address);
-				}
-			}
-		};
 		getActivity().registerReceiver(receiver,
 				new IntentFilter(DlnaService.NEW_DEVICES_FOUND));
-		switch (netType) {
-		case ConnectivityManager.TYPE_MOBILE:
-			// if (wifiManager.isWifiEnabled()) {
-			// nearbyList.setAdapter(new WifiScanAdapter(getActivity(),
-			// wifiManager.getScanResults()));
-			// nearbyLayout.setVisibility(View.VISIBLE);
-			// }
-			break;
-		default:
-			break;
-		}
 		super.onResume();
 	}
 
@@ -237,48 +229,9 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	}
 
 	@Override
-	public void onDismiss(DialogInterface dialog) {
-		switch (netType) {
-		case ConnectivityManager.TYPE_MOBILE:
-			if (wifiManager.isWifiEnabled()) {
-				nearbyList.setAdapter(new WifiScanAdapter(getActivity(),
-						wifiManager.getScanResults()));
-				nearbyLayout.setVisibility(View.VISIBLE);
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		switch (parent.getId()) {
-		case R.id.nearbylist:
-			ScanResult result = (ScanResult) nearbyList.getAdapter().getItem(
-					position);
-			WifiConfiguration wifiConfig = new WifiConfiguration();
-			wifiConfig.SSID = result.SSID;
-			try {
-				Method connect = WifiManager.class.getMethod("connect",
-						WifiConfiguration.class);
-				connect.invoke(wifiManager, wifiConfig, null);
-			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			break;
 		case R.id.resultlist:
 
 			break;
