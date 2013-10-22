@@ -82,6 +82,6 @@ public class OtherData {
 	public static final String DESCRIPTIONURL = Environment
 			.getExternalStorageDirectory()
 			+ File.separator
-			+ "FCR"
+			+ "FCC"
 			+ File.separator + "description.xml";
 }

@@ -14,7 +14,6 @@ import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.upnp.ControlPoint;
-import lms.foodchainC.util.DialogUtil;
 import lms.foodchainC.util.FileInfoUtils;
 
 import org.cybergarage.upnp.Device;
@@ -46,6 +45,7 @@ import android.util.Log;
 public class DlnaService extends Service implements DeviceChangeListener {
 
 	public static final String NEW_DEVICES_FOUND = "newDeviceFound";
+	public static final String NEW_RESTAURANT_FOUND = "newRestaurantFound";
 	public static final String SEARCH_DEVICE = "search_FC_device";
 
 	private final IBinder binder = new DlnaServiceBinder();
@@ -120,7 +120,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		d.setDeviceType(OtherData.CUSTOMERDEVICETYPE);
 		d.setDescriptionURI(OtherData.DESCRIPTIONURL);
 		if (FileInfoUtils.writeFile(d.getRootNode().toString().getBytes(),
-				"FCR", "description.xml"))
+				"FCC", "description.xml"))
 			d.start();
 	}
 
@@ -181,7 +181,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 				lc.add(c);
 				RestaurantData.current().setCustomer(lc);
 			}
-			sendBroadcast(new Intent(NEW_DEVICES_FOUND));
+			// sendBroadcast(new Intent(NEW_DEVICES_FOUND));
 		} else if (OtherData.WAITERDEVICETYPE.equals(dev.getDeviceType())) {
 			// TODO 发现服务生
 			EmployeeData c = new EmployeeData(dev, EmployeeData.WAITER);
@@ -195,30 +195,14 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			EmployeeData c = new EmployeeData(dev, EmployeeData.COOKER);
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
-			Intent intent = new Intent(NEW_DEVICES_FOUND);
+			String l = dev.getLocation();
+			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
 			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
 			intent.putExtra("name", dev.getFriendlyName());
-			intent.putExtra("address", "http://" + dev.getInterfaceAddress()
+			intent.putExtra("address", l.substring(0, l.lastIndexOf(":"))
 					+ ":4004");
 			sendBroadcast(intent);
-			// RestaurantData.current().device = dev;
-			// getResDetail(dev);
 		}
-	}
-
-	private void getResDetail(Device dev) {
-		RestaurantData.current().localUrl = "http://"
-				+ dev.getInterfaceAddress() + ":4004";
-		String result = NetUtil.executeGet(getApplicationContext(),
-				JSONRequest.restaurantInfoRequest(),
-				RestaurantData.current().localUrl);
-		String msg = JSONParser.restaurantInfoParse(result,
-				RestaurantData.current());
-		if (msg.equals(""))
-			sendBroadcast(new Intent(NEW_DEVICES_FOUND).putExtra("type",
-					OtherData.RESTAURANTDEVICETYPE));
-		else
-			DialogUtil.alertToast(getApplicationContext(), msg);
 	}
 
 	public String getHallInfo(ArrayList<TableStyleData> tableStyleList) {

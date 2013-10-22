@@ -16,10 +16,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -49,8 +49,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 
 	private BroadcastReceiver receiver;
 	private ConnectivityManager connectivityManager;
-	private WifiManager wifiManager;
-	private LinearLayout nearbyLayout;
+	private LinearLayout currentLayout;
 	private ListView resultList;
 	private TextView currentRes;
 	private EditText edit;
@@ -69,8 +68,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 		connectivityManager = (ConnectivityManager) getActivity()
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		wifiManager = (WifiManager) getActivity().getSystemService(
-				Context.WIFI_SERVICE);
 		initView();
 		receiver = new BroadcastReceiver() {
 			@Override
@@ -81,6 +78,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 					RestaurantData.local().localUrl = intent
 							.getStringExtra("address");
 					currentRes.setText(RestaurantData.local().name);
+					currentLayout.setVisibility(View.VISIBLE);
 				}
 			}
 		};
@@ -91,11 +89,13 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		getView().findViewById(R.id.search_restaurant).setOnClickListener(this);
 		getView().findViewById(R.id.search_case).setOnClickListener(this);
 		getView().findViewById(R.id.search_btn).setOnClickListener(this);
+		getView().findViewById(R.id.search_hall).setOnClickListener(this);
+		getView().findViewById(R.id.search_menu).setOnClickListener(this);
 		clean = (ImageButton) getView().findViewById(R.id.search_clean);
 		clean.setOnClickListener(this);
 		edit = (EditText) getView().findViewById(R.id.search_edit);
 		edit.addTextChangedListener(this);
-		nearbyLayout = (LinearLayout) getView().findViewById(
+		currentLayout = (LinearLayout) getView().findViewById(
 				R.id.current_layout);
 		currentRes = (TextView) getView().findViewById(R.id.current_res);
 		currentRes.setOnClickListener(this);
@@ -120,6 +120,16 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.current_res:
 			getLocalResDetail();
+			break;
+		case R.id.search_hall:
+			// TODO 跳转到大厅
+
+			break;
+		case R.id.search_menu:
+			// TODO 跳转到菜单
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			ft.replace(R.id.frame, new MenuFragment());
+			ft.commit();
 			break;
 		default:
 			break;
@@ -193,7 +203,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onResume() {
 		getActivity().registerReceiver(receiver,
-				new IntentFilter(DlnaService.NEW_DEVICES_FOUND));
+				new IntentFilter(DlnaService.NEW_RESTAURANT_FOUND));
 		super.onResume();
 	}
 
@@ -201,7 +211,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 
 		@Override
 		protected String doInBackground(Object... params) {
-			String result = NetUtil.executeGet(getActivity()
+			String result = NetUtil.executePost(getActivity()
 					.getApplicationContext(), JSONRequest
 					.restaurantInfoRequest(), RestaurantData.local().localUrl);
 			String msg = JSONParser.restaurantInfoParse(result,
@@ -213,10 +223,12 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		protected void onPostExecute(String result) {
 			if (result.equals("")) {
 				// TODO
-				// FragmentTransaction ft = getFragmentManager()
-				// .beginTransaction();
-				// ft.replace(R.id.frame, new HallFragment());
-				// ft.commit();
+				FragmentTransaction ft = getFragmentManager()
+						.beginTransaction();
+				ft.replace(R.id.frame, new HallFragment());
+				ft.commit();
+			} else {
+
 			}
 			super.onPostExecute(result);
 		}
