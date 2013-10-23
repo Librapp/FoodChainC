@@ -30,7 +30,6 @@ public class BillFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.hall, container);
-		list = (ListView) v.findViewById(R.id.hall_tablelist);
 		return v;
 	}
 

@@ -196,6 +196,8 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
 			String l = dev.getLocation();
+			dev.getHTTPBindAddress();
+			dev.getURLBase();
 			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
 			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
 			intent.putExtra("name", dev.getFriendlyName());

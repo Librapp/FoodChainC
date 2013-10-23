@@ -1,59 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
-    <RelativeLayout
-        android:id="@+id/hall_title"
-        android:layout_width="fill_parent"
-        android:layout_height="54dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/all_title" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="@string/hall" />
-        <Button
-            android:id="@+id/hall_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="5dp"
-            android:text="@string/refresh" />
-    </RelativeLayout>
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/hall_title" >
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-            <ListView
-                android:id="@+id/hall_tablelist"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/hall_waiter"
-                android:layout_alignParentTop="true"
-                android:background="@android:color/darker_gray"
-                android:scrollingCache="false" />
-            <lms.foodchainR.widget.StepGallery
-                android:id="@+id/hall_waiter"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@android:color/darker_gray"
-                android:gravity="left|center_vertical" />
-        </RelativeLayout>
-        <TextView
-            android:id="@+id/close"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="22sp"
-            android:visibility="gone" />
-    </FrameLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 </RelativeLayout>

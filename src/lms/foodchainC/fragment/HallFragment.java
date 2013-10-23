@@ -8,7 +8,6 @@ import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.net.NetUtil;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -110,9 +109,9 @@ public class HallFragment extends Fragment implements OnPageChangeListener {
 		@Override
 		protected ArrayList<TableStyleData> doInBackground(Object... params) {
 
-			String result = NetUtil.executePost((Context) params[0],
-					(String) params[1],
-					RestaurantData.current().device.getLocation());
+			String result = NetUtil.executePost(getActivity()
+					.getApplicationContext(), JSONRequest
+					.restaurantInfoRequest(), RestaurantData.local().localUrl);
 			styleList = new ArrayList<TableStyleData>();
 			JSONParser.hallInfoParse(result, styleList);
 			return styleList;

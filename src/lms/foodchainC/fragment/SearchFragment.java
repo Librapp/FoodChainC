@@ -57,6 +57,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	private ArrayList<CaseData> caseResult;
 	private ArrayList<RestaurantData> resResult;
 	private GetLocalResInfoTask getLocalResInfoTask;
+	private FragmentTransaction ft;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +69,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 		connectivityManager = (ConnectivityManager) getActivity()
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ft = getFragmentManager().beginTransaction();
 		initView();
 		receiver = new BroadcastReceiver() {
 			@Override
@@ -123,11 +125,11 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.search_hall:
 			// TODO 跳转到大厅
-
+			ft.replace(R.id.frame, new HallFragment());
+			ft.commit();
 			break;
 		case R.id.search_menu:
 			// TODO 跳转到菜单
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			ft.replace(R.id.frame, new MenuFragment());
 			ft.commit();
 			break;
