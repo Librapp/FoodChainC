@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import lms.foodchainC.R;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseStyleData;
+import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.net.JSONParser;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,13 +24,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MenuFragment extends Fragment implements OnPageChangeListener,
-		OnClickListener, OnLongClickListener {
+		OnClickListener {
 	private Case_DBHelper cdb;
 	private LinearLayout title;
 	private ViewPager pager;
@@ -34,6 +38,7 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	private final int DELETE = 1;
 	private final int EDIT = 2;
 	private int currentItem = 0;
+	private GetMenuTask getMenuTask;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,13 +59,11 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 		for (CaseStyleData csd : styleList) {
 			TextView name = new TextView(getActivity());
 			name.setText(csd.name);
-			name.setOnLongClickListener(this);
 			title.addView(name);
 		}
 		mfa = new MenuFragAdapter(getChildFragmentManager());
 		pager.setAdapter(mfa);
 		pager.setCurrentItem(0);
-		title.setOnLongClickListener(this);
 		title.setOnCreateContextMenuListener(this);
 	}
 
@@ -124,9 +127,13 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 		}
 	}
 
-	@Override
-	public boolean onLongClick(View v) {
-		return false;
+	private void getMenu() {
+		if (getMenuTask != null) {
+			getMenuTask.cancel(true);
+			getMenuTask = null;
+		}
+		getMenuTask = new GetMenuTask();
+		getMenuTask.execute();
 	}
 
 	@Override
@@ -146,6 +153,34 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 			break;
 		}
 		return true;
+	}
+
+	private class GetMenuTask extends
+			AsyncTask<Object, JSONRequest, ArrayList<CaseStyleData>> {
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+
+		@Override
+		protected ArrayList<CaseStyleData> doInBackground(Object... params) {
+
+			String result = NetUtil.executePost(getActivity()
+					.getApplicationContext(), JSONRequest
+					.restaurantInfoRequest(), RestaurantData.local().localUrl);
+			styleList = new ArrayList<CaseStyleData>();
+			JSONParser.menuDataParse(result, cdb);
+			return styleList;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<CaseStyleData> styleList) {
+			mfa = new MenuFragAdapter(getChildFragmentManager());
+			pager.setAdapter(mfa);
+			super.onPreExecute();
+		};
+
 	}
 
 }
