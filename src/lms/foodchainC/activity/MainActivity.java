@@ -1,8 +1,6 @@
 package lms.foodchainC.activity;
 
 import lms.foodchainC.R;
-import lms.foodchainC.fragment.BillFragment;
-import lms.foodchainC.fragment.MessageFragment;
 import lms.foodchainC.fragment.SearchFragment;
 import lms.foodchainC.service.DlnaService;
 import android.content.Intent;
@@ -55,24 +53,26 @@ public class MainActivity extends SherlockFragmentActivity implements
 				ft.attach(frag);
 		} else if (tab.getText()
 				.equals(getResources().getString(R.string.bill))) {
-			Fragment frag = getSupportFragmentManager().findFragmentByTag(
-					getResources().getString(R.string.bill));
-			if (frag == null) {
-				frag = new BillFragment();
-				ft.replace(R.id.frame, frag,
-						getResources().getString(R.string.bill));
-			} else
-				ft.attach(frag);
+			Toast.makeText(this, "正在开发……", Toast.LENGTH_SHORT).show();
+			// Fragment frag = getSupportFragmentManager().findFragmentByTag(
+			// getResources().getString(R.string.bill));
+			// if (frag == null) {
+			// frag = new BillFragment();
+			// ft.replace(R.id.frame, frag,
+			// getResources().getString(R.string.bill));
+			// } else
+			// ft.attach(frag);
 		} else if (tab.getText().equals(
 				getResources().getString(R.string.message))) {
-			Fragment frag = getSupportFragmentManager().findFragmentByTag(
-					getResources().getString(R.string.message));
-			if (frag == null) {
-				frag = new MessageFragment();
-				ft.replace(R.id.frame, frag,
-						getResources().getString(R.string.message));
-			} else
-				ft.attach(frag);
+			Toast.makeText(this, "正在开发……", Toast.LENGTH_SHORT).show();
+			// Fragment frag = getSupportFragmentManager().findFragmentByTag(
+			// getResources().getString(R.string.message));
+			// if (frag == null) {
+			// frag = new MessageFragment();
+			// ft.replace(R.id.frame, frag,
+			// getResources().getString(R.string.message));
+			// } else
+			// ft.attach(frag);
 		}
 	}
 

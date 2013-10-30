@@ -3,6 +3,7 @@ package lms.foodchainC.fragment;
 import java.util.ArrayList;
 
 import lms.foodchainC.R;
+import lms.foodchainC.activity.RestaurantDetailActivtiy;
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
@@ -79,6 +80,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 					RestaurantData.local().name = intent.getStringExtra("name");
 					RestaurantData.local().localUrl = intent
 							.getStringExtra("address");
+					getLocalResDetail();
 					currentRes.setText(RestaurantData.local().name);
 					currentLayout.setVisibility(View.VISIBLE);
 				}
@@ -140,6 +142,10 @@ public class SearchFragment extends Fragment implements OnClickListener,
 
 	/** 获取局域网内餐厅信息 */
 	private void getLocalResDetail() {
+		if (getLocalResInfoTask != null) {
+			getLocalResInfoTask.cancel(true);
+			getLocalResInfoTask = null;
+		}
 		getLocalResInfoTask = new GetLocalResInfoTask();
 		getLocalResInfoTask.execute(RestaurantData.local().localUrl);
 	}
@@ -224,11 +230,8 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		@Override
 		protected void onPostExecute(String result) {
 			if (result.equals("")) {
-				// TODO
-				FragmentTransaction ft = getFragmentManager()
-						.beginTransaction();
-				ft.replace(R.id.frame, new HallFragment());
-				ft.commit();
+				startActivity(new Intent(getActivity().getApplicationContext(),
+						RestaurantDetailActivtiy.class));
 			} else {
 
 			}

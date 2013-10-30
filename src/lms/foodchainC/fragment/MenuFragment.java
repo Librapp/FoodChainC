@@ -18,10 +18,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -35,10 +32,9 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	private ViewPager pager;
 	private ArrayList<CaseStyleData> styleList;
 	private MenuFragAdapter mfa;
-	private final int DELETE = 1;
-	private final int EDIT = 2;
 	private int currentItem = 0;
 	private GetMenuTask getMenuTask;
+	public static final String RESTAURANTINFO = "restaurantInfo";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,17 +50,22 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private void getData(Context context) {
-		cdb = new Case_DBHelper(context);
-		styleList = cdb.getStyle();
-		for (CaseStyleData csd : styleList) {
-			TextView name = new TextView(getActivity());
-			name.setText(csd.name);
-			title.addView(name);
+		if (getActivity().getSharedPreferences(RESTAURANTINFO,
+				Context.MODE_PRIVATE).getInt("id", 0) != RestaurantData.local().id) {
+			getMenu();
+		} else {
+			cdb = new Case_DBHelper(context);
+			styleList = cdb.getStyle();
+			for (CaseStyleData csd : styleList) {
+				TextView name = new TextView(getActivity());
+				name.setText(csd.name);
+				title.addView(name);
+			}
+			mfa = new MenuFragAdapter(getChildFragmentManager());
+			pager.setAdapter(mfa);
+			pager.setCurrentItem(0);
+			title.setOnCreateContextMenuListener(this);
 		}
-		mfa = new MenuFragAdapter(getChildFragmentManager());
-		pager.setAdapter(mfa);
-		pager.setCurrentItem(0);
-		title.setOnCreateContextMenuListener(this);
 	}
 
 	private void initView() {
@@ -134,25 +135,6 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 		}
 		getMenuTask = new GetMenuTask();
 		getMenuTask.execute();
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		menu.add(0, DELETE, 1, "删除");
-		menu.add(0, EDIT, 2, "编辑");
-		super.onCreateContextMenu(menu, v, menuInfo);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		CaseStyleData c = styleList.get(currentItem);
-		switch (item.getItemId()) {
-
-		default:
-			break;
-		}
-		return true;
 	}
 
 	private class GetMenuTask extends

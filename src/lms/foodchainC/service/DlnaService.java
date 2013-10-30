@@ -25,11 +25,7 @@ import org.cybergarage.util.Debug;
 import org.cybergarage.xml.Node;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
@@ -53,6 +49,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	// CP有没有启动
 	private static boolean started = false;
 	private lms.foodchainC.upnp.Device d;
+	private Thread thread;
 
 	public class DlnaServiceBinder extends Binder {
 		public DlnaService getService() {
@@ -76,16 +73,17 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		});
 		thread.start();
 		initControlPoint();
-		final WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-		registerReceiver(new BroadcastReceiver() {
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED) {
-					// multicastSearch();
-				}
-			}
-		}, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
+		// final WifiManager wifiManager = (WifiManager)
+		// getSystemService(WIFI_SERVICE);
+		// registerReceiver(new BroadcastReceiver() {
+		//
+		// @Override
+		// public void onReceive(Context context, Intent intent) {
+		// if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED) {
+		// // multicastSearch();
+		// }
+		// }
+		// }, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
 	}
 
 	@Override
@@ -114,8 +112,8 @@ public class DlnaService extends Service implements DeviceChangeListener {
 
 		d = new lms.foodchainC.upnp.Device(root, device);
 		d.setFriendlyName(Self.current().name);
-		String uuid = "uuid:" + getMyUUID();
-		d.setUDN(uuid);
+		// String uuid = "uuid:" + getMyUUID();
+		// d.setUDN(uuid);
 		// TODO
 		d.setDeviceType(OtherData.CUSTOMERDEVICETYPE);
 		d.setDescriptionURI(OtherData.DESCRIPTIONURL);
@@ -155,18 +153,23 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	}
 
 	public void multicastSearch() {
-		new Thread(new Runnable() {
+		if (thread == null) {
+			thread = new Thread(new Runnable() {
 
-			@Override
-			public void run() {
-				if (!started) {
-					c.start();
-					started = true;
-				} else {
-					c.search();
+				@Override
+				public void run() {
+					if (!started) {
+						c.start();
+						started = true;
+					} else {
+						c.search();
+					}
 				}
-			}
-		}).start();
+			});
+			thread.start();
+		} else {
+
+		}
 	}
 
 	@Override

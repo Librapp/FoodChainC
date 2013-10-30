@@ -29,7 +29,7 @@ public class BillFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.hall, container);
+		View v = inflater.inflate(R.layout.bill, container);
 		return v;
 	}
 

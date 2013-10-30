@@ -110,8 +110,8 @@ public class HallFragment extends Fragment implements OnPageChangeListener {
 		protected ArrayList<TableStyleData> doInBackground(Object... params) {
 
 			String result = NetUtil.executePost(getActivity()
-					.getApplicationContext(), JSONRequest
-					.restaurantInfoRequest(), RestaurantData.local().localUrl);
+					.getApplicationContext(), JSONRequest.hallInfoRequest(),
+					RestaurantData.local().localUrl);
 			styleList = new ArrayList<TableStyleData>();
 			JSONParser.hallInfoParse(result, styleList);
 			return styleList;

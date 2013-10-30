@@ -20,6 +20,7 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 	private ImageView logo;
 	private boolean isLocal;
 	private RestaurantData resData;
+	private OnClickListener mListener;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,14 +30,15 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		mListener = (OnClickListener) getActivity();
 		name = (TextView) getView().findViewById(R.id.name);
 		address = (TextView) getView().findViewById(R.id.address);
 		tel = (TextView) getView().findViewById(R.id.tel);
 		sms = (TextView) getView().findViewById(R.id.sms);
 		intro = (TextView) getView().findViewById(R.id.intro_txt);
 		logo = (ImageView) getView().findViewById(R.id.logo);
-		getView().findViewById(R.id.menu).setOnClickListener(this);
-		getView().findViewById(R.id.hall).setOnClickListener(this);
+		getView().findViewById(R.id.menu).setOnClickListener(mListener);
+		getView().findViewById(R.id.hall).setOnClickListener(mListener);
 		isLocal = getArguments().getBoolean("isLocal");
 		if (isLocal)
 			resData = RestaurantData.local();
@@ -51,7 +53,7 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	public ResDetailFragment instance(RestaurantData res) {
+	public static ResDetailFragment instance(RestaurantData res) {
 		ResDetailFragment frag = new ResDetailFragment();
 		Bundle b = new Bundle();
 		b.putBoolean("isLocal", res.isLocal);
@@ -63,12 +65,7 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.menu:
 
-			break;
-		case R.id.hall:
-
-			break;
 		default:
 			break;
 		}

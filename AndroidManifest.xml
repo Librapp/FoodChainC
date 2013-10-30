@@ -60,7 +60,7 @@
         </activity>
         <!-- 餐厅详情页 -->
         <activity
-            android:name=".activity.RestaurantActivity"
+            android:name=".activity.RestaurantDetailActivtiy"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
@@ -105,25 +105,9 @@
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="adjustPan|stateUnspecified" >
         </activity>
-        <!-- 大厅页 -->
-        <activity
-            android:name=".activity.HallActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="adjustPan|stateUnspecified" >
-        </activity>
         <!-- 帐单页 -->
         <activity
             android:name=".activity.BillActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="adjustPan|stateUnspecified" >
-        </activity>
-        <!-- 厨房页 -->
-        <activity
-            android:name=".activity.KitchenActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
