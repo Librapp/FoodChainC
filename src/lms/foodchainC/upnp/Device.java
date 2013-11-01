@@ -1310,19 +1310,7 @@ public class Device extends org.cybergarage.upnp.Device implements
 		if (isRootDevice == true)
 			devUSN += "::" + USN.ROOTDEVICE;
 
-		if (ST.isAllDevice(ssdpST) == true) {
-			String devNT = getNotifyDeviceNT();
-			int repeatCnt = (isRootDevice == true) ? 3 : 2;
-			for (int n = 0; n < repeatCnt; n++)
-				postSearchResponse(ssdpPacket, devNT, devUSN);
-		} else if (ST.isRootDevice(ssdpST) == true) {
-			if (isRootDevice == true)
-				postSearchResponse(ssdpPacket, ST.ROOT_DEVICE, devUSN);
-		} else if (ST.isUUIDDevice(ssdpST) == true) {
-			String devUDN = getUDN();
-			if (ssdpST.equals(devUDN) == true)
-				postSearchResponse(ssdpPacket, devUDN, devUSN);
-		} else if (ST.isURNDevice(ssdpST) == true) {
+		if (ST.isURNDevice(ssdpST) == true) {
 			String devType = getDeviceType();
 			if (ssdpST.equals(devType) == true) {
 				// Thanks for Mikael Hakman (04/25/05)

@@ -49,7 +49,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	// CP有没有启动
 	private static boolean started = false;
 	private lms.foodchainC.upnp.Device d;
-	private Thread thread;
 
 	public class DlnaServiceBinder extends Binder {
 		public DlnaService getService() {
@@ -153,23 +152,19 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	}
 
 	public void multicastSearch() {
-		if (thread == null) {
-			thread = new Thread(new Runnable() {
+		Thread thread = new Thread(new Runnable() {
 
-				@Override
-				public void run() {
-					if (!started) {
-						c.start();
-						started = true;
-					} else {
-						c.search();
-					}
+			@Override
+			public void run() {
+				if (!started) {
+					c.start("FC");
+					started = true;
+				} else {
+					c.search("FC");
 				}
-			});
-			thread.start();
-		} else {
-
-		}
+			}
+		});
+		thread.start();
 	}
 
 	@Override
@@ -199,8 +194,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
 			String l = dev.getLocation();
-			dev.getHTTPBindAddress();
-			dev.getURLBase();
 			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
 			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
 			intent.putExtra("name", dev.getFriendlyName());

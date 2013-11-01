@@ -170,15 +170,13 @@ public class ControlPoint extends org.cybergarage.upnp.ControlPoint implements
 	}
 
 	private synchronized void addDevice(SSDPPacket ssdpPacket) {
-		if (ssdpPacket.isRootDevice() == false)
-			return;
 
 		String usn = ssdpPacket.getUSN();
 		String udn = USN.getUDN(usn);
 		Device dev = getDevice(udn);
 		if (dev != null) {
 			dev.setSSDPPacket(ssdpPacket);
-			return;
+			performAddDeviceListener(dev);
 		}
 
 		String location = ssdpPacket.getLocation();
@@ -425,7 +423,7 @@ public class ControlPoint extends org.cybergarage.upnp.ControlPoint implements
 	}
 
 	public void searchResponseReceived(SSDPPacket packet) {
-		if (packet.isRootDevice() == true)
+		if (packet.getST().equals("FC"))
 			addDevice(packet);
 		performSearchResponseListener(packet);
 	}
