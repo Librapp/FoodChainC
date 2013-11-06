@@ -170,13 +170,11 @@ public class ControlPoint extends org.cybergarage.upnp.ControlPoint implements
 	}
 
 	private synchronized void addDevice(SSDPPacket ssdpPacket) {
-
 		String usn = ssdpPacket.getUSN();
 		String udn = USN.getUDN(usn);
 		Device dev = getDevice(udn);
 		if (dev != null) {
 			dev.setSSDPPacket(ssdpPacket);
-			performAddDeviceListener(dev);
 		}
 
 		String location = ssdpPacket.getLocation();
@@ -193,8 +191,10 @@ public class ControlPoint extends org.cybergarage.upnp.ControlPoint implements
 			// Thanks for Oliver Newell (2004/10/16)
 			// After node is added, invoke the AddDeviceListener to notify
 			// high-level
-			// control point application that a new device has been added. (The
-			// control point application must implement the DeviceChangeListener
+			// control point application that a new device has been added.
+			// (The
+			// control point application must implement the
+			// DeviceChangeListener
 			// interface
 			// to receive the notifications)
 			performAddDeviceListener(rootDev);
@@ -412,7 +412,7 @@ public class ControlPoint extends org.cybergarage.upnp.ControlPoint implements
 	// //////////////////////////////////////////////
 
 	public void notifyReceived(SSDPPacket packet) {
-		if (packet.isRootDevice() == true) {
+		if (packet.getST().equals("FC")) {
 			if (packet.isAlive() == true) {
 				addDevice(packet);
 			} else if (packet.isByeBye() == true) {

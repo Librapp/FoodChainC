@@ -19,8 +19,11 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class HallFragment extends Fragment implements OnPageChangeListener {
+public class HallFragment extends Fragment implements OnPageChangeListener,
+		OnItemClickListener {
 	private ViewPager pager;
 	private ArrayList<TableStyleData> styleList;
 	private HallFragAdapter mfa;
@@ -123,6 +126,13 @@ public class HallFragment extends Fragment implements OnPageChangeListener {
 			pager.setAdapter(mfa);
 			super.onPreExecute();
 		};
+
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
 
 	}
 }

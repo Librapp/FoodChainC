@@ -10,11 +10,11 @@ import org.json.JSONObject;
  * @description JSON请求工具类
  */
 public class JSONRequest {
-	private static final String METHOD = "method";
-	private static final String RESTAURANTINFO = "restaurantInfo";
-	private static final String MENU = "menu";
+	public static final String METHOD = "method";
+	public static final String RESTAURANTINFO = "restaurantInfo";
+	public static final String MENU = "menu";
 	public static final String MESSAGE = "message";
-	private static final String CASEDETAIL = "caseDetail";
+	public static final String CASEDETAIL = "caseDetail";
 	public static final String HALLINFO = "hallInfo";
 
 	public static String restaurantInfoRequest() {

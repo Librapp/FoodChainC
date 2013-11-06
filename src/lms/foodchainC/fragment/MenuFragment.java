@@ -34,7 +34,6 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	private MenuFragAdapter mfa;
 	private int currentItem = 0;
 	private GetMenuTask getMenuTask;
-	public static final String RESTAURANTINFO = "restaurantInfo";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +49,7 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private void getData(Context context) {
-		if (getActivity().getSharedPreferences(RESTAURANTINFO,
+		if (getActivity().getSharedPreferences(JSONRequest.RESTAURANTINFO,
 				Context.MODE_PRIVATE).getInt("id", 0) != RestaurantData.local().id) {
 			getMenu();
 		} else {
