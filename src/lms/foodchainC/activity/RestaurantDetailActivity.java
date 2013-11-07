@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class RestaurantDetailActivtiy extends SherlockFragmentActivity
+public class RestaurantDetailActivity extends SherlockFragmentActivity
 		implements OnClickListener {
 	private boolean isLocal;
 	private FragmentTransaction ft;

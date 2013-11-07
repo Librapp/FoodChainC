@@ -3,7 +3,7 @@ package lms.foodchainC.fragment;
 import java.util.ArrayList;
 
 import lms.foodchainC.R;
-import lms.foodchainC.activity.RestaurantDetailActivtiy;
+import lms.foodchainC.activity.RestaurantDetailActivity;
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
@@ -126,9 +126,11 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			getLocalResDetail();
 			break;
 		case R.id.search_hall:
+			getActivity().startActivity(
+					new Intent(getActivity(), RestaurantDetailActivity.class));
 			// TODO 跳转到大厅
-			ft.replace(R.id.frame, new HallFragment());
-			ft.commit();
+			// ft.replace(R.id.frame, new HallFragment());
+			// ft.commit();
 			break;
 		case R.id.search_menu:
 			// TODO 跳转到菜单
@@ -230,8 +232,9 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		@Override
 		protected void onPostExecute(String result) {
 			if (result.equals("")) {
-				startActivity(new Intent(getActivity().getApplicationContext(),
-						RestaurantDetailActivtiy.class));
+				// getActivity().startActivity(
+				// new Intent(getActivity(),
+				// RestaurantDetailActivity.class));
 			} else {
 
 			}

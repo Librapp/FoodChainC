@@ -24,7 +24,8 @@ import org.json.JSONObject;
  * 
  */
 public class JSONParser {
-	public static String msg = "";
+	private static String msg = "";
+	public static final String NODATARETURN = "获取数据失败";
 
 	/**
 	 * 解析MenuData
@@ -106,22 +107,25 @@ public class JSONParser {
 	public static String restaurantInfoParse(String result,
 			RestaurantData current) {
 		msg = "";
-		try {
-			JSONObject data = new JSONObject(result);
-			current.name = data.optString("name");
-			current.headPic = data.optString("headPic");
-			current.address = data.optString("address");
-			current.tel = data.optString("tel");
-			current.sms = data.optString("sms");
-			current.opentime = data.optString("opentime");
-			current.email = data.optString("email");
-			current.id = data.optInt("id");
-			current.credit = data.optInt("credit");
-			current.state = data.optInt("state");
-		} catch (JSONException e) {
-			e.printStackTrace();
-			msg = e.getMessage();
-		}
+		if (result != null)
+			try {
+				JSONObject data = new JSONObject(result);
+				current.name = data.optString("name");
+				current.headPic = data.optString("headPic");
+				current.address = data.optString("address");
+				current.tel = data.optString("tel");
+				current.sms = data.optString("sms");
+				current.opentime = data.optString("opentime");
+				current.email = data.optString("email");
+				current.id = data.optInt("id");
+				current.credit = data.optInt("credit");
+				current.state = data.optInt("state");
+			} catch (JSONException e) {
+				e.printStackTrace();
+				msg = e.getMessage();
+			}
+		else
+			msg = NODATARETURN;
 		return msg;
 	}
 

@@ -111,9 +111,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 
 		d = new lms.foodchainC.upnp.Device(root, device);
 		d.setFriendlyName(Self.current().name);
-		// String uuid = "uuid:" + getMyUUID();
-		// d.setUDN(uuid);
-		// TODO
+		d.setUDN("uuid:" + getMyUUID());
 		d.setDeviceType(OtherData.CUSTOMERDEVICETYPE);
 		d.setDescriptionURI(OtherData.DESCRIPTIONURL);
 		if (FileInfoUtils.writeFile(d.getRootNode().toString().getBytes(),
