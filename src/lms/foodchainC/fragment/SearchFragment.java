@@ -20,7 +20,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -58,7 +57,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	private ArrayList<CaseData> caseResult;
 	private ArrayList<RestaurantData> resResult;
 	private GetLocalResInfoTask getLocalResInfoTask;
-	private FragmentTransaction ft;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +68,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 		connectivityManager = (ConnectivityManager) getActivity()
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		ft = getFragmentManager().beginTransaction();
 		initView();
 		receiver = new BroadcastReceiver() {
 			@Override
@@ -93,8 +90,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		getView().findViewById(R.id.search_restaurant).setOnClickListener(this);
 		getView().findViewById(R.id.search_case).setOnClickListener(this);
 		getView().findViewById(R.id.search_btn).setOnClickListener(this);
-		getView().findViewById(R.id.search_hall).setOnClickListener(this);
-		getView().findViewById(R.id.search_menu).setOnClickListener(this);
 		clean = (ImageButton) getView().findViewById(R.id.search_clean);
 		clean.setOnClickListener(this);
 		edit = (EditText) getView().findViewById(R.id.search_edit);
@@ -124,18 +119,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.current_res:
 			getLocalResDetail();
-			break;
-		case R.id.search_hall:
-			getActivity().startActivity(
-					new Intent(getActivity(), RestaurantDetailActivity.class));
-			// TODO 跳转到大厅
-			// ft.replace(R.id.frame, new HallFragment());
-			// ft.commit();
-			break;
-		case R.id.search_menu:
-			// TODO 跳转到菜单
-			ft.replace(R.id.frame, new MenuFragment());
-			ft.commit();
 			break;
 		default:
 			break;
@@ -232,9 +215,10 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		@Override
 		protected void onPostExecute(String result) {
 			if (result.equals("")) {
-				// getActivity().startActivity(
-				// new Intent(getActivity(),
-				// RestaurantDetailActivity.class));
+				Intent i = new Intent(getActivity(),
+						RestaurantDetailActivity.class);
+				i.putExtra("isLocal", true);
+				getActivity().startActivity(i);
 			} else {
 
 			}

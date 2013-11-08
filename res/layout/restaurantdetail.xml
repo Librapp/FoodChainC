@@ -13,7 +13,7 @@
         android:text="@string/name" />
     <RelativeLayout
         android:id="@+id/rd_up"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
         android:paddingTop="5dp" >
@@ -66,33 +66,11 @@
             </TableRow>
         </TableLayout>
     </RelativeLayout>
-    <LinearLayout
-        android:id="@+id/rd_mid"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rd_up"
-        android:orientation="horizontal"
-        android:paddingTop="5dp" >
-        <Button
-            android:id="@+id/menu"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/menu" />
-        <Button
-            android:id="@+id/hall"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/hall" />
-    </LinearLayout>
     <RelativeLayout
         android:id="@+id/rd_down"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rd_mid"
+        android:layout_below="@+id/rd_up"
         android:layout_margin="5dp" >
         <TextView
             android:id="@+id/intro"

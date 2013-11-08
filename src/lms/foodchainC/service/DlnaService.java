@@ -195,8 +195,12 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
 			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
 			intent.putExtra("name", dev.getFriendlyName());
-			intent.putExtra("address", l.substring(0, l.lastIndexOf(":"))
-					+ ":4004");
+			if (l.contains("%"))
+				intent.putExtra("address", l.substring(0, l.lastIndexOf("%"))
+						+ ":4004");
+			else
+				intent.putExtra("address", l.substring(0, l.lastIndexOf(":"))
+						+ ":4004");
 			sendBroadcast(intent);
 		}
 	}
