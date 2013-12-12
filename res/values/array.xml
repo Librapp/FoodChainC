@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="slidingmenu">
+        <item>管理</item>
+        <item>菜单</item>
+        <item>大厅</item>
+        <item>厨房</item>
+    </string-array>
+    <string-array name="genders">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="grades">
+        <item>小班</item>
+        <item>中班</item>
+        <item>大班</item>
+    </string-array>
+    <string-array name="ages">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+</resources>
