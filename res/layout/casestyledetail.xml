@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     <RelativeLayout
-        android:id="@+id/case_title"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:background="@drawable/all_title" >
         <Button
             android:id="@+id/back"
@@ -25,68 +23,21 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/name" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/currentstyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/case_title"
-        android:orientation="horizontal" >
-        <lms.foodchainR.widget.StepGallery
-            android:id="@+id/gallery"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/create"
-            android:gravity="left" />
         <Button
-            android:id="@+id/create"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="3dp"
-            android:background="@drawable/add" />
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/edit" />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/currentstyle" >
-        <RelativeLayout
-            android:id="@+id/filter"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal" >
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true" />
-            <EditText
-                android:id="@+id/edittext"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/spinner"
-                android:drawableRight="@drawable/search"
-                android:inputType="text" />
-        </RelativeLayout>
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/filter"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/filter"
-            android:layout_centerInParent="true"
-            android:text="@string/noresult_createnew"
-            android:visibility="gone" />
-    </RelativeLayout>
-</RelativeLayout>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants" />
+</LinearLayout>

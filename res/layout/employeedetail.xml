@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/status"
+            android:text="@string/state"
             android:textSize="30dp" />
     </RelativeLayout>
     <LinearLayout

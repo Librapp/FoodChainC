@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@android:color/darker_gray"
-            android:text="@string/status"
+            android:text="@string/state"
             android:textColor="@android:color/white" />
     </FrameLayout>
     <TableLayout

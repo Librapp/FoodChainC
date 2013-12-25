@@ -1,7 +1,7 @@
 package lms.foodchainC.fragment;
 
 import lms.foodchainC.R;
-import lms.foodchainC.activity.CaseStyleDetailActivity;
+import lms.foodchainC.activity.DetailActivity;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.widget.MenuAdapter;
@@ -71,7 +71,7 @@ public class CaseStyleFragment extends ListFragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		Intent intent = new Intent(getActivity(), CaseStyleDetailActivity.class);
+		Intent intent = new Intent(getActivity(), DetailActivity.class);
 		intent.putExtra("id", csd.id);
 		startActivity(intent);
 	}

@@ -70,7 +70,6 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	private void initView() {
 		pager = (ViewPager) getView().findViewById(R.id.pager);
 		title = (LinearLayout) getView().findViewById(R.id.title);
-		getView().findViewById(R.id.create).setOnClickListener(this);
 	}
 
 	private class MenuFragAdapter extends FragmentPagerAdapter {

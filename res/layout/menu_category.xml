@@ -4,11 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
+
     <HorizontalScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/category_down_bg"
         android:scrollbars="none" >
+
         <LinearLayout
             android:id="@+id/filter_style"
             android:layout_width="wrap_content"
@@ -16,17 +18,20 @@
             android:orientation="horizontal" >
         </LinearLayout>
     </HorizontalScrollView>
+
     <ImageView
         android:id="@+id/line0"
         android:layout_width="fill_parent"
         android:layout_height="0.5dip"
         android:background="@drawable/category_down_line"
         android:contentDescription="@string/app_name" />
+
     <HorizontalScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/category_down_bg"
         android:scrollbars="none" >
+
         <LinearLayout
             android:id="@+id/filter_family"
             android:layout_width="wrap_content"
@@ -34,4 +39,5 @@
             android:orientation="horizontal" >
         </LinearLayout>
     </HorizontalScrollView>
+
 </LinearLayout>

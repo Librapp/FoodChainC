@@ -5,23 +5,19 @@
     android:orientation="vertical"
     android:paddingLeft="8dp"
     android:paddingRight="8dp" >
-
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00FF00"
         android:drawSelectorOnTop="false" />
-
     <TextView
         android:id="@id/android:empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:background="#FF0000"
+        android:background="@android:color/darker_gray"
         android:clickable="true"
         android:gravity="center"
-        android:text="@string/nodata"
-        android:textColor="@android:color/black" />
-
+        android:text="@string/addnewcase"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

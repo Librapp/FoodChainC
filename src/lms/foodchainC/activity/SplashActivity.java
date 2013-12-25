@@ -7,6 +7,7 @@ import lms.foodchainC.util.SharePerformanceUtil;
 
 import org.cybergarage.util.Debug;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,7 +23,7 @@ import android.widget.Toast;
  * @description 启动界面
  * @changeLog
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends Activity {
 
 	private final int INITDATAEND = 1;
 
