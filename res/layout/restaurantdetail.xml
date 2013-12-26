@@ -14,14 +14,14 @@
             android:layout_alignParentTop="true"
             android:paddingTop="5dp" >
             <Button
-                android:id="@+id/rd_edit"
+                android:id="@+id/rd_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="2dp"
                 android:gravity="center"
-                android:text="@string/edit"
+                android:text="@string/follow"
                 android:textSize="14sp" />
             <ImageView
                 android:id="@+id/rd_logo"
@@ -35,7 +35,7 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/rd_edit"
+                android:layout_toLeftOf="@+id/rd_follow"
                 android:layout_toRightOf="@+id/rd_logo"
                 android:orientation="vertical" >
                 <TableRow>
@@ -49,13 +49,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/name" />
-                    <EditText
-                        android:id="@+id/rd_name_edit"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLength="14"
-                        android:visibility="gone" />
                 </TableRow>
                 <TableRow>
                     <TextView
@@ -68,13 +61,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/num" />
-                    <EditText
-                        android:id="@+id/rd_tel_edit"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:maxLength="14"
-                        android:visibility="gone" />
                 </TableRow>
                 <TableRow>
                     <TextView
@@ -87,13 +73,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/num" />
-                    <EditText
-                        android:id="@+id/rd_sms_edit"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:maxLength="14"
-                        android:visibility="gone" />
                 </TableRow>
                 <TableRow>
                     <TextView
@@ -106,13 +85,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/word" />
-                    <EditText
-                        android:id="@+id/rd_location_edit"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:singleLine="false"
-                        android:visibility="gone" />
                 </TableRow>
             </TableLayout>
         </RelativeLayout>
@@ -174,87 +146,6 @@
                 android:maxLines="5"
                 android:minLines="3"
                 android:text="@string/word" />
-            <EditText
-                android:id="@+id/rd_intro_edit"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/rd_intro"
-                android:inputType="textMultiLine"
-                android:maxLines="5"
-                android:minLines="3"
-                android:visibility="gone" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rd_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rd_down"
-            android:layout_margin="5dp" >
-            <TextView
-                android:id="@+id/rd_table_help"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:text="@string/create_table_help" />
-            <LinearLayout
-                android:id="@+id/rd_table_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/rd_table_help"
-                android:layout_margin="5dp"
-                android:orientation="horizontal" >
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/code" />
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tablecount" />
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/seatcount" />
-            </LinearLayout>
-            <Button
-                android:id="@+id/rd_add_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/rd_table_help"
-                android:gravity="center"
-                android:text="@string/add"
-                android:textSize="14sp" />
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:layout_below="@+id/rd_table_title"
-                android:paddingTop="10dp" >
-                <ListView
-                    android:id="@+id/rd_tablelist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|left"
-                    android:descendantFocusability="blocksDescendants"
-                    android:visibility="gone" >
-                </ListView>
-                <TextView
-                    android:id="@+id/rd_notabledatatip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|left"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
-                    android:autoLink="all"
-                    android:text="@string/notabledatatip"
-                    android:textStyle="italic" />
-            </FrameLayout>
         </RelativeLayout>
     </RelativeLayout>
     <ImageView

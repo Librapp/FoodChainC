@@ -5,6 +5,7 @@ import java.io.File;
 import lms.foodchainC.R;
 import lms.foodchainC.activity.DetailActivity;
 import lms.foodchainC.data.UserData;
+import lms.foodchainC.util.ImageLoaderHelper;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -46,10 +47,10 @@ public class UserInfoEditFragment extends Fragment implements OnClickListener {
 		pswEdit = (RelativeLayout) v.findViewById(R.id.passwordedit);
 		photo = (ImageView) v.findViewById(R.id.photo);
 		resetPsw = (TextView) v.findViewById(R.id.resetpassword);
-		nickname.setText(UserData.self().getNickname());
-		signature.setText(UserData.self().getSignature());
+		nickname.setText(UserData.self().nickname);
+		signature.setText(UserData.self().signature);
 		ImageLoaderHelper loaderHelper = new ImageLoaderHelper();
-		loaderHelper.loadImage(photo, UserData.self().getPhoto(),
+		loaderHelper.loadImage(photo, UserData.self().headPic,
 				R.drawable.user_default_icon);
 		photo.setOnClickListener(this);
 		resetPsw.setOnClickListener(this);
@@ -86,7 +87,7 @@ public class UserInfoEditFragment extends Fragment implements OnClickListener {
 		if (resultCode == Activity.RESULT_OK) {
 			switch (requestCode) {
 			case DetailActivity.GETIMAGE_BYCAMERA:
-				Uri uri = Uri.fromFile(new File(UserData.self().getPhoto()));
+				Uri uri = Uri.fromFile(new File(UserData.self().headPic));
 				startPhotoZoom(uri);
 				break;
 			case DetailActivity.GETIMAGE_BYSDCARD:

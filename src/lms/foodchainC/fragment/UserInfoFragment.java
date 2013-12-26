@@ -2,6 +2,7 @@ package lms.foodchainC.fragment;
 
 import lms.foodchainC.R;
 import lms.foodchainC.data.UserData;
+import lms.foodchainC.util.ImageLoaderHelper;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -35,12 +36,12 @@ public class UserInfoFragment extends Fragment implements OnClickListener {
 		nickname = (TextView) v.findViewById(R.id.nickname);
 		signature = (TextView) v.findViewById(R.id.signature);
 		photo = (ImageView) v.findViewById(R.id.photo);
-		username.setText(UserData.self().getName());
-		email.setText(UserData.self().getEmail());
-		nickname.setText(UserData.self().getNickname());
-		signature.setText(UserData.self().getSignature());
+		username.setText(UserData.self().name);
+		email.setText(UserData.self().email);
+		nickname.setText(UserData.self().nickname);
+		signature.setText(UserData.self().signature);
 		ImageLoaderHelper loaderHelper = new ImageLoaderHelper();
-		loaderHelper.loadImage(photo, UserData.self().getPhoto(),
+		loaderHelper.loadImage(photo, UserData.self().headPic,
 				R.drawable.user_default_icon);
 		v.findViewById(R.id.edit).setOnClickListener(this);
 		super.onActivityCreated(savedInstanceState);

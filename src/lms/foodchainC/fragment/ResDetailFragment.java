@@ -12,11 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ResDetailFragment extends Fragment implements OnClickListener {
-	private TextView name;
-	private TextView address;
-	private TextView tel;
-	private TextView sms;
-	private TextView intro;
+	private TextView name, address, tel, sms, intro;
 	private ImageView logo;
 	private boolean isLocal;
 	private RestaurantData resData;
@@ -29,12 +25,9 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		name = (TextView) getView().findViewById(R.id.name);
-		address = (TextView) getView().findViewById(R.id.address);
-		tel = (TextView) getView().findViewById(R.id.tel);
-		sms = (TextView) getView().findViewById(R.id.sms);
-		intro = (TextView) getView().findViewById(R.id.intro_txt);
-		logo = (ImageView) getView().findViewById(R.id.logo);
+		View v = getView();
+		name = (TextView) v.findViewById(R.id.name);
+		logo = (ImageView) v.findViewById(R.id.logo);
 		isLocal = getArguments().getBoolean("isLocal");
 		if (isLocal)
 			resData = RestaurantData.local();

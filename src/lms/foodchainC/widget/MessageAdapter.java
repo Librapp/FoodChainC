@@ -5,7 +5,6 @@ import java.util.List;
 import lms.foodchainC.R;
 import lms.foodchainC.data.EmotionData;
 import lms.foodchainC.data.MessageData;
-import lms.foodchainC.data.UserData;
 import lms.foodchainC.util.MakeEmotionsList;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -78,10 +77,10 @@ public class MessageAdapter extends BaseAdapter {
 		holder.icon.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (cd.direction == 1)
-					UserData.current().id = cd.sId;
-				else
-					UserData.current().id = cd.rId;
+				// if (cd.direction == 1)
+				// UserData.current().id = cd.sId;
+				// else
+				// UserData.current().id = cd.rId;
 				// TODO 用户详情
 			}
 		});

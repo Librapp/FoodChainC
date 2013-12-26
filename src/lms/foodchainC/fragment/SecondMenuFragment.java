@@ -62,7 +62,7 @@ public class SecondMenuFragment extends Fragment implements OnClickListener {
 			getActivity().finish();
 			break;
 		case R.id.user_name:
-			if (UserData.self().getState() == 0) {
+			if (UserData.self().state == 0) {
 				intent.putExtra("title", R.string.login);
 				getActivity().startActivityForResult(intent, LOGIN);
 			} else {

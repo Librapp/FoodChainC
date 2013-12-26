@@ -143,8 +143,8 @@ public class LoginFragment extends Fragment implements OnClickListener,
 				Editor ed = sp.edit();
 				if (autoLogin.isChecked()) {
 					ed.putBoolean("autoLogin", true);
-					ed.putString("name", UserData.self().getName());
-					ed.putString("psw", UserData.self().getPassword());
+					ed.putString("name", UserData.self().name);
+					ed.putString("psw", UserData.self().password);
 				} else
 					ed.putBoolean("autoLogin", false);
 				ed.commit();

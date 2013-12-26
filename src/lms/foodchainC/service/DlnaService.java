@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import lms.foodchainC.dao.Table_DBHelper;
 import lms.foodchainC.data.CustomerData;
 import lms.foodchainC.data.EmployeeData;
 import lms.foodchainC.data.OtherData;
@@ -27,7 +28,9 @@ import org.cybergarage.xml.Node;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -63,26 +66,14 @@ public class DlnaService extends Service implements DeviceChangeListener {
 
 	@Override
 	public void onCreate() {
-		Thread thread = new Thread(new Runnable() {
+		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				initServer();
 			}
-		});
-		thread.start();
+		}).start();
 		initControlPoint();
-		// final WifiManager wifiManager = (WifiManager)
-		// getSystemService(WIFI_SERVICE);
-		// registerReceiver(new BroadcastReceiver() {
-		//
-		// @Override
-		// public void onReceive(Context context, Intent intent) {
-		// if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED) {
-		// // multicastSearch();
-		// }
-		// }
-		// }, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
 	}
 
 	@Override
@@ -150,20 +141,34 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	}
 
 	public void multicastSearch() {
-		Thread thread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				if (!started) {
-					c.start("FC");
-					started = true;
-				} else {
-					c.search("FC");
-				}
-			}
-		});
-		thread.start();
+		// new Thread(new Runnable() {
+		// @Override
+		// public void run() {
+		// if (!started) {
+		// c.start("FC");
+		// started = true;
+		// } else {
+		// c.search("FC");
+		// }
+		// }
+		// }).start();
+		mHandler.sendEmptyMessage(0);
 	}
+
+	Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			if (!started) {
+				c.start("FC");
+				started = true;
+			} else {
+				c.search("FC");
+			}
+			if (!RestaurantData.local().isLocal)
+				sendEmptyMessageDelayed(0, 10000);
+			super.handleMessage(msg);
+		}
+	};
 
 	@Override
 	public void deviceAdded(Device dev) {
@@ -212,6 +217,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		String msg = JSONParser.hallInfoParse(result, tableStyleList);
 		if (msg.equals("")) {
 			// TODO 存储
+			new Table_DBHelper(getApplicationContext());
 		}
 		return msg;
 	}

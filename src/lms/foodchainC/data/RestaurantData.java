@@ -17,6 +17,8 @@ public class RestaurantData extends UserData {
 	public String opentime = "9:00-21:00";
 	// 订餐短信
 	public String sms = "13800138000";
+	/** 局域网内地址 */
+	public String localUrl;
 	// 座位数
 	public int seatCount = 0;
 	// 空座位数
@@ -39,8 +41,9 @@ public class RestaurantData extends UserData {
 	private List<MaterialData> materials;
 	/** 是否是局域网 */
 	public boolean isLocal;
-
+	/** 当前选择 */
 	private static RestaurantData current;
+	/** 本地 */
 	private static RestaurantData local;
 
 	public RestaurantData() {

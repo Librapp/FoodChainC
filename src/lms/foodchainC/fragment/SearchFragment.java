@@ -1,10 +1,7 @@
 package lms.foodchainC.fragment;
 
-import java.util.ArrayList;
-
 import lms.foodchainC.R;
-import lms.foodchainC.activity.RestaurantDetailActivity;
-import lms.foodchainC.data.CaseData;
+import lms.foodchainC.activity.DetailActivity;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.net.JSONParser;
@@ -30,8 +27,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -42,20 +39,18 @@ import android.widget.TextView;
  */
 public class SearchFragment extends Fragment implements OnClickListener,
 		TextWatcher, OnItemClickListener {
-	private final int CASE = 1;
-	private final int RESTAURANT = 0;
-	private int searchType = RESTAURANT;
-	private int netType = 0;
+	private final int CASE = 1, RESTAURANT = 0;
+	private int searchType = RESTAURANT, netType = 0;
 
 	private BroadcastReceiver receiver;
 	private ConnectivityManager connectivityManager;
-	private LinearLayout currentLayout;
 	private ListView resultList;
-	private TextView currentRes;
+	private RelativeLayout currentRes;
+	private TextView name;
 	private EditText edit;
 	private ImageButton clean;
-	private ArrayList<CaseData> caseResult;
-	private ArrayList<RestaurantData> resResult;
+	// private ArrayList<CaseData> caseResult;
+	// private ArrayList<RestaurantData> resResult;
 	private GetLocalResInfoTask getLocalResInfoTask;
 
 	@Override
@@ -78,8 +73,8 @@ public class SearchFragment extends Fragment implements OnClickListener,
 					RestaurantData.local().localUrl = intent
 							.getStringExtra("address");
 					getLocalResDetail();
-					currentRes.setText(RestaurantData.local().name);
-					currentLayout.setVisibility(View.VISIBLE);
+					name.setText(RestaurantData.local().name);
+					currentRes.setVisibility(View.VISIBLE);
 				}
 			}
 		};
@@ -87,38 +82,34 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	}
 
 	private void initView() {
-		getView().findViewById(R.id.search_restaurant).setOnClickListener(this);
-		getView().findViewById(R.id.search_case).setOnClickListener(this);
-		getView().findViewById(R.id.search_btn).setOnClickListener(this);
-		clean = (ImageButton) getView().findViewById(R.id.search_clean);
+		View v = getView();
+		v.findViewById(R.id.search_btn).setOnClickListener(this);
+		v.findViewById(R.id.change).setOnClickListener(this);
+		clean = (ImageButton) v.findViewById(R.id.clear);
 		clean.setOnClickListener(this);
-		edit = (EditText) getView().findViewById(R.id.search_edit);
+		edit = (EditText) v.findViewById(R.id.edit);
 		edit.addTextChangedListener(this);
-		currentLayout = (LinearLayout) getView().findViewById(
-				R.id.current_layout);
-		currentRes = (TextView) getView().findViewById(R.id.current_res);
+		currentRes = (RelativeLayout) v.findViewById(R.id.current_res);
 		currentRes.setOnClickListener(this);
-		resultList = (ListView) getView().findViewById(R.id.resultlist);
+		name = (TextView) v.findViewById(R.id.name);
+		resultList = (ListView) v.findViewById(R.id.result);
 		resultList.setOnItemClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.search_restaurant:
-			searchType = RESTAURANT;
-			break;
-		case R.id.search_case:
-			searchType = CASE;
-			break;
 		case R.id.search_btn:
 			search();
 			break;
-		case R.id.search_clean:
+		case R.id.clear:
 			edit.setText("");
 			break;
 		case R.id.current_res:
 			getLocalResDetail();
+			break;
+		case R.id.change:
+			// TODO
 			break;
 		default:
 			break;
@@ -187,10 +178,11 @@ public class SearchFragment extends Fragment implements OnClickListener,
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		if (s.length() > 0)
-			edit.setVisibility(View.VISIBLE);
-		else
-			edit.setVisibility(View.GONE);
+		if (s.length() > 0) {
+			clean.setVisibility(View.VISIBLE);
+		} else {
+			clean.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -215,8 +207,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		@Override
 		protected void onPostExecute(String result) {
 			if (result.equals("")) {
-				Intent i = new Intent(getActivity(),
-						RestaurantDetailActivity.class);
+				Intent i = new Intent(getActivity(), DetailActivity.class);
 				i.putExtra("isLocal", true);
 				getActivity().startActivity(i);
 			} else {
@@ -235,12 +226,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		switch (parent.getId()) {
-		case R.id.resultlist:
-
-			break;
-		default:
-			break;
-		}
+		// TODO
 	}
 }

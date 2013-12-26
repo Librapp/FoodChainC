@@ -21,7 +21,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +42,6 @@ import com.sina.weibo.sdk.widget.LoginButton;
 public class RegisterFragment extends Fragment implements OnClickListener,
 		RequestListener {
 	private EditText name, psw, confirmpsw, email;
-	private RadioButton male, female, secret;
 	private TextView contract;
 	private CheckBox check;
 	private LoginButton weibo;
@@ -138,7 +136,7 @@ public class RegisterFragment extends Fragment implements OnClickListener,
 			check.setChecked(true);
 			Intent i = new Intent(getActivity(), DetailActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			i.putExtra("url", "file:///android_asset/tvfan_agreement.htm");
+			i.putExtra("url", "file:///android_asset/agreement.htm");
 			i.putExtra("title", R.string.webbrowser);
 			getActivity().startActivity(i);
 			break;
