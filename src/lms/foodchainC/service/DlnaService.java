@@ -14,9 +14,9 @@ import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.net.NetUtil;
-import lms.foodchainC.upnp.ControlPoint;
 import lms.foodchainC.util.FileInfoUtils;
 
+import org.cybergarage.upnp.ControlPoint;
 import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.RootDescription;
 import org.cybergarage.upnp.device.DeviceChangeListener;
@@ -48,7 +48,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	public static final String SEARCH_DEVICE = "search_FC_device";
 
 	private final IBinder binder = new DlnaServiceBinder();
-	private ControlPoint c;
+	private static ControlPoint c;
 	// CP有没有启动
 	private static boolean started = false;
 	private lms.foodchainC.upnp.Device d;
@@ -80,7 +80,8 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
 		if (SEARCH_DEVICE.equals(intent.getAction())) {
-			multicastSearch();
+			// multicastSearch();
+			mHandler.sendEmptyMessage(0);
 		}
 		return Service.START_NOT_STICKY;
 	}
@@ -152,10 +153,9 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		// }
 		// }
 		// }).start();
-		mHandler.sendEmptyMessage(0);
 	}
 
-	Handler mHandler = new Handler() {
+	static Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			if (!started) {
@@ -182,7 +182,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 				lc.add(c);
 				RestaurantData.current().setCustomer(lc);
 			}
-			// sendBroadcast(new Intent(NEW_DEVICES_FOUND));
 		} else if (OtherData.WAITERDEVICETYPE.equals(dev.getDeviceType())) {
 			// TODO 发现服务生
 			EmployeeData c = new EmployeeData(dev, EmployeeData.WAITER);
@@ -216,8 +215,8 @@ public class DlnaService extends Service implements DeviceChangeListener {
 				RestaurantData.current().localUrl);
 		String msg = JSONParser.hallInfoParse(result, tableStyleList);
 		if (msg.equals("")) {
-			// TODO 存储
-			new Table_DBHelper(getApplicationContext());
+			new Table_DBHelper(getApplicationContext())
+					.insertTableStyleList(tableStyleList);
 		}
 		return msg;
 	}

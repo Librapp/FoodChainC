@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +48,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	private RelativeLayout currentRes;
 	private TextView name;
 	private EditText edit;
-	private ImageButton clean;
+	private ImageView clean;
 	// private ArrayList<CaseData> caseResult;
 	// private ArrayList<RestaurantData> resResult;
 	private GetLocalResInfoTask getLocalResInfoTask;
@@ -85,7 +85,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		View v = getView();
 		v.findViewById(R.id.search_btn).setOnClickListener(this);
 		v.findViewById(R.id.change).setOnClickListener(this);
-		clean = (ImageButton) v.findViewById(R.id.clear);
+		clean = (ImageView) v.findViewById(R.id.clear);
 		clean.setOnClickListener(this);
 		edit = (EditText) v.findViewById(R.id.edit);
 		edit.addTextChangedListener(this);

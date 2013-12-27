@@ -340,7 +340,6 @@ public class Table_DBHelper extends Base_DBHelper {
 			values.put("customerName", s.customerName);
 			values.put("customerId", s.customerId);
 			values.put("bookTime", s.bookTime);
-			db.beginTransaction();
 			db.insert(TABLEDATA, null, values);
 			List<SeatData> list = new ArrayList<SeatData>();
 			for (int i = 0; i < s.seatCount; i++) {
@@ -348,7 +347,6 @@ public class Table_DBHelper extends Base_DBHelper {
 				insertSeatData(t);
 				list.add(t);
 			}
-			db.setTransactionSuccessful();
 			s.setSeat(list);
 			return true;
 		} catch (Exception e) {
@@ -369,7 +367,7 @@ public class Table_DBHelper extends Base_DBHelper {
 			values.put("styleId", s.id);
 			values.put("seatCount", s.seatCount);
 			values.put("tableCount", s.tableCount);
-
+			db.insert(TABLESTYLEDATA, null, values);
 			List<TableData> list = new ArrayList<TableData>();
 			for (int i = 0; i < s.tableCount; i++) {
 				TableData t = new TableData(s, i);
@@ -378,8 +376,23 @@ public class Table_DBHelper extends Base_DBHelper {
 				list.add(t);
 			}
 			s.setTable(list);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			db.endTransaction();
+		}
+	}
+
+	public boolean insertTableStyleList(List<TableStyleData> list) {
+		if (db == null)
+			db = getWritableDatabase();
+		try {
 			db.beginTransaction();
-			db.insert(TABLESTYLEDATA, null, values);
+			for (TableStyleData ts : list) {
+				insertTableStyle(ts);
+			}
 			db.setTransactionSuccessful();
 			return true;
 		} catch (Exception e) {

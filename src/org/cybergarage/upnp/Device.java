@@ -905,6 +905,8 @@ public class Device implements org.cybergarage.http.HTTPRequestListener,
 	public boolean isDevice(String name) {
 		if (name == null)
 			return false;
+		if (name.endsWith(getUDN()) == true)
+			return true;
 		if (name.equals(getFriendlyName()) == true)
 			return true;
 		if (name.endsWith(getDeviceType()) == true)

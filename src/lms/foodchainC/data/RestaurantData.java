@@ -40,7 +40,7 @@ public class RestaurantData extends UserData {
 	// 原料
 	private List<MaterialData> materials;
 	/** 是否是局域网 */
-	public boolean isLocal;
+	public boolean isLocal = false;
 	/** 当前选择 */
 	private static RestaurantData current;
 	/** 本地 */
