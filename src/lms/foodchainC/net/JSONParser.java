@@ -3,6 +3,7 @@ package lms.foodchainC.net;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseData;
@@ -131,7 +132,7 @@ public class JSONParser {
 
 	/** 解析hallInfo */
 	public static String hallInfoParse(String result,
-			ArrayList<TableStyleData> tableStyleList) {
+			List<TableStyleData> tableStyleList) {
 		msg = "";
 		try {
 			JSONArray data = new JSONArray(result);
@@ -139,6 +140,10 @@ public class JSONParser {
 				JSONObject item = data.getJSONObject(i);
 				TableStyleData ts = new TableStyleData();
 				msg = tableStyleDataParse(item.toString(), ts);
+				if (msg.equals(""))
+					tableStyleList.add(ts);
+				else
+					return msg;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

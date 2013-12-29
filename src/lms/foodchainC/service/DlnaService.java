@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import lms.foodchainC.dao.Table_DBHelper;
 import lms.foodchainC.data.CustomerData;
 import lms.foodchainC.data.EmployeeData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.Self;
-import lms.foodchainC.data.TableStyleData;
-import lms.foodchainC.net.JSONParser;
-import lms.foodchainC.net.JSONRequest;
-import lms.foodchainC.net.NetUtil;
+import lms.foodchainC.net.GetMenuTask;
 import lms.foodchainC.util.FileInfoUtils;
 
 import org.cybergarage.upnp.ControlPoint;
@@ -27,10 +23,9 @@ import org.cybergarage.xml.Node;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -52,6 +47,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	// CP有没有启动
 	private static boolean started = false;
 	private lms.foodchainC.upnp.Device d;
+	private static SearchDeviceTask searchDeviceTask;
 
 	public class DlnaServiceBinder extends Binder {
 		public DlnaService getService() {
@@ -80,8 +76,12 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
 		if (SEARCH_DEVICE.equals(intent.getAction())) {
-			// multicastSearch();
-			mHandler.sendEmptyMessage(0);
+			if (searchDeviceTask != null) {
+				searchDeviceTask.cancel(true);
+				searchDeviceTask = null;
+			}
+			searchDeviceTask = new SearchDeviceTask();
+			searchDeviceTask.execute(RestaurantData.local().isLocal);
 		}
 		return Service.START_NOT_STICKY;
 	}
@@ -141,35 +141,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		});
 	}
 
-	public void multicastSearch() {
-		// new Thread(new Runnable() {
-		// @Override
-		// public void run() {
-		// if (!started) {
-		// c.start("FC");
-		// started = true;
-		// } else {
-		// c.search("FC");
-		// }
-		// }
-		// }).start();
-	}
-
-	static Handler mHandler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			if (!started) {
-				c.start("FC");
-				started = true;
-			} else {
-				c.search("FC");
-			}
-			if (!RestaurantData.local().isLocal)
-				sendEmptyMessageDelayed(0, 10000);
-			super.handleMessage(msg);
-		}
-	};
-
 	@Override
 	public void deviceAdded(Device dev) {
 		if (OtherData.CUSTOMERDEVICETYPE.equals(dev.getDeviceType())) {
@@ -199,32 +170,37 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
 			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
 			intent.putExtra("name", dev.getFriendlyName());
+			String address = "";
 			if (l.contains("%"))
-				intent.putExtra("address", l.substring(0, l.lastIndexOf("%"))
-						+ ":4004");
+				address = l.substring(0, l.lastIndexOf("%")) + ":4004";
 			else
-				intent.putExtra("address", l.substring(0, l.lastIndexOf(":"))
-						+ ":4004");
+				address = l.substring(0, l.lastIndexOf(":")) + ":4004";
+			intent.putExtra("address", address);
+			RestaurantData.local().isLocal = true;
+			RestaurantData.local().localUrl = address;
+			new GetMenuTask().execute(RestaurantData.local().localUrl);
 			sendBroadcast(intent);
 		}
-	}
-
-	public String getHallInfo(ArrayList<TableStyleData> tableStyleList) {
-		String result = NetUtil.executeGet(getApplicationContext(),
-				JSONRequest.hallInfoRequest(),
-				RestaurantData.current().localUrl);
-		String msg = JSONParser.hallInfoParse(result, tableStyleList);
-		if (msg.equals("")) {
-			new Table_DBHelper(getApplicationContext())
-					.insertTableStyleList(tableStyleList);
-		}
-		return msg;
 	}
 
 	@Override
 	public void deviceRemoved(Device dev) {
 		// TODO Auto-generated method stub
 
+	}
+
+	private class SearchDeviceTask extends AsyncTask<Object, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Object... params) {
+			if (!started) {
+				c.start("FC");
+				started = true;
+			} else {
+				c.search("FC");
+			}
+			return null;
+		}
 	}
 
 }
