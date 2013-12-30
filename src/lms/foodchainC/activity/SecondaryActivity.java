@@ -4,6 +4,7 @@ import lms.foodchainC.R;
 import lms.foodchainC.fragment.AboutFragment;
 import lms.foodchainC.fragment.FeedbackFragment;
 import lms.foodchainC.fragment.LoginFragment;
+import lms.foodchainC.fragment.ResDetailFragment;
 import lms.foodchainC.fragment.SendCommentFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ public class SecondaryActivity extends FragmentActivity implements
 		title = (TextView) findViewById(R.id.title);
 		int t = getIntent().getIntExtra("title", R.string.about);
 		title.setText(t);
+		Bundle b = new Bundle();
 		switch (t) {
 		case R.string.dianping:
 			mContent = new SendCommentFragment();
@@ -46,6 +48,12 @@ public class SecondaryActivity extends FragmentActivity implements
 			break;
 		case R.string.userinfo:
 
+			break;
+		case R.string.restaurantdetail:
+			mContent = new ResDetailFragment();
+			b.putBoolean("isLocal", getIntent()
+					.getBooleanExtra("isLocal", true));
+			break;
 		default:
 			break;
 		}

@@ -1,6 +1,7 @@
 package lms.foodchainC.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
@@ -21,7 +22,7 @@ public class Case_DBHelper extends Base_DBHelper {
 	private final String STYLEDATA = "styleData";
 
 	public Case_DBHelper(Context context) {
-		super(context, "fcr_case.db", null, VERSION);
+		super(context, "fcc_case.db", null, VERSION);
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class Case_DBHelper extends Base_DBHelper {
 	}
 
 	/** 获取类型 */
-	public ArrayList<CaseStyleData> getStyle() {
+	public ArrayList<CaseStyleData> getCaseStyleList() {
 		ArrayList<CaseStyleData> list = new ArrayList<CaseStyleData>();
 		Cursor cursor = null;
 		try {
@@ -160,8 +161,7 @@ public class Case_DBHelper extends Base_DBHelper {
 	}
 
 	/** 创建新菜 */
-	public boolean createCase(CaseData c) {
-		db = getWritableDatabase();
+	private boolean insertCase(CaseData c) {
 		try {
 			ContentValues values = new ContentValues();
 			values.put("caseId", c.caseId);
@@ -172,73 +172,44 @@ public class Case_DBHelper extends Base_DBHelper {
 			values.put("cookTime", c.cookTime);
 			values.put("style", c.style);
 			values.put("family", c.family);
-			db.beginTransaction();
 			db.insert(CASEDATA, null, values);
-			db.setTransactionSuccessful();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		} finally {
-			db.endTransaction();
 		}
 	}
 
 	/** 创建新类型 */
-	public boolean createCaseStyle(CaseStyleData c) {
-		db = getWritableDatabase();
+	private boolean insertCaseStyle(CaseStyleData cs) {
 		try {
 			ContentValues values = new ContentValues();
-			values.put("name", c.name);
-			db.beginTransaction();
+			values.put("name", cs.name);
 			db.insert(STYLEDATA, null, values);
-			db.setTransactionSuccessful();
-			getCaseStyleDataByName(c);
+			for (CaseData c : cs.getList()) {
+				insertCase(c);
+			}
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		} finally {
-			db.endTransaction();
 		}
 	}
 
-	/** 修改已有菜 */
-	public boolean upgradeCase(CaseData c) {
-		db = getWritableDatabase();
+	/**
+	 * 插入类型列表
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public boolean insertCaseStyleList(List<CaseStyleData> list) {
+		if (db == null)
+			db = getWritableDatabase();
 		try {
-			ContentValues values = new ContentValues();
-			values.put("caseId", c.caseId);
-			values.put("name", c.name);
-			values.put("price", c.price);
-			values.put("pic", c.picPath);
-			values.put("intro", c.intro);
-			values.put("cookTime", c.cookTime);
-			values.put("type", c.type);
-			values.put("style", c.style);
-			values.put("family", c.family);
-			selectArgs = new String[] { c.id + "" };
 			db.beginTransaction();
-			db.update(CASEDATA, values, "id=?", selectArgs);
-			db.setTransactionSuccessful();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			db.endTransaction();
-		}
-	}
-
-	/** 修改类型菜 */
-	public boolean upgradeStyleCase(CaseData c) {
-		db = getWritableDatabase();
-		try {
-			ContentValues values = new ContentValues();
-			values.put("state", c.state);
-			selectArgs = new String[] { c.id + "" };
-			db.beginTransaction();
-			db.update(STYLEDATA, values, "id=?", selectArgs);
+			for (CaseStyleData cs : list) {
+				insertCaseStyle(cs);
+			}
 			db.setTransactionSuccessful();
 			return true;
 		} catch (Exception e) {
@@ -293,4 +264,5 @@ public class Case_DBHelper extends Base_DBHelper {
 		// TODO Auto-generated method stub
 
 	}
+
 }

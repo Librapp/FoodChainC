@@ -1,7 +1,7 @@
 package lms.foodchainC.fragment;
 
 import lms.foodchainC.R;
-import lms.foodchainC.activity.DetailActivity;
+import lms.foodchainC.activity.SecondaryActivity;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.net.JSONParser;
@@ -69,9 +69,10 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			public void onReceive(Context context, Intent intent) {
 				if (intent.getStringExtra("type").equals(
 						OtherData.RESTAURANTDEVICETYPE)) {
-					RestaurantData.local().name = intent.getStringExtra("name");
-					RestaurantData.local().localUrl = intent
-							.getStringExtra("address");
+					// RestaurantData.local().name =
+					// intent.getStringExtra("name");
+					// RestaurantData.local().localUrl = intent
+					// .getStringExtra("address");
 					getLocalResDetail();
 					name.setText(RestaurantData.local().name);
 					currentRes.setVisibility(View.VISIBLE);
@@ -207,8 +208,9 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		@Override
 		protected void onPostExecute(String result) {
 			if (result.equals("")) {
-				Intent i = new Intent(getActivity(), DetailActivity.class);
+				Intent i = new Intent(getActivity(), SecondaryActivity.class);
 				i.putExtra("isLocal", true);
+				i.putExtra("title", R.string.restaurantdetail);
 				getActivity().startActivity(i);
 			} else {
 

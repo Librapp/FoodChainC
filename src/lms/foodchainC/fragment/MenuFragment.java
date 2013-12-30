@@ -25,6 +25,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author 梦思
+ * @description 菜单模块
+ * @createTime 2013/12/30
+ */
 public class MenuFragment extends Fragment implements OnPageChangeListener,
 		OnClickListener {
 	private Case_DBHelper cdb;
@@ -49,12 +55,11 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private void getData(Context context) {
-		if (getActivity().getSharedPreferences(JSONRequest.RESTAURANTINFO,
-				Context.MODE_PRIVATE).getInt("id", 0) != RestaurantData.local().id) {
+		if (getArguments().getInt("id") != RestaurantData.local().id) {
 			getMenu();
 		} else {
 			cdb = new Case_DBHelper(context);
-			styleList = cdb.getStyle();
+			styleList = cdb.getCaseStyleList();
 			for (CaseStyleData csd : styleList) {
 				TextView name = new TextView(getActivity());
 				name.setText(csd.name);
@@ -68,8 +73,9 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private void initView() {
-		pager = (ViewPager) getView().findViewById(R.id.pager);
-		title = (LinearLayout) getView().findViewById(R.id.title);
+		View v = getView();
+		pager = (ViewPager) v.findViewById(R.id.pager);
+		title = (LinearLayout) v.findViewById(R.id.title);
 	}
 
 	private class MenuFragAdapter extends FragmentPagerAdapter {

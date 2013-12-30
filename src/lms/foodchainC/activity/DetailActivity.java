@@ -2,7 +2,9 @@ package lms.foodchainC.activity;
 
 import lms.foodchainC.R;
 import lms.foodchainC.fragment.AboutFragment;
+import lms.foodchainC.fragment.HallFragment;
 import lms.foodchainC.fragment.LoginFragment;
+import lms.foodchainC.fragment.MenuFragment;
 import lms.foodchainC.fragment.WebBrowserFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,12 +43,19 @@ public class DetailActivity extends FragmentActivity implements OnClickListener 
 		case R.string.message:
 			mContent = new LoginFragment();
 			break;
-		case R.string.myinfo:
-
+		case R.string.menu:
+			b.putInt("id", getIntent().getIntExtra("id", 0));
+			mContent = new MenuFragment();
+			break;
+		case R.string.hall:
+			b.putInt("id", getIntent().getIntExtra("id", 0));
+			mContent = new HallFragment();
+			break;
 		case R.string.webbrowser:
 			String url = getIntent().getStringExtra("url");
 			mContent = new WebBrowserFragment();
 			b.putString("url", url);
+			break;
 		default:
 			break;
 		}

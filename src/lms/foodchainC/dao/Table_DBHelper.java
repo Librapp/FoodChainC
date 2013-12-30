@@ -305,8 +305,6 @@ public class Table_DBHelper extends Base_DBHelper {
 	// ------------------------------------------------------------ 插入单个对象
 	/** 插入单个座位 */
 	private void insertSeatData(SeatData s) {
-		if (db == null)
-			db = getWritableDatabase();
 		if (s == null)
 			return;
 		try {
@@ -327,8 +325,6 @@ public class Table_DBHelper extends Base_DBHelper {
 
 	/** 插入单个餐桌 */
 	private boolean insertTableData(TableData s) {
-		if (db == null)
-			db = getWritableDatabase();
 		if (s == null)
 			return false;
 		try {
@@ -352,18 +348,13 @@ public class Table_DBHelper extends Base_DBHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		} finally {
-			db.endTransaction();
 		}
 	}
 
 	/** 插入单个餐桌类型 */
-	public boolean insertTableStyle(TableStyleData s) {
-		if (db == null)
-			db = getWritableDatabase();
+	private boolean insertTableStyle(TableStyleData s) {
 		try {
 			ContentValues values = new ContentValues();
-
 			values.put("styleId", s.id);
 			values.put("seatCount", s.seatCount);
 			values.put("tableCount", s.tableCount);
@@ -380,8 +371,6 @@ public class Table_DBHelper extends Base_DBHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		} finally {
-			db.endTransaction();
 		}
 	}
 

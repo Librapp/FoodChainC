@@ -93,36 +93,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rd_up"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingTop="5dp" >
             <Button
-                android:id="@+id/rd_employee"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/employee" />
+                android:id="@+id/rd_menu"
+                style="@style/LoginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu" />
             <Button
-                android:id="@+id/rd_vip"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/vip" />
-            <Button
-                android:id="@+id/bill"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/bill" />
-            <Button
-                android:id="@+id/store"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/store" />
+                android:id="@+id/rd_hall"
+                style="@style/LoginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hall" />
         </LinearLayout>
         <RelativeLayout
             android:id="@+id/rd_down"
@@ -147,6 +132,11 @@
                 android:minLines="3"
                 android:text="@string/word" />
         </RelativeLayout>
+        <ListView
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rd_down" />
     </RelativeLayout>
     <ImageView
         android:id="@+id/rd_bg"

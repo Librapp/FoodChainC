@@ -36,17 +36,22 @@ public class JSONParser {
 	public static String menuDataParse(String result, Case_DBHelper cdb) {
 		msg = "";
 		try {
-			JSONArray array = new JSONArray(result);
-			ArrayList<CaseStyleData> list = new ArrayList<CaseStyleData>();
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject item = array.getJSONObject(i);
-				CaseStyleData csd = new CaseStyleData();
-				msg = caseStyleDataParse(item.toString(), csd);
-				if (msg.equals("")) {
-					list.add(csd);
-					cdb.createCaseStyle(csd);
-				} else
-					return msg;
+			JSONObject data = new JSONObject(result);
+			int code = data.getInt("code");
+			msg = data.getString("msg");
+			if (code == 0) {
+				JSONArray array = data.optJSONArray("caseStyleList");
+				ArrayList<CaseStyleData> list = new ArrayList<CaseStyleData>();
+				for (int i = 0; i < array.length(); i++) {
+					JSONObject item = array.getJSONObject(i);
+					CaseStyleData csd = new CaseStyleData();
+					msg = caseStyleDataParse(item.toString(), csd);
+					if (msg.equals("")) {
+						list.add(csd);
+					} else
+						return msg;
+				}
+				cdb.insertCaseStyleList(list);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

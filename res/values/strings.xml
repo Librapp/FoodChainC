@@ -160,4 +160,5 @@
     <string name="newpassword">请输入新密码</string>
     <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
     <string name="change">换一家</string>
+    <string name="restaurantdetail">饭店详情</string>
 </resources>
