@@ -73,7 +73,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 					// intent.getStringExtra("name");
 					// RestaurantData.local().localUrl = intent
 					// .getStringExtra("address");
-					getLocalResDetail();
 					name.setText(RestaurantData.local().name);
 					currentRes.setVisibility(View.VISIBLE);
 				}

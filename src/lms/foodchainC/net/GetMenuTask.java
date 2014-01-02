@@ -16,7 +16,7 @@ public class GetMenuTask extends AsyncTask<Object, Void, String> {
 	protected String doInBackground(Object... params) {
 		Context context = (Context) params[0];
 		String url = (String) params[1];
-		String result = NetUtil.executeGet(context,
+		String result = NetUtil.executePost(context,
 				JSONRequest.menuDataRequest(), url);
 		return JSONParser.menuDataParse(result, new Case_DBHelper(context));
 	}

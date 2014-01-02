@@ -67,7 +67,6 @@ public class SecondaryActivity extends FragmentActivity implements
 		case R.id.back:
 			finish();
 			break;
-
 		default:
 			break;
 		}

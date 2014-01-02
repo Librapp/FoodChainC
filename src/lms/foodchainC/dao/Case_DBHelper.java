@@ -186,9 +186,10 @@ public class Case_DBHelper extends Base_DBHelper {
 			ContentValues values = new ContentValues();
 			values.put("name", cs.name);
 			db.insert(STYLEDATA, null, values);
-			for (CaseData c : cs.getList()) {
-				insertCase(c);
-			}
+			if (cs.getList() != null)
+				for (CaseData c : cs.getList()) {
+					insertCase(c);
+				}
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

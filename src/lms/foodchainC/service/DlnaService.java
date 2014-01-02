@@ -173,7 +173,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
 			String address = "";
 			if (l.contains("%"))
-				address = l.substring(0, l.lastIndexOf("%")) + "]" + ":4004";
+				address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
 			else
 				address = l.substring(0, l.lastIndexOf(":")) + ":4004";
 			intent.putExtra("address", address);

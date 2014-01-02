@@ -19,7 +19,7 @@ public class GetHallInfoTask extends AsyncTask<Object, Void, String> {
 		Context context = (Context) params[0];
 		String url = (String) params[1];
 		List<TableStyleData> tableStyleList = (List<TableStyleData>) params[2];
-		String result = NetUtil.executeGet(context,
+		String result = NetUtil.executePost(context,
 				JSONRequest.hallInfoRequest(), url);
 		return JSONParser.hallInfoParse(result, tableStyleList);
 	}
