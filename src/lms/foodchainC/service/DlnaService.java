@@ -21,7 +21,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -74,7 +73,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 
 		if (SEARCH_DEVICE.equals(intent.getAction())) {
 			searchDevice();
-			handler.postDelayed(task, 5000);
+			// handler.postDelayed(task, 5000);
 		}
 		return Service.START_NOT_STICKY;
 	}
@@ -169,21 +168,23 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
 			String l = dev.getLocation();
-			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
-			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
-			String address = "";
-			if (l.contains("%"))
-				address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
-			else
-				address = l.substring(0, l.lastIndexOf(":")) + ":4004";
-			intent.putExtra("address", address);
-			// RestaurantData.local().id = (Integer) dev.getUserData();
-			RestaurantData.local().isLocal = true;
-			RestaurantData.local().localUrl = address;
-			RestaurantData.local().name = dev.getFriendlyName();
-			new GetMenuTask().execute(getApplicationContext(),
-					RestaurantData.local().localUrl);
-			sendBroadcast(intent);
+			if (!l.contains("%")) {
+				Intent intent = new Intent(NEW_RESTAURANT_FOUND);
+				intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
+				String address = "";
+				if (l.contains("%"))
+					address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
+				else
+					address = l.substring(0, l.lastIndexOf(":")) + ":4004";
+				intent.putExtra("address", address);
+				// RestaurantData.local().id = (Integer) dev.getUserData();
+				RestaurantData.local().isLocal = true;
+				RestaurantData.local().localUrl = address;
+				RestaurantData.local().name = dev.getFriendlyName();
+				new GetMenuTask().execute(getApplicationContext(),
+						RestaurantData.local().localUrl);
+				sendBroadcast(intent);
+			}
 		}
 	}
 
@@ -193,17 +194,17 @@ public class DlnaService extends Service implements DeviceChangeListener {
 
 	}
 
-	private Handler handler = new Handler();
-
-	private Runnable task = new Runnable() {
-		public void run() {
-			// TODO Auto-generated method stub
-			if (!RestaurantData.local().isLocal) {
-				searchDevice();
-				handler.postDelayed(this, 5000);// 设置延迟时间，此处是5秒
-			}
-		}
-	};
+	// private Handler handler = new Handler();
+	//
+	// private Runnable task = new Runnable() {
+	// public void run() {
+	// // TODO Auto-generated method stub
+	// if (!RestaurantData.local().isLocal) {
+	// searchDevice();
+	// handler.postDelayed(this, 5000);// 设置延迟时间，此处是5秒
+	// }
+	// }
+	// };
 
 	private class SearchDeviceTask extends AsyncTask<Object, Void, Void> {
 

@@ -70,6 +70,17 @@ public class JSONParser {
 			csd.startTime = data.optString("startTime");
 			csd.endTime = data.optString("endTime");
 			csd.weekday = data.optInt("weekday");
+			JSONArray array = data.optJSONArray("");
+			ArrayList<CaseData> list = new ArrayList<CaseData>();
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject item = array.getJSONObject(i);
+				CaseData c = new CaseData();
+				msg = caseDataParse(item.toString(), c);
+				if (msg.equals("")) {
+					list.add(c);
+				} else
+					return msg;
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();

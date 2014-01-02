@@ -74,33 +74,34 @@ public class SSDPSearchResponseSocketList extends Vector {
 		String[] bindAddresses;
 		if (binds != null) {
 			bindAddresses = new String[binds.length];
-			// for (int i = 0; i < binds.length; i++) {
-			// bindAddresses[i] = binds[i].getHostAddress();
-			// }
-			// } else {
-			// int nHostAddrs = HostInterface.getNHostAddresses();
-			// bindAddresses = new String[nHostAddrs];
-			// for (int n = 0; n < nHostAddrs; n++) {
-			// bindAddresses[n] = HostInterface.getHostAddress(n);
-			// }
-			// }
-			// try {
-			// for (int j = 0; j < bindAddresses.length; j++) {
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < binds.length; i++) {
 				bindAddresses[i] = binds[i].getHostAddress();
 			}
 		} else {
 			int nHostAddrs = HostInterface.getNHostAddresses();
 			bindAddresses = new String[nHostAddrs];
-			for (int n = 0; n < 1; n++) {
+			for (int n = 0; n < nHostAddrs; n++) {
 				bindAddresses[n] = HostInterface.getHostAddress(n);
 			}
 		}
 		try {
-			for (int j = 0; j < 1; j++) {
+			for (int j = 0; j < bindAddresses.length; j++) {
+				// for (int i = 0; i < 1; i++) {
+				// bindAddresses[i] = binds[i].getHostAddress();
+				// }
+				// } else {
+				// int nHostAddrs = HostInterface.getNHostAddresses();
+				// bindAddresses = new String[nHostAddrs];
+				// for (int n = 0; n < 1; n++) {
+				// bindAddresses[n] = HostInterface.getHostAddress(n);
+				// }
+				// }
+				// try {
+				// for (int j = 0; j < 1; j++) {
 				SSDPSearchResponseSocket socket = new SSDPSearchResponseSocket(
 						bindAddresses[j], port);
-				add(socket);
+				if (!socket.getLocalAddress().equals(""))
+					add(socket);
 			}
 		} catch (Exception e) {
 			stop();

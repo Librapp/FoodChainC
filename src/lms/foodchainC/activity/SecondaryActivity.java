@@ -57,8 +57,8 @@ public class SecondaryActivity extends FragmentActivity implements
 		default:
 			break;
 		}
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.frame, mContent).commit();
+		mContent.setArguments(b);
+		switchContent(mContent);
 	}
 
 	@Override
@@ -73,8 +73,8 @@ public class SecondaryActivity extends FragmentActivity implements
 	}
 
 	public void switchContent(final Fragment fragment) {
-		mContent = fragment;
+
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.frame, mContent).commit();
+				.replace(R.id.frame, fragment).commit();
 	}
 }

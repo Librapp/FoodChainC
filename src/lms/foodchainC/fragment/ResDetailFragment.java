@@ -36,8 +36,12 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		View v = getView();
-		name = (TextView) v.findViewById(R.id.name);
-		logo = (ImageView) v.findViewById(R.id.logo);
+		name = (TextView) v.findViewById(R.id.rd_name_text);
+		logo = (ImageView) v.findViewById(R.id.rd_logo);
+		address = (TextView) v.findViewById(R.id.rd_address_text);
+		tel = (TextView) v.findViewById(R.id.rd_tel_num);
+		sms = (TextView) v.findViewById(R.id.rd_sms_num);
+		intro = (TextView) v.findViewById(R.id.rd_intro_txt);
 		comment = (ListView) v.findViewById(R.id.comment);
 		v.findViewById(R.id.rd_menu).setOnClickListener(this);
 		v.findViewById(R.id.rd_hall).setOnClickListener(this);
@@ -56,14 +60,14 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	public static ResDetailFragment instance(RestaurantData res) {
-		ResDetailFragment frag = new ResDetailFragment();
-		Bundle b = new Bundle();
-		b.putBoolean("isLocal", res.isLocal);
-		frag.setArguments(b);
-		return frag;
-
-	}
+	// public static ResDetailFragment instance(RestaurantData res) {
+	// ResDetailFragment frag = new ResDetailFragment();
+	// Bundle b = new Bundle();
+	// b.putBoolean("isLocal", res.isLocal);
+	// frag.setArguments(b);
+	// return frag;
+	//
+	// }
 
 	@Override
 	public void onClick(View v) {
