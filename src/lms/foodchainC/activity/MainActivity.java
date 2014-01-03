@@ -4,6 +4,8 @@ import lms.foodchainC.R;
 import lms.foodchainC.fragment.SearchFragment;
 import lms.foodchainC.fragment.SecondMenuFragment;
 import lms.foodchainC.fragment.SlidingMenuFragment;
+import lms.foodchainC.service.DlnaService;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -96,6 +98,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			long currentTime = System.currentTimeMillis();
 			if (currentTime - lastTime >= 0 && currentTime - lastTime <= 2000) {
+				deleteFile("fcc_case.db");
+				stopService(new Intent(this, DlnaService.class));
 				return super.onKeyDown(keyCode, event);
 			} else {
 				Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();

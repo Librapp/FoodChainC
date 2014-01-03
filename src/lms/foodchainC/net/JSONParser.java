@@ -70,8 +70,8 @@ public class JSONParser {
 			csd.startTime = data.optString("startTime");
 			csd.endTime = data.optString("endTime");
 			csd.weekday = data.optInt("weekday");
-			JSONArray array = data.optJSONArray("");
-			ArrayList<CaseData> list = new ArrayList<CaseData>();
+			JSONArray array = data.optJSONArray("caseList");
+			List<CaseData> list = new ArrayList<CaseData>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject item = array.getJSONObject(i);
 				CaseData c = new CaseData();

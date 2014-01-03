@@ -168,23 +168,23 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
 			String l = dev.getLocation();
-			if (!l.contains("%")) {
-				Intent intent = new Intent(NEW_RESTAURANT_FOUND);
-				intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
-				String address = "";
-				if (l.contains("%"))
-					address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
-				else
-					address = l.substring(0, l.lastIndexOf(":")) + ":4004";
-				intent.putExtra("address", address);
-				// RestaurantData.local().id = (Integer) dev.getUserData();
-				RestaurantData.local().isLocal = true;
-				RestaurantData.local().localUrl = address;
-				RestaurantData.local().name = dev.getFriendlyName();
-				new GetMenuTask().execute(getApplicationContext(),
-						RestaurantData.local().localUrl);
-				sendBroadcast(intent);
-			}
+			// if (!l.contains("%")) {
+			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
+			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
+			String address = "";
+			if (l.contains("%"))
+				address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
+			else
+				address = l.substring(0, l.lastIndexOf(":")) + ":4004";
+			intent.putExtra("address", address);
+			// RestaurantData.local().id = (Integer) dev.getUserData();
+			RestaurantData.local().isLocal = true;
+			RestaurantData.local().localUrl = address;
+			RestaurantData.local().name = dev.getFriendlyName();
+			new GetMenuTask().execute(getApplicationContext(),
+					RestaurantData.local().localUrl);
+			sendBroadcast(intent);
+			// }
 		}
 	}
 
