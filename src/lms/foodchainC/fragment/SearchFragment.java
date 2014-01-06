@@ -69,10 +69,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			public void onReceive(Context context, Intent intent) {
 				if (intent.getStringExtra("type").equals(
 						OtherData.RESTAURANTDEVICETYPE)) {
-					// RestaurantData.local().name =
-					// intent.getStringExtra("name");
-					// RestaurantData.local().localUrl = intent
-					// .getStringExtra("address");
 					name.setText(RestaurantData.local().name);
 					currentRes.setVisibility(View.VISIBLE);
 				}
@@ -94,6 +90,9 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		name = (TextView) v.findViewById(R.id.name);
 		resultList = (ListView) v.findViewById(R.id.result);
 		resultList.setOnItemClickListener(this);
+
+		name.setText(RestaurantData.local().name);
+		currentRes.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -106,7 +105,11 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			edit.setText("");
 			break;
 		case R.id.current_res:
-			getLocalResDetail();
+			// getLocalResDetail();
+			Intent i = new Intent(getActivity(), SecondaryActivity.class);
+			i.putExtra("isLocal", true);
+			i.putExtra("title", R.string.restaurantdetail);
+			getActivity().startActivity(i);
 			break;
 		case R.id.change:
 			// TODO

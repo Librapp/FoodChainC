@@ -48,7 +48,7 @@ public class MenuAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.text = (TextView) view.findViewById(R.id.case_name);
 			holder.text1 = (TextView) view.findViewById(R.id.case_price);
-			holder.pic1 = (ImageView) view.findViewById(R.id.case_status);
+			holder.text2 = (TextView) view.findViewById(R.id.case_status);
 			holder.pic = (ImageView) view.findViewById(R.id.case_pic);
 			view.setTag(holder);
 		} else
@@ -56,16 +56,16 @@ public class MenuAdapter extends BaseAdapter {
 		holder.text1.setText(c.price + "元");
 		holder.text.setText(c.name);
 
-		switch (c.state) {
-		case CaseData.AVILIABLE:
-			holder.pic1.setImageResource(R.drawable.case_aviliable);
-			break;
-		case CaseData.UNAVILIABLE:
-			holder.pic1.setImageResource(R.drawable.case_soldout);
-			break;
-		default:
-			break;
-		}
+		// switch (c.state) {
+		// case CaseData.AVILIABLE:
+		// holder.pic1.setImageResource(R.drawable.case_aviliable);
+		// break;
+		// case CaseData.UNAVILIABLE:
+		// holder.pic1.setImageResource(R.drawable.case_soldout);
+		// break;
+		// default:
+		// break;
+		// }
 
 		Drawable d = Drawable.createFromPath(c.picPath);
 		if (d != null) {

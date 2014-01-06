@@ -81,6 +81,7 @@ public class JSONParser {
 				} else
 					return msg;
 			}
+			csd.setList(list);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();

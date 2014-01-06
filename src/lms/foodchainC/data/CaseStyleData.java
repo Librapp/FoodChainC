@@ -1,6 +1,6 @@
 package lms.foodchainC.data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 李梦思
@@ -13,7 +13,7 @@ public class CaseStyleData {
 
 	public int id;
 	public String name;
-	ArrayList<CaseData> list;
+	List<CaseData> list;
 	public String startTime;
 	public String endTime;
 	public int weekday;
@@ -27,11 +27,11 @@ public class CaseStyleData {
 		this.name = name;
 	}
 
-	public void setList(ArrayList<CaseData> list) {
+	public void setList(List<CaseData> list) {
 		this.list = list;
 	}
 
-	public ArrayList<CaseData> getList() {
+	public List<CaseData> getList() {
 		return list;
 	}
 }

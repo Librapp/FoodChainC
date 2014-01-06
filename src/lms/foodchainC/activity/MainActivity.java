@@ -98,7 +98,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			long currentTime = System.currentTimeMillis();
 			if (currentTime - lastTime >= 0 && currentTime - lastTime <= 2000) {
-				deleteFile("fcc_case.db");
+				deleteDatabase("fcc_case.db");
 				stopService(new Intent(this, DlnaService.class));
 				return super.onKeyDown(keyCode, event);
 			} else {

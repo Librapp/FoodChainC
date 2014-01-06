@@ -3,7 +3,6 @@ package lms.foodchainC.activity;
 import lms.foodchainC.R;
 import lms.foodchainC.data.SystemData;
 import lms.foodchainC.net.NetMessageType;
-import lms.foodchainC.service.DlnaService;
 import lms.foodchainC.util.SharePerformanceUtil;
 
 import org.cybergarage.util.Debug;
@@ -48,7 +47,7 @@ public class SplashActivity extends Activity {
 		// 启动服务
 		// startService(new Intent(this, MenuService.class));
 		// startService(new Intent(this, TableService.class));
-		startService(new Intent(DlnaService.SEARCH_DEVICE));
+		// startService(new Intent(DlnaService.SEARCH_DEVICE));
 		handler.sendEmptyMessage(INITDATAEND);
 	}
 

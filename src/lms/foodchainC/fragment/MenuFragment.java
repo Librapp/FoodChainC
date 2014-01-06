@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -49,27 +49,28 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		cdb = new Case_DBHelper(getActivity());
 		initView();
 		getData(getActivity());
 		super.onActivityCreated(savedInstanceState);
 	}
 
 	private void getData(Context context) {
-		if (getArguments().getInt("id") != RestaurantData.local().id) {
-			getMenu();
-		} else {
-			cdb = new Case_DBHelper(context);
-			styleList = cdb.getCaseStyleList();
-			for (CaseStyleData csd : styleList) {
-				TextView name = new TextView(getActivity());
-				name.setText(csd.name);
-				title.addView(name);
-			}
-			mfa = new MenuFragAdapter(getChildFragmentManager());
-			pager.setAdapter(mfa);
-			pager.setCurrentItem(0);
-			title.setOnCreateContextMenuListener(this);
-		}
+		// if (getArguments().getInt("id") != RestaurantData.local().id) {
+		getMenu();
+		// } else {
+		// cdb = new Case_DBHelper(context);
+		// styleList = cdb.getCaseStyleList();
+		// for (CaseStyleData csd : styleList) {
+		// TextView name = new TextView(getActivity());
+		// name.setText(csd.name);
+		// title.addView(name);
+		// }
+		// mfa = new MenuFragAdapter(getChildFragmentManager());
+		// pager.setAdapter(mfa);
+		// pager.setCurrentItem(0);
+		// title.setOnCreateContextMenuListener(this);
+		// }
 	}
 
 	private void initView() {
@@ -153,10 +154,15 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 		protected ArrayList<CaseStyleData> doInBackground(Object... params) {
 
 			String result = NetUtil.executePost(getActivity()
-					.getApplicationContext(), JSONRequest
-					.restaurantInfoRequest(), RestaurantData.local().localUrl);
+					.getApplicationContext(), JSONRequest.menuDataRequest(),
+					RestaurantData.local().localUrl);
 			styleList = new ArrayList<CaseStyleData>();
-			JSONParser.menuDataParse(result, cdb);
+			if (JSONParser.menuDataParse(result, cdb).equals("")) {
+				styleList = cdb.getCaseStyleList();
+			} else {
+				Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT)
+						.show();
+			}
 			return styleList;
 		}
 
