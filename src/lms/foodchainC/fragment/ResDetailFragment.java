@@ -2,6 +2,7 @@ package lms.foodchainC.fragment;
 
 import lms.foodchainC.R;
 import lms.foodchainC.activity.DetailActivity;
+import lms.foodchainC.activity.MenuActivity;
 import lms.foodchainC.data.RestaurantData;
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,9 +74,9 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rd_menu:
-			Intent iMenu = new Intent(getActivity(), DetailActivity.class);
-			iMenu.putExtra("title", R.string.menu);
-			iMenu.putExtra("id", resData.id);
+			Intent iMenu = new Intent(getActivity(), MenuActivity.class);
+			// iMenu.putExtra("title", R.string.menu);
+			// iMenu.putExtra("id", resData.id);
 			getActivity().startActivity(iMenu);
 			break;
 		case R.id.rd_hall:

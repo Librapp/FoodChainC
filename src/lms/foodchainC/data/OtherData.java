@@ -44,25 +44,6 @@ public class OtherData {
 	public static final String RDETAIL_PIC_SHORT = "FCR/RDETAIL/";
 
 	/* 数据库相关 */
-	// 一般数据库
-	public static final String NORMAL_DB = "fcrn.db";
-	// 加密数据库
-	public static final String SECRET_DB = "fcrs.db";
-	// 顾客表
-	public static final String CUSTOMERDATA = "customerData";
-	public static final String CUSTOMERDATA_DB = "fcrcd.db";
-	// 雇员表
-	public static final String EMPLOYEEDATA = "employeeData";
-	public static final String EMPLOYEEDATA_DB = "fcred.db";
-	// 原料表
-	public static final String MATERIALDATA = "materialData";
-	public static final String MATERIALDATA_DB = "fcrmad.db";
-	// 评论表
-	public static final String COMMENTDATA = "commentData";
-	// 消息表
-	public static final String MEASSAGEDATA = "messageData";
-	// 聊天表
-	public static final String CHATDATA = "chatData";
 
 	/* 配置文件 */
 	// 本地数据
