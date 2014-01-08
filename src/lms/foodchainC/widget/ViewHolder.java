@@ -1,5 +1,6 @@
 package lms.foodchainC.widget;
 
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,4 +16,7 @@ public class ViewHolder {
 	public TextView text4;
 	public TextView text5;
 	public ImageButton btn;
+	public ImageButton btn1;
+	public EditText edit;
+	public EditText edit1;
 }

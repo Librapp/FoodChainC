@@ -14,6 +14,8 @@ import lms.foodchainC.widget.MyExpandableListAdapter;
 import android.app.ExpandableListActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
@@ -24,7 +26,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
  * @description 菜单界面
  * @createTime 2014/01/07
  */
-public final class MenuActivity extends ExpandableListActivity {
+public final class MenuActivity extends ExpandableListActivity implements
+		OnClickListener {
 	private PullToRefreshExpandableListView mPullRefreshListView;
 	private MyExpandableListAdapter mAdapter;
 
@@ -38,6 +41,7 @@ public final class MenuActivity extends ExpandableListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ptr_expandable_list);
 		mPullRefreshListView = (PullToRefreshExpandableListView) findViewById(R.id.pull_refresh_expandable_list);
+		findViewById(R.id.sendorder).setOnClickListener(this);
 		getMenu();
 	}
 
@@ -85,5 +89,17 @@ public final class MenuActivity extends ExpandableListActivity {
 			mPullRefreshListView.onRefreshComplete();
 			super.onPreExecute();
 		};
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.sendorder:
+			// TODO 下订单
+			break;
+
+		default:
+			break;
+		}
 	}
 }

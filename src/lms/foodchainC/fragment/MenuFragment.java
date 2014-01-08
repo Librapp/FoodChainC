@@ -2,112 +2,147 @@ package lms.foodchainC.fragment;
 
 import java.util.ArrayList;
 
+import lms.foodchainC.R;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.RestaurantData;
-import lms.foodchainC.net.JSONParser;
-import lms.foodchainC.net.JSONRequest;
-import lms.foodchainC.net.NetUtil;
+import lms.foodchainC.net.GetMenuTask;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
-
-import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshExpandableListFragment;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 /**
  * 
  * @author 梦思
  * @description 菜单模块
- * @createTime 2013/12/30
+ * @createTime 2013/12/25
  */
-public class MenuFragment extends PullToRefreshExpandableListFragment implements
-		OnItemClickListener {
+public class MenuFragment extends Fragment implements OnPageChangeListener,
+		OnClickListener {
 	private Case_DBHelper cdb;
+	private LinearLayout title;
+	private ViewPager pager;
+	private MenuFragAdapter mfa;
+
 	private ArrayList<CaseStyleData> styleList;
-	private int currentItem = 0;
-	private GetMenuTask getMenuTask;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.menu, container, false);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		cdb = new Case_DBHelper(getActivity());
+		initView();
+		getMenu();
 		getData(getActivity());
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	private void getData(Context context) {
-		// if (getArguments().getInt("id") != RestaurantData.local().id) {
-		getMenu();
-		// } else {
-		// cdb = new Case_DBHelper(context);
-		// styleList = cdb.getCaseStyleList();
-		// for (CaseStyleData csd : styleList) {
-		// TextView name = new TextView(getActivity());
-		// name.setText(csd.name);
-		// title.addView(name);
-		// }
-		// mfa = new MenuFragAdapter(getChildFragmentManager());
-		// pager.setAdapter(mfa);
-		// pager.setCurrentItem(0);
-		// title.setOnCreateContextMenuListener(this);
-		// }
-	}
-
 	private void getMenu() {
-		if (getMenuTask != null) {
-			getMenuTask.cancel(true);
-			getMenuTask = null;
-		}
-		getMenuTask = new GetMenuTask();
-		getMenuTask.execute();
+		new GetMenuTask().execute(getActivity(),
+				RestaurantData.local().localUrl);
 	}
 
-	private class GetMenuTask extends
-			AsyncTask<Object, JSONRequest, ArrayList<CaseStyleData>> {
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
+	private void getData(Context context) {
+		cdb = new Case_DBHelper(context);
+		styleList = cdb.getCaseStyleList();
+		RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		rl.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+		rl.setMargins(5, 5, 5, 5);
+		for (int i = 0; i < styleList.size(); i++) {
+			CaseStyleData csd = styleList.get(i);
+			Button name = new Button(getActivity());
+			name.setId(csd.id);
+			name.setLayoutParams(rl);
+			name.setText(csd.name);
+			name.setOnCreateContextMenuListener(this);
+			title.addView(name);
+		}
+		mfa = new MenuFragAdapter(getChildFragmentManager());
+		pager.setAdapter(mfa);
+		pager.setCurrentItem(0);
+	}
+
+	private void initView() {
+		pager = (ViewPager) getView().findViewById(R.id.pager);
+		title = (LinearLayout) getView().findViewById(R.id.title);
+	}
+
+	private class MenuFragAdapter extends FragmentPagerAdapter {
+
+		public MenuFragAdapter(FragmentManager fm) {
+			super(fm);
 		}
 
 		@Override
-		protected ArrayList<CaseStyleData> doInBackground(Object... params) {
-
-			String result = NetUtil.executePost(getActivity()
-					.getApplicationContext(), JSONRequest.menuDataRequest(),
-					RestaurantData.local().localUrl);
-			styleList = new ArrayList<CaseStyleData>();
-			if (JSONParser.menuDataParse(result, cdb).equals("")) {
-				styleList = cdb.getCaseStyleList();
-			} else {
-				Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT)
-						.show();
-			}
-			return styleList;
+		public Fragment getItem(int arg0) {
+			CaseStyleData csd = styleList.get(arg0);
+			return CaseStyleFragment.newInstance(csd.id);
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<CaseStyleData> styleList) {
-			// mAdapter = new SimpleExpandableListAdapter(this, groupData,
-			// android.R.layout.simple_expandable_list_item_1,
-			// new String[] { KEY }, new int[] { android.R.id.text1 },
-			// childData,
-			// android.R.layout.simple_expandable_list_item_2, new String[] {
-			// KEY }, new int[] { android.R.id.text1 });
-			// mPullRefreshListView.setAdapter(adapter);
-			super.onPreExecute();
-		};
+		public int getCount() {
+			return styleList.size();
+		}
+
+		@Override
+		public int getItemPosition(Object object) {
+			return PagerAdapter.POSITION_NONE;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return styleList.get(position).name;
+		}
 
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onPageScrollStateChanged(int arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		// TODO
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		default:
+			break;
+		}
 	}
 
 }
