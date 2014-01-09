@@ -1,13 +1,16 @@
 package lms.foodchainC.fragment;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import lms.foodchainC.R;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.RestaurantData;
-import lms.foodchainC.net.GetMenuTask;
+import lms.foodchainC.net.JSONParser;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +26,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Toast;
 
 /**
  * 
@@ -33,11 +37,12 @@ import android.widget.RelativeLayout.LayoutParams;
 public class MenuFragment extends Fragment implements OnPageChangeListener,
 		OnClickListener {
 	private Case_DBHelper cdb;
+	private GetMenuTask getMenuTask;
 	private LinearLayout title;
 	private ViewPager pager;
 	private MenuFragAdapter mfa;
 
-	private ArrayList<CaseStyleData> styleList;
+	private List<CaseStyleData> styleList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,17 +61,19 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 		initView();
 		getMenu();
-		getData(getActivity());
 		super.onActivityCreated(savedInstanceState);
 	}
 
 	private void getMenu() {
-		new GetMenuTask().execute(getActivity(),
-				RestaurantData.local().localUrl);
+		if (getMenuTask != null) {
+			getMenuTask.cancel(true);
+			getMenuTask = null;
+		}
+		getMenuTask = new GetMenuTask();
+		getMenuTask.execute(getActivity(), RestaurantData.local().localUrl);
 	}
 
-	private void getData(Context context) {
-		cdb = new Case_DBHelper(context);
+	private void getData() {
 		styleList = cdb.getCaseStyleList();
 		RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -143,6 +150,33 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 		default:
 			break;
 		}
+	}
+
+	private class GetMenuTask extends AsyncTask<Object, Void, String> {
+
+		@Override
+		protected String doInBackground(Object... params) {
+			Context context = (Context) params[0];
+			String url = (String) params[1];
+			String result = NetUtil.executePost(context,
+					JSONRequest.menuDataRequest(), url);
+			String msg = "";
+			if (cdb == null)
+				cdb = new Case_DBHelper(context);
+			msg = JSONParser.menuDataParse(result, cdb);
+			if (msg.equals(""))
+				getData();
+			return msg;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (!result.equals(""))
+				Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT)
+						.show();
+			super.onPostExecute(result);
+		}
+
 	}
 
 }
