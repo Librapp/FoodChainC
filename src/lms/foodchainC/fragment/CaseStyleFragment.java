@@ -1,32 +1,26 @@
 package lms.foodchainC.fragment;
 
 import lms.foodchainC.R;
-import lms.foodchainC.activity.DetailActivity;
+import lms.foodchainC.dao.Bill_DBHelper;
 import lms.foodchainC.dao.Case_DBHelper;
+import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.widget.MenuAdapter;
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class CaseStyleFragment extends ListFragment implements OnClickListener {
+public class CaseStyleFragment extends ListFragment implements
+		OnItemClickListener {
 	private CaseStyleData csd;
 	private Case_DBHelper cdb;
+	private Bill_DBHelper bdb;
 	private MenuAdapter ma;
-	private Button edit;
-
-	@Override
-	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
-		super.onAttach(activity);
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,14 +38,11 @@ public class CaseStyleFragment extends ListFragment implements OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		cdb = new Case_DBHelper(getActivity());
-
-		edit = new Button(getActivity());
-		edit.setText(R.string.edit);
-		edit.setOnClickListener(this);
-		getListView().addFooterView(edit);
+		bdb = new Bill_DBHelper(getActivity());
 		if (cdb.getCaseStyleData(csd) && csd.getList().size() > 0) {
 			ma = new MenuAdapter(getActivity(), csd.getList());
 			setListAdapter(ma);
+			getListView().setOnItemClickListener(this);
 		}
 		super.onActivityCreated(savedInstanceState);
 	}
@@ -70,10 +61,18 @@ public class CaseStyleFragment extends ListFragment implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {
-		Intent intent = new Intent(getActivity(), DetailActivity.class);
-		intent.putExtra("id", csd.id);
-		startActivity(intent);
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		CaseData c = csd.getList().get(position);
+		if (c.orderId == 0) {
+			c.orderId = 1;
+			bdb.insertCase(c);
+		} else {
+			c.orderId = 0;
+			bdb.deleteCase(c);
+		}
+		ma.notifyDataSetChanged();
 	}
 
 }

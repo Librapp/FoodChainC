@@ -59,11 +59,28 @@ public class Bill_DBHelper extends Base_DBHelper {
 				+ "type integer," + "message varchar" + ")";
 	}
 
+	/** 创建新菜 */
+	public boolean insertCase(CaseData c) {
+		db = getWritableDatabase();
+		try {
+			ContentValues values = new ContentValues();
+			values.put("id", c.id);
+			values.put("name", c.name);
+			values.put("price", c.price);
+			values.put("pic", c.picPath);
+			db.insert(ORDERDATA, null, values);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	/** 获取帐单 */
 	public boolean getBillData(BillData b) {
+		db = getReadableDatabase();
 		Cursor cursor = null;
 		try {
-			db = getReadableDatabase();
 			selectArgs = new String[] { b.customerId, b.customerName, b.seatId,
 					b.tableId };
 			cursor = db.query(BILLDATA, null,
@@ -247,6 +264,20 @@ public class Bill_DBHelper extends Base_DBHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		} finally {
+			db.endTransaction();
+		}
+	}
+
+	public void deleteCase(CaseData c) {
+		if (db == null)
+			db = getWritableDatabase();
+		try {
+			selectArgs = new String[] { c.id + "" };
+			db.delete(ORDERDATA, "id=?", selectArgs);
+			db.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			db.endTransaction();
 		}

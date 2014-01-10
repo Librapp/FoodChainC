@@ -58,7 +58,7 @@ public class CaseData {
 	// 烹饪时间
 	public int cookTime = 10;
 	// 烹饪列表Id
-	public int orderId;
+	public int orderId = 0;
 	// 是否是新创建
 	public boolean isNew = false;
 	// 评论

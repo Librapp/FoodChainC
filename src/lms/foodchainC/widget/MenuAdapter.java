@@ -28,20 +28,20 @@ public class MenuAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public CaseData getItem(int position) {
 		return lc.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return position;
+		return getItem(position).id;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		ViewHolder holder;
-		CaseData c = lc.get(position);
+		CaseData c = getItem(position);
 		if (view == null) {
 			view = LayoutInflater.from(context).inflate(
 					R.layout.menu_list_item, null);
@@ -56,6 +56,15 @@ public class MenuAdapter extends BaseAdapter {
 		holder.text1.setText(c.price + "元");
 		holder.text.setText(c.name);
 
+		if (c.orderId != 0) {
+			// TODO 已点
+			view.setBackgroundColor(context.getResources().getColor(
+					R.color.com_sina_weibo_sdk_blue));
+		} else {
+			// TODO 未点
+			view.setBackgroundColor(context.getResources().getColor(
+					R.color.white));
+		}
 		// switch (c.state) {
 		// case CaseData.AVILIABLE:
 		// holder.pic1.setImageResource(R.drawable.case_aviliable);
