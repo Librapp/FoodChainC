@@ -5,6 +5,7 @@ import lms.foodchainC.fragment.AboutFragment;
 import lms.foodchainC.fragment.HallFragment;
 import lms.foodchainC.fragment.LoginFragment;
 import lms.foodchainC.fragment.MenuFragment;
+import lms.foodchainC.fragment.OrderListFragment;
 import lms.foodchainC.fragment.WebBrowserFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -55,6 +56,9 @@ public class DetailActivity extends FragmentActivity implements OnClickListener 
 			String url = getIntent().getStringExtra("url");
 			mContent = new WebBrowserFragment();
 			b.putString("url", url);
+			break;
+		case R.string.sendorder:
+			mContent = new OrderListFragment();
 			break;
 		default:
 			break;

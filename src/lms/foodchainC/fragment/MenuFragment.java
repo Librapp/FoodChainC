@@ -3,6 +3,7 @@ package lms.foodchainC.fragment;
 import java.util.List;
 
 import lms.foodchainC.R;
+import lms.foodchainC.activity.DetailActivity;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.RestaurantData;
@@ -10,6 +11,7 @@ import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.net.NetUtil;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -147,6 +149,11 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.sendorder:
+			Intent i = new Intent(getActivity(), DetailActivity.class);
+			i.putExtra("title", R.string.sendorder);
+			getActivity().startActivity(i);
+			break;
 		default:
 			break;
 		}

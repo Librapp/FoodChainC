@@ -52,11 +52,10 @@ public class Bill_DBHelper extends Base_DBHelper {
 
 	/** 生成订单表 */
 	private String createOrderDataTable() {
-		return CREATE + ORDERDATA + " ("
-				+ "orderId integer primary key autoincrement," + "id integer,"
-				+ "billId integer," + "caseId varchar," + "caseName varchar,"
-				+ "price float," + "orderTime varchar," + "state integer,"
-				+ "type integer," + "message varchar" + ")";
+		return CREATE + ORDERDATA + " (" + AUTO_KEY + ",caseId integer"
+				+ ",name varchar" + ",price float" + ",pic varchar"
+				+ ",cookTime integer" + ",style integer" + ",state integer"
+				+ ",count integer" + ")";
 	}
 
 	/** 创建新菜 */
@@ -68,6 +67,10 @@ public class Bill_DBHelper extends Base_DBHelper {
 			values.put("name", c.name);
 			values.put("price", c.price);
 			values.put("pic", c.picPath);
+			values.put("cookTime", c.cookTime);
+			values.put("style", c.style);
+			values.put("state", c.state);
+			values.put("count", c.count);
 			db.insert(ORDERDATA, null, values);
 			return true;
 		} catch (Exception e) {

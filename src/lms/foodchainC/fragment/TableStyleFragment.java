@@ -19,7 +19,7 @@ public class TableStyleFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.tablestyle_list, null);
+		View v = inflater.inflate(R.layout.tablestyle, null);
 		return v;
 	}
 
@@ -36,11 +36,6 @@ public class TableStyleFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-
-	}
-
 	public static TableStyleFragment newInstance(String id) {
 		TableStyleFragment f = new TableStyleFragment();
 		Bundle args = new Bundle();
@@ -49,4 +44,8 @@ public class TableStyleFragment extends ListFragment {
 		return f;
 	}
 
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+
+	}
 }

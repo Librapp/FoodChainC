@@ -9,9 +9,11 @@ import android.support.v4.app.ListFragment;
  * @description 列表模块
  */
 public class MyListFragment extends ListFragment {
-	private static int type;
+	/** 消息 */
 	private final static int MESSAGE = 1;
-	private final static int YOUERYUAN = 2;
+	/** 订单 */
+	private final static int ORDER = 2;
+	private static int type;
 
 	public static MyListFragment messageInstance() {
 		MyListFragment f = new MyListFragment();
@@ -19,9 +21,9 @@ public class MyListFragment extends ListFragment {
 		return f;
 	}
 
-	public static MyListFragment youeryuanInstance() {
+	public static MyListFragment orderInstance() {
 		MyListFragment f = new MyListFragment();
-		type = YOUERYUAN;
+		type = ORDER;
 		return f;
 	}
 
@@ -31,7 +33,7 @@ public class MyListFragment extends ListFragment {
 		case MESSAGE:
 
 			break;
-		case YOUERYUAN:
+		case ORDER:
 
 			break;
 		default:
