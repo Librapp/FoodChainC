@@ -65,21 +65,4 @@ public class BillFragment extends Fragment {
 		};
 
 	}
-
-	private class LoadBillTask extends AsyncTask<Object, String, Boolean> {
-
-		@Override
-		protected Boolean doInBackground(Object... params) {
-			orderList = new ArrayList<CaseData>();
-			boolean result = bdb.getOrderList(orderList);
-			billList = new ArrayList<BillData>();
-			return result;
-		}
-
-		protected void onPostExecute(Boolean result) {
-			// TODO
-		};
-
-	}
-
 }

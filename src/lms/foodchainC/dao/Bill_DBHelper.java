@@ -160,8 +160,9 @@ public class Bill_DBHelper extends Base_DBHelper {
 	}
 
 	/** 获取订单 */
-	public boolean getOrderList(ArrayList<CaseData> list) {
+	public List<CaseData> getOrderList() {
 		Cursor cursor = null;
+		List<CaseData> list = new ArrayList<CaseData>();
 		try {
 			db = getReadableDatabase();
 			cursor = db.query(ORDERDATA, null, null, null, null, null,
@@ -182,15 +183,14 @@ public class Bill_DBHelper extends Base_DBHelper {
 					list.add(c);
 				}
 			}
-			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
 		} finally {
 			if (cursor != null) {
 				cursor.close();
 			}
 		}
+		return list;
 	}
 
 	/** 创建账单 */
