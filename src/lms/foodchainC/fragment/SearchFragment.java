@@ -201,7 +201,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		protected String doInBackground(Object... params) {
 			String result = NetUtil.executePost(getActivity()
 					.getApplicationContext(), JSONRequest
-					.restaurantInfoRequest(), RestaurantData.local().localUrl);
+					.restaurantInfo(), RestaurantData.local().localUrl);
 			String msg = JSONParser.restaurantInfoParse(result,
 					RestaurantData.local());
 			return msg;

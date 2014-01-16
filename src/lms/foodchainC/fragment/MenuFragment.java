@@ -166,7 +166,7 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 			Context context = (Context) params[0];
 			String url = (String) params[1];
 			String result = NetUtil.executePost(context,
-					JSONRequest.menuDataRequest(), url);
+					JSONRequest.menuData(), url);
 			String msg = "";
 			if (cdb == null)
 				cdb = new Case_DBHelper(context);

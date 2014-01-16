@@ -25,7 +25,7 @@ public class JSONRequest {
 	public static final String HALLINFO = "hallInfo";
 	public static final String ORDER = "order";
 
-	public static String restaurantInfoRequest() {
+	public static String restaurantInfo() {
 		JSONObject holder = new JSONObject();
 		try {
 			holder.put(METHOD, RESTAURANTINFO);
@@ -35,7 +35,7 @@ public class JSONRequest {
 		return holder.toString();
 	}
 
-	public static String caseDetailRequest() {
+	public static String caseDetail() {
 		JSONObject holder = new JSONObject();
 		try {
 			holder.put(METHOD, CASEDETAIL);
@@ -45,7 +45,7 @@ public class JSONRequest {
 		return holder.toString();
 	}
 
-	public static String hallInfoRequest() {
+	public static String hallInfo() {
 		JSONObject holder = new JSONObject();
 		try {
 			holder.put(METHOD, HALLINFO);
@@ -55,7 +55,7 @@ public class JSONRequest {
 		return holder.toString();
 	}
 
-	public static String menuDataRequest() {
+	public static String menuData() {
 		JSONObject holder = new JSONObject();
 		try {
 			holder.put(METHOD, MENU);
@@ -65,16 +65,17 @@ public class JSONRequest {
 		return holder.toString();
 	}
 
-	public static String OrderRequest(Bill_DBHelper bdb) {
+	public static String order(Bill_DBHelper bdb) {
 		JSONObject data = new JSONObject();
 		try {
 			data.put(METHOD, ORDER);
 			data.putOpt("id", UserData.self().id);
 			data.putOpt("name", UserData.self().name);
+			data.putOpt("address", UserData.self().address);
 			List<CaseData> list = bdb.getOrderList();
 			JSONArray array = new JSONArray();
 			for (CaseData c : list) {
-				array.put(caseDataResponse(c));
+				array.put(caseData(c));
 			}
 			data.putOpt("caseList", array);
 		} catch (JSONException e) {
@@ -83,14 +84,13 @@ public class JSONRequest {
 		return data.toString();
 	}
 
-	private static JSONObject caseDataResponse(CaseData c) {
+	private static JSONObject caseData(CaseData c) {
 		JSONObject data = new JSONObject();
 		try {
 			data.putOpt("id", c.id);
 			data.putOpt("name", c.name);
 			data.putOpt("message", c.message);
 			data.putOpt("orderTime", c.orderTime);
-			data.putOpt("price", c.price);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

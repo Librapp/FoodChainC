@@ -5,6 +5,10 @@ import java.util.List;
 import lms.foodchainC.R;
 import lms.foodchainC.dao.Bill_DBHelper;
 import lms.foodchainC.data.CaseData;
+import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.net.JSONParser;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
 import lms.foodchainC.widget.OrderAdapter;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -65,16 +69,19 @@ public class OrderListFragment extends Fragment implements OnClickListener {
 	}
 
 	private void sendOrder() {
-		// TODO Auto-generated method stub
-
+		new SendOrderTask().execute(getActivity(),
+				RestaurantData.local().localUrl);
 	}
 
 	private class SendOrderTask extends AsyncTask<Object, Void, String> {
 
 		@Override
 		protected String doInBackground(Object... params) {
-			// TODO Auto-generated method stub
-			return null;
+			Context context = (Context) params[0];
+			String url = (String) params[1];
+			String result = NetUtil.executePost(context,
+					JSONRequest.order(bdb), url);
+			return JSONParser.result(result);
 		}
 
 	}

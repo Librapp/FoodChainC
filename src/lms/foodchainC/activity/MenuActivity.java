@@ -66,7 +66,7 @@ public final class MenuActivity extends ExpandableListActivity implements
 		protected List<CaseStyleData> doInBackground(Object... params) {
 
 			String result = NetUtil.executePost(MenuActivity.this,
-					JSONRequest.menuDataRequest(),
+					JSONRequest.menuData(),
 					RestaurantData.local().localUrl);
 			styleList = new ArrayList<CaseStyleData>();
 			if (cdb == null)

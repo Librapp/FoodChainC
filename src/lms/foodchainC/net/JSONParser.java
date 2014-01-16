@@ -28,6 +28,19 @@ public class JSONParser {
 	private static String msg = "";
 	public static final String NODATARETURN = "获取数据失败";
 
+	/** 通用解析 */
+	public static String result(String result) {
+		msg = "";
+		try {
+			JSONObject data = new JSONObject(result);
+			msg = data.getString("msg");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+
 	/**
 	 * 解析MenuData
 	 * 
