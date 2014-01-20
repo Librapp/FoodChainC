@@ -1,8 +1,6 @@
 package lms.foodchainC.net;
 
-import java.util.List;
-
-import lms.foodchainC.data.TableStyleData;
+import lms.foodchainC.dao.Table_DBHelper;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -18,10 +16,9 @@ public class GetHallInfoTask extends AsyncTask<Object, Void, String> {
 	protected String doInBackground(Object... params) {
 		Context context = (Context) params[0];
 		String url = (String) params[1];
-		List<TableStyleData> tableStyleList = (List<TableStyleData>) params[2];
-		String result = NetUtil.executePost(context,
-				JSONRequest.hallInfo(), url);
-		return JSONParser.hallInfoParse(result, tableStyleList);
+		String result = NetUtil.executePost(context, JSONRequest.hallInfo(),
+				url);
+		return JSONParser.hallInfoParse(result, new Table_DBHelper(context));
 	}
 
 }

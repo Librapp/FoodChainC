@@ -18,7 +18,7 @@ public class RestaurantData extends UserData {
 	// 订餐短信
 	public String sms = "13800138000";
 	/** 局域网内地址 */
-	public String localUrl = "http://10.9.55.96:4004";
+	public String localUrl = "http://10.9.56.106:4004";
 	// 座位数
 	public int seatCount = 0;
 	// 空座位数

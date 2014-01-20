@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import lms.foodchainC.dao.Case_DBHelper;
+import lms.foodchainC.dao.Table_DBHelper;
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.MessageData;
@@ -32,8 +33,12 @@ public class JSONParser {
 	public static String result(String result) {
 		msg = "";
 		try {
-			JSONObject data = new JSONObject(result);
-			msg = data.getString("msg");
+			if (result != null) {
+				JSONObject data = new JSONObject(result);
+				msg = data.getString("msg");
+			} else {
+				msg = NODATARETURN;
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -49,22 +54,27 @@ public class JSONParser {
 	public static String menuDataParse(String result, Case_DBHelper cdb) {
 		msg = "";
 		try {
-			JSONObject data = new JSONObject(result);
-			int code = data.getInt("code");
-			msg = data.getString("msg");
-			if (code == 0) {
-				JSONArray array = data.optJSONArray("caseStyleList");
-				ArrayList<CaseStyleData> list = new ArrayList<CaseStyleData>();
-				for (int i = 0; i < array.length(); i++) {
-					JSONObject item = array.getJSONObject(i);
-					CaseStyleData csd = new CaseStyleData();
-					msg = caseStyleDataParse(item.toString(), csd);
-					if (msg.equals("")) {
-						list.add(csd);
-					} else
-						return msg;
+			if (result != null) {
+
+				JSONObject data = new JSONObject(result);
+				int code = data.getInt("code");
+				msg = data.getString("msg");
+				if (code == 0) {
+					JSONArray array = data.optJSONArray("caseStyleList");
+					ArrayList<CaseStyleData> list = new ArrayList<CaseStyleData>();
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject item = array.getJSONObject(i);
+						CaseStyleData csd = new CaseStyleData();
+						msg = caseStyleDataParse(item.toString(), csd);
+						if (msg.equals("")) {
+							list.add(csd);
+						} else
+							return msg;
+					}
+					cdb.insertCaseStyleList(list);
 				}
-				cdb.insertCaseStyleList(list);
+			} else {
+				msg = NODATARETURN;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -77,24 +87,28 @@ public class JSONParser {
 	public static String caseStyleDataParse(String result, CaseStyleData csd) {
 		msg = "";
 		try {
-			JSONObject data = new JSONObject(result);
-			csd.id = data.optInt("id");
-			csd.name = data.optString("name");
-			csd.startTime = data.optString("startTime");
-			csd.endTime = data.optString("endTime");
-			csd.weekday = data.optInt("weekday");
-			JSONArray array = data.optJSONArray("caseList");
-			List<CaseData> list = new ArrayList<CaseData>();
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject item = array.getJSONObject(i);
-				CaseData c = new CaseData();
-				msg = caseDataParse(item.toString(), c);
-				if (msg.equals("")) {
-					list.add(c);
-				} else
-					return msg;
+			if (result != null) {
+				JSONObject data = new JSONObject(result);
+				csd.id = data.optInt("id");
+				csd.name = data.optString("name");
+				csd.startTime = data.optString("startTime");
+				csd.endTime = data.optString("endTime");
+				csd.weekday = data.optInt("weekday");
+				JSONArray array = data.optJSONArray("caseList");
+				List<CaseData> list = new ArrayList<CaseData>();
+				for (int i = 0; i < array.length(); i++) {
+					JSONObject item = array.getJSONObject(i);
+					CaseData c = new CaseData();
+					msg = caseDataParse(item.toString(), c);
+					if (msg.equals("")) {
+						list.add(c);
+					} else
+						return msg;
+				}
+				csd.setList(list);
+			} else {
+				msg = NODATARETURN;
 			}
-			csd.setList(list);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -106,27 +120,30 @@ public class JSONParser {
 	public static String caseDataParse(String result, CaseData cd) {
 		msg = "";
 		try {
-			JSONObject data = new JSONObject(result);
-			cd.id = data.optInt("id");
-			cd.caseId = data.optInt("caseId");
-			cd.billId = data.optInt("billId");
-			cd.family = data.optInt("family");
-			cd.cookerId = data.optInt("cookerId");
-			cd.waiterId = data.optInt("waiterId");
-			cd.type = data.optInt("type");
-			cd.state = data.optInt("state");
-			cd.style = data.optInt("style");
-			cd.cookTime = data.optInt("cookTime");
-			cd.orderId = data.optInt("orderId");
-			cd.name = data.optString("name");
-			cd.picPath = data.optString("picPath");
-			cd.intro = data.optString("intro");
-			cd.orderTime = data.optString("orderTime");
-			cd.waitTime = data.optString("waitTime");
-			cd.message = data.optString("message");
-			cd.mark = data.optDouble("mark");
-			cd.price = data.optDouble("price");
-			cd.special = data.optDouble("special");
+			if (result != null) {
+				JSONObject data = new JSONObject(result);
+				cd.id = data.optInt("id");
+				cd.caseId = data.optInt("caseId");
+				cd.billId = data.optInt("billId");
+				cd.family = data.optInt("family");
+				cd.cookerId = data.optInt("cookerId");
+				cd.waiterId = data.optInt("waiterId");
+				cd.type = data.optInt("type");
+				cd.state = data.optInt("state");
+				cd.style = data.optInt("style");
+				cd.cookTime = data.optInt("cookTime");
+				cd.orderId = data.optInt("orderId");
+				cd.name = data.optString("name");
+				cd.picPath = data.optString("picPath");
+				cd.intro = data.optString("intro");
+				cd.orderTime = data.optString("orderTime");
+				cd.waitTime = data.optString("waitTime");
+				cd.message = data.optString("message");
+				cd.mark = data.optDouble("mark");
+				cd.price = data.optDouble("price");
+				cd.special = data.optDouble("special");
+			} else
+				msg = NODATARETURN;
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();
@@ -161,13 +178,14 @@ public class JSONParser {
 	}
 
 	/** 解析hallInfo */
-	public static String hallInfoParse(String result,
-			List<TableStyleData> tableStyleList) {
+	public static String hallInfoParse(String result, Table_DBHelper tdb) {
 		msg = "";
 		try {
-			JSONArray data = new JSONArray(result);
+			JSONObject data = new JSONObject(result);
+			List<TableStyleData> tableStyleList = new ArrayList<TableStyleData>();
+			JSONArray array = data.optJSONArray("tableStyleList");
 			for (int i = 0; i < data.length(); i++) {
-				JSONObject item = data.getJSONObject(i);
+				JSONObject item = array.getJSONObject(i);
 				TableStyleData ts = new TableStyleData();
 				msg = tableStyleDataParse(item.toString(), ts);
 				if (msg.equals(""))
@@ -175,6 +193,7 @@ public class JSONParser {
 				else
 					return msg;
 			}
+			tdb.insertTableStyleList(tableStyleList);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();

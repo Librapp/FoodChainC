@@ -24,10 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 
 /**
@@ -77,19 +74,6 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 
 	private void getData() {
 		styleList = cdb.getCaseStyleList();
-		RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		rl.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-		rl.setMargins(5, 5, 5, 5);
-		for (int i = 0; i < styleList.size(); i++) {
-			CaseStyleData csd = styleList.get(i);
-			Button name = new Button(getActivity());
-			name.setId(csd.id);
-			name.setLayoutParams(rl);
-			name.setText(csd.name);
-			name.setOnCreateContextMenuListener(this);
-			title.addView(name);
-		}
 		mfa = new MenuFragAdapter(getChildFragmentManager());
 		pager.setAdapter(mfa);
 		pager.setCurrentItem(0);
@@ -98,6 +82,7 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	private void initView() {
 		pager = (ViewPager) getView().findViewById(R.id.pager);
 		title = (LinearLayout) getView().findViewById(R.id.title);
+		getView().findViewById(R.id.sendorder).setOnClickListener(this);
 	}
 
 	private class MenuFragAdapter extends FragmentPagerAdapter {
@@ -167,12 +152,13 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 			String url = (String) params[1];
 			String result = NetUtil.executePost(context,
 					JSONRequest.menuData(), url);
+
 			String msg = "";
-			if (cdb == null)
-				cdb = new Case_DBHelper(context);
-			msg = JSONParser.menuDataParse(result, cdb);
-			if (msg.equals(""))
-				getData();
+			if (result != null) {
+				if (cdb == null)
+					cdb = new Case_DBHelper(context);
+				msg = JSONParser.menuDataParse(result, cdb);
+			}
 			return msg;
 		}
 
@@ -181,6 +167,8 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 			if (!result.equals(""))
 				Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT)
 						.show();
+			else
+				getData();
 			super.onPostExecute(result);
 		}
 

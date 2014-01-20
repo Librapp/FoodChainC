@@ -52,7 +52,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 
 	/** 生成订单表 */
 	private String createOrderDataTable() {
-		return CREATE + ORDERDATA + " (" + AUTO_KEY + ",caseId integer"
+		return CREATE + ORDERDATA + " (" + AUTO_KEY + ",id integer"
 				+ ",name varchar" + ",price float" + ",pic varchar"
 				+ ",cookTime integer" + ",style integer" + ",state integer"
 				+ ",count integer" + ")";
@@ -205,6 +205,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 			values.put("tableId", b.tableId);
 			values.put("createTime", b.createTime);
 			values.put("type", b.type);
+			db.beginTransaction();
 			db.insert(BILLDATA, null, values);
 			createOrderData(b);
 			db.setTransactionSuccessful();
@@ -243,6 +244,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 			db = getWritableDatabase();
 		try {
 			selectArgs = new String[] { b.id + "" };
+			db.beginTransaction();
 			db.delete(BILLDATA, "billId=?", selectArgs);
 			db.delete(ORDERDATA, "billId=?", selectArgs);
 			db.setTransactionSuccessful();
@@ -261,6 +263,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 			db = getWritableDatabase();
 		try {
 			selectArgs = new String[] { c.orderId + "" };
+			db.beginTransaction();
 			db.delete(ORDERDATA, "oiderId=?", selectArgs);
 			db.setTransactionSuccessful();
 			return true;
@@ -277,6 +280,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 			db = getWritableDatabase();
 		try {
 			selectArgs = new String[] { c.id + "" };
+			db.beginTransaction();
 			db.delete(ORDERDATA, "id=?", selectArgs);
 			db.setTransactionSuccessful();
 		} catch (Exception e) {

@@ -3,6 +3,7 @@ package lms.foodchainC.fragment;
 import java.util.ArrayList;
 
 import lms.foodchainC.R;
+import lms.foodchainC.dao.Table_DBHelper;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.net.JSONParser;
@@ -28,6 +29,7 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 	private ArrayList<TableStyleData> styleList;
 	private HallFragAdapter mfa;
 	private GetHallInfoTask getHallInfoTask;
+	private Table_DBHelper tdb;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,7 +118,7 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 					.getApplicationContext(), JSONRequest.hallInfo(),
 					RestaurantData.local().localUrl);
 			styleList = new ArrayList<TableStyleData>();
-			JSONParser.hallInfoParse(result, styleList);
+			JSONParser.hallInfoParse(result, tdb);
 			return styleList;
 		}
 
