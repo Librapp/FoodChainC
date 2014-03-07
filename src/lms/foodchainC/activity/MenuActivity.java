@@ -66,8 +66,7 @@ public final class MenuActivity extends ExpandableListActivity implements
 		protected List<CaseStyleData> doInBackground(Object... params) {
 
 			String result = NetUtil.executePost(MenuActivity.this,
-					JSONRequest.menuData(),
-					RestaurantData.local().localUrl);
+					JSONRequest.menuData(), RestaurantData.local().localUrl);
 			styleList = new ArrayList<CaseStyleData>();
 			if (cdb == null)
 				cdb = new Case_DBHelper(MenuActivity.this);
@@ -97,7 +96,6 @@ public final class MenuActivity extends ExpandableListActivity implements
 		case R.id.sendorder:
 			// TODO 下订单
 			break;
-
 		default:
 			break;
 		}
