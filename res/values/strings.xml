@@ -163,4 +163,6 @@
     <string name="restaurantdetail">饭店详情</string>
     <string name="zero">0</string>
     <string name="sendorder">下订单</string>
+    <string name="favorite">收藏</string>
+    <string name="alreadyorder">已点0份</string>
 </resources>

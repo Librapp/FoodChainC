@@ -49,22 +49,24 @@ public class MenuAdapter extends BaseAdapter {
 			holder.text = (TextView) view.findViewById(R.id.case_name);
 			holder.text1 = (TextView) view.findViewById(R.id.case_price);
 			holder.text2 = (TextView) view.findViewById(R.id.case_status);
+			holder.text3 = (TextView) view.findViewById(R.id.case_count);
 			holder.pic = (ImageView) view.findViewById(R.id.case_pic);
 			view.setTag(holder);
 		} else
 			holder = (ViewHolder) view.getTag();
 		holder.text1.setText(c.price + "元");
 		holder.text.setText(c.name);
+		holder.text3.setText("已点" + c.count + "份");
 
-		if (c.orderId != 0) {
-			// TODO 已点
-			view.setBackgroundColor(context.getResources().getColor(
-					R.color.com_sina_weibo_sdk_blue));
-		} else {
-			// TODO 未点
-			view.setBackgroundColor(context.getResources().getColor(
-					R.color.white));
-		}
+		// if (c.orderId != 0) {
+		// // TODO 已点
+		// view.setBackgroundColor(context.getResources().getColor(
+		// R.color.com_sina_weibo_sdk_blue));
+		// } else {
+		// // TODO 未点
+		// view.setBackgroundColor(context.getResources().getColor(
+		// R.color.white));
+		// }
 		// switch (c.state) {
 		// case CaseData.AVILIABLE:
 		// holder.pic1.setImageResource(R.drawable.case_aviliable);

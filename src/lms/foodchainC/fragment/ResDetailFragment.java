@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import android.widget.TextView;
  */
 public class ResDetailFragment extends Fragment implements OnClickListener {
 	private TextView name, address, tel, sms, intro;
+	private Button fav;
 	private ImageView logo;
 	private ListView comment;
 	private boolean isLocal;
@@ -43,6 +45,7 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 		sms = (TextView) v.findViewById(R.id.rd_sms_num);
 		intro = (TextView) v.findViewById(R.id.rd_intro_txt);
 		comment = (ListView) v.findViewById(R.id.comment);
+		fav = (Button) v.findViewById(R.id.rd_favorite);
 		v.findViewById(R.id.rd_menu).setOnClickListener(this);
 		v.findViewById(R.id.rd_hall).setOnClickListener(this);
 		isLocal = getArguments().getBoolean("isLocal");

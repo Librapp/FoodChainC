@@ -42,8 +42,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 
 	/** 生成账单表 */
 	private String createBillDataTable() {
-		return CREATE + BILLDATA + " ("
-				+ "billId integer primary key autoincrement,"
+		return CREATE + BILLDATA + " (" + "billId integer primary key,"
 				+ "customerId varchar," + "customerName varchar,"
 				+ "seatId varchar," + "tableId varchar,"
 				+ "createTime varchar," + "state integer," + "tip integer,"
@@ -52,7 +51,7 @@ public class Bill_DBHelper extends Base_DBHelper {
 
 	/** 生成订单表 */
 	private String createOrderDataTable() {
-		return CREATE + ORDERDATA + " (" + AUTO_KEY + ",id integer"
+		return CREATE + ORDERDATA + " (" + "id integer primary key"
 				+ ",name varchar" + ",price float" + ",pic varchar"
 				+ ",cookTime integer" + ",style integer" + ",state integer"
 				+ ",count integer" + ")";
@@ -60,22 +59,47 @@ public class Bill_DBHelper extends Base_DBHelper {
 
 	/** 创建新菜 */
 	public boolean insertCase(CaseData c) {
-		db = getWritableDatabase();
 		try {
 			ContentValues values = new ContentValues();
 			values.put("id", c.id);
-			values.put("name", c.name);
-			values.put("price", c.price);
-			values.put("pic", c.picPath);
-			values.put("cookTime", c.cookTime);
-			values.put("style", c.style);
-			values.put("state", c.state);
-			values.put("count", c.count);
-			db.insert(ORDERDATA, null, values);
+			if (getCase(c)) {
+				db = getWritableDatabase();
+				values.put("count", c.count);
+				selectArgs = new String[] { "count=?" };
+				db.update(ORDERDATA, values, null, selectArgs);
+			} else {
+				db = getWritableDatabase();
+				values.put("name", c.name);
+				values.put("price", c.price);
+				values.put("pic", c.picPath);
+				values.put("cookTime", c.cookTime);
+				values.put("style", c.style);
+				values.put("state", c.state);
+				values.put("count", c.count);
+				db.insert(ORDERDATA, null, values);
+			}
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	public boolean getCase(CaseData c) {
+		db = getReadableDatabase();
+		Cursor cursor = null;
+		try {
+			selectArgs = new String[] { c.id + "" };
+			cursor = db.query(ORDERDATA, null, "id=?", selectArgs, null, null,
+					null);
+			return cursor.moveToFirst();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
 		}
 	}
 

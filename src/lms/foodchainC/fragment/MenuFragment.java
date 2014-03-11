@@ -1,10 +1,13 @@
 package lms.foodchainC.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lms.foodchainC.R;
 import lms.foodchainC.activity.DetailActivity;
+import lms.foodchainC.dao.Bill_DBHelper;
 import lms.foodchainC.dao.Case_DBHelper;
+import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.net.JSONParser;
@@ -24,6 +27,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -34,14 +39,17 @@ import android.widget.Toast;
  * @createTime 2013/12/25
  */
 public class MenuFragment extends Fragment implements OnPageChangeListener,
-		OnClickListener {
+		OnClickListener, OnItemClickListener {
 	private Case_DBHelper cdb;
+	private Bill_DBHelper bdb;
 	private GetMenuTask getMenuTask;
 	private LinearLayout title;
 	private ViewPager pager;
 	private MenuFragAdapter mfa;
 
+	private int currentPage = 0;
 	private List<CaseStyleData> styleList;
+	private List<CaseData> orderList = new ArrayList<CaseData>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +67,9 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		initView();
-		getMenu();
+		// getMenu();
+		getData();
+		bdb = new Bill_DBHelper(getActivity());
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -73,7 +83,12 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private void getData() {
-		styleList = cdb.getCaseStyleList();
+		// styleList = cdb.getCaseStyleList();
+		styleList = new ArrayList<CaseStyleData>();
+		for (int i = 0; i < 10; i++) {
+			CaseStyleData csd = new CaseStyleData();
+			styleList.add(csd);
+		}
 		mfa = new MenuFragAdapter(getChildFragmentManager());
 		pager.setAdapter(mfa);
 		pager.setCurrentItem(0);
@@ -128,7 +143,7 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 
 	@Override
 	public void onPageSelected(int arg0) {
-		// TODO
+		currentPage = arg0;
 	}
 
 	@Override
@@ -172,6 +187,13 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 			super.onPostExecute(result);
 		}
 
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+		CaseData c = (CaseData) arg0.getAdapter().getItem(arg2);
+		bdb.insertCase(c);
 	}
 
 }

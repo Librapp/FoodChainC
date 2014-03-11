@@ -14,14 +14,14 @@
             android:layout_alignParentTop="true"
             android:paddingTop="5dp" >
             <Button
-                android:id="@+id/rd_follow"
+                android:id="@+id/rd_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="2dp"
                 android:gravity="center"
-                android:text="@string/follow"
+                android:text="@string/favorite"
                 android:textSize="14sp" />
             <ImageView
                 android:id="@+id/rd_logo"

@@ -1,5 +1,8 @@
 package lms.foodchainC.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lms.foodchainC.R;
 import lms.foodchainC.dao.Bill_DBHelper;
 import lms.foodchainC.dao.Case_DBHelper;
@@ -11,6 +14,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 /**
@@ -24,6 +28,7 @@ public class CaseStyleFragment extends ListFragment {
 	private Case_DBHelper cdb;
 	private Bill_DBHelper bdb;
 	private MenuAdapter ma;
+	private OnItemClickListener itemListener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,23 +47,34 @@ public class CaseStyleFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		cdb = new Case_DBHelper(getActivity());
 		bdb = new Bill_DBHelper(getActivity());
-		if (cdb.getCaseStyleData(csd) && csd.getList().size() > 0) {
-			ma = new MenuAdapter(getActivity(), csd.getList());
-			setListAdapter(ma);
+		// if (cdb.getCaseStyleData(csd) && csd.getList().size() > 0) {
+		// ma = new MenuAdapter(getActivity(), csd.getList());
+		// setListAdapter(ma);
+		// }
+		List<CaseData> list = new ArrayList<CaseData>();
+		for (int j = 0; j < 10; j++) {
+			CaseData cd = new CaseData();
+			list.add(cd);
 		}
+		csd.setList(list);
+		ma = new MenuAdapter(getActivity(), csd.getList());
+		setListAdapter(ma);
+		itemListener = (MenuFragment) getParentFragment();
 		super.onActivityCreated(savedInstanceState);
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		CaseData c = csd.getList().get(position);
-		if (c.orderId == 0) {
-			c.orderId = 1;
-			bdb.insertCase(c);
-		} else {
-			c.orderId = 0;
-			bdb.deleteCase(c);
-		}
+		c.count++;
+		// if (c.orderId == 0) {
+		// c.orderId = 1;
+		// bdb.insertCase(c);
+		// } else {
+		// c.orderId = 0;
+		// bdb.deleteCase(c);
+		// }
+		itemListener.onItemClick(l, v, position, id);
 		ma.notifyDataSetChanged();
 	}
 
