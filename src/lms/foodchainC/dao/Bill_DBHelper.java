@@ -61,14 +61,14 @@ public class Bill_DBHelper extends Base_DBHelper {
 	public boolean insertCase(CaseData c) {
 		try {
 			ContentValues values = new ContentValues();
-			values.put("id", c.id);
 			if (getCase(c)) {
 				db = getWritableDatabase();
 				values.put("count", c.count);
-				selectArgs = new String[] { "count=?" };
-				db.update(ORDERDATA, values, null, selectArgs);
+				selectArgs = new String[] { c.id + "" };
+				db.update(ORDERDATA, values, "id=?", selectArgs);
 			} else {
 				db = getWritableDatabase();
+				values.put("id", c.id);
 				values.put("name", c.name);
 				values.put("price", c.price);
 				values.put("pic", c.picPath);
@@ -77,6 +77,25 @@ public class Bill_DBHelper extends Base_DBHelper {
 				values.put("state", c.state);
 				values.put("count", c.count);
 				db.insert(ORDERDATA, null, values);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean upgradeCase(CaseData c) {
+		try {
+			ContentValues values = new ContentValues();
+			if (getCase(c)) {
+				db = getWritableDatabase();
+				values.put("price", c.price);
+				values.put("count", c.count);
+				values.put("state", c.state);
+				values.put("cookTime", c.cookTime);
+				selectArgs = new String[] { c.id + "" };
+				db.update(ORDERDATA, values, "id=?", selectArgs);
 			}
 			return true;
 		} catch (Exception e) {
@@ -157,17 +176,17 @@ public class Bill_DBHelper extends Base_DBHelper {
 
 			if (cursor != null) {
 				while (cursor.moveToNext()) {
-					CaseData c = new CaseData(
-							cursor.getInt(cursor.getColumnIndex("orderId")),
-							cursor.getInt(cursor.getColumnIndex("id")),
-							cursor.getInt(cursor.getColumnIndex("caseId")),
-							cursor.getString(cursor.getColumnIndex("caseName")),
-							cursor.getFloat(cursor.getColumnIndex("price")),
-							cursor.getInt(cursor.getColumnIndex("billId")),
-							cursor.getString(cursor.getColumnIndex("orderTime")),
-							cursor.getInt(cursor.getColumnIndex("state")),
-							cursor.getInt(cursor.getColumnIndex("type")),
-							cursor.getString(cursor.getColumnIndex("message")));
+					CaseData c = new CaseData(cursor.getInt(cursor
+							.getColumnIndex("orderId")), cursor.getInt(cursor
+							.getColumnIndex("id")), cursor.getInt(cursor
+							.getColumnIndex("caseId")), cursor.getString(cursor
+							.getColumnIndex("name")), cursor.getFloat(cursor
+							.getColumnIndex("price")), cursor.getInt(cursor
+							.getColumnIndex("billId")), cursor.getString(cursor
+							.getColumnIndex("orderTime")), cursor.getInt(cursor
+							.getColumnIndex("state")), cursor.getInt(cursor
+							.getColumnIndex("type")), cursor.getString(cursor
+							.getColumnIndex("message")));
 					list.add(c);
 				}
 				b.setCaseList(list);
@@ -189,21 +208,14 @@ public class Bill_DBHelper extends Base_DBHelper {
 		List<CaseData> list = new ArrayList<CaseData>();
 		try {
 			db = getReadableDatabase();
-			cursor = db.query(ORDERDATA, null, null, null, null, null,
-					"orederId");
+			cursor = db.query(ORDERDATA, null, null, null, null, null, null);
 			if (cursor != null) {
 				while (cursor.moveToNext()) {
-					CaseData c = new CaseData(
-							cursor.getInt(cursor.getColumnIndex("orderId")),
-							cursor.getInt(cursor.getColumnIndex("id")),
-							cursor.getInt(cursor.getColumnIndex("caseId")),
-							cursor.getString(cursor.getColumnIndex("caseName")),
-							cursor.getFloat(cursor.getColumnIndex("price")),
-							cursor.getInt(cursor.getColumnIndex("billId")),
-							cursor.getString(cursor.getColumnIndex("orderTime")),
-							cursor.getInt(cursor.getColumnIndex("state")),
-							cursor.getInt(cursor.getColumnIndex("type")),
-							cursor.getString(cursor.getColumnIndex("message")));
+					CaseData c = new CaseData();
+					c.id = cursor.getInt(cursor.getColumnIndex("id"));
+					c.name = cursor.getString(cursor.getColumnIndex("name"));
+					c.price = cursor.getFloat(cursor.getColumnIndex("price"));
+					c.count = cursor.getInt(cursor.getColumnIndex("count"));
 					list.add(c);
 				}
 			}

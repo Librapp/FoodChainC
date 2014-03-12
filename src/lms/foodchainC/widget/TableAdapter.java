@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,7 +49,7 @@ public class TableAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.id = (TextView) view.findViewById(R.id.tli_table_id);
 			holder.icon = (ImageView) view.findViewById(R.id.tli_table_icon);
-			holder.seat = (GridView) view.findViewById(R.id.tli_seat_grid);
+			holder.seat = (MyGridView) view.findViewById(R.id.tli_seat_grid);
 			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) view.getTag();
@@ -71,7 +70,6 @@ public class TableAdapter extends BaseAdapter {
 		case TableData.AVAILIABLE:
 			holder.icon.setImageResource(R.drawable.icon);
 			break;
-
 		default:
 			break;
 		}
@@ -81,6 +79,6 @@ public class TableAdapter extends BaseAdapter {
 	static class ViewHolder {
 		TextView id;
 		ImageView icon;
-		GridView seat;
+		MyGridView seat;
 	}
 }

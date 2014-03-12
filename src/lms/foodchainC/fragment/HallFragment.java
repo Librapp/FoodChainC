@@ -22,10 +22,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 public class HallFragment extends Fragment implements OnPageChangeListener,
 		OnItemClickListener {
 	private ViewPager pager;
+	private LinearLayout waitLayout;
 	private ArrayList<TableStyleData> styleList;
 	private HallFragAdapter mfa;
 	private GetHallInfoTask getHallInfoTask;
@@ -40,12 +44,49 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		initView();
-		refresh();
+
+		styleList = new ArrayList<TableStyleData>();
+		TableStyleData tsd = new TableStyleData("A01", 10, 4);
+		styleList.add(tsd);
+		Button btn = new Button(getActivity());
+		btn.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
+				+ tsd.tableCount + ")");
+		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		btn.setLayoutParams(lp);
+		waitLayout.addView(btn);
+
+		tsd = new TableStyleData("A02", 8, 6);
+		styleList.add(tsd);
+		Button btn1 = new Button(getActivity());
+		btn1.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
+				+ tsd.tableCount + ")");
+		btn1.setLayoutParams(lp);
+		waitLayout.addView(btn1);
+
+		tsd = new TableStyleData("A03", 4, 8);
+		styleList.add(tsd);
+		Button btn2 = new Button(getActivity());
+		btn2.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
+				+ tsd.tableCount + ")");
+		btn2.setLayoutParams(lp);
+		waitLayout.addView(btn2);
+
+		Button btn3 = new Button(getActivity());
+		btn3.setText("空位(120/120)");
+		btn3.setLayoutParams(lp);
+		waitLayout.addView(btn3);
+
+		mfa = new HallFragAdapter(getChildFragmentManager());
+		pager.setAdapter(mfa);
+
+		// refresh();
 		super.onActivityCreated(savedInstanceState);
 	}
 
 	private void initView() {
 		pager = (ViewPager) getView().findViewById(R.id.pager);
+		waitLayout = (LinearLayout) getView().findViewById(R.id.waitlayout);
 	}
 
 	private class HallFragAdapter extends FragmentPagerAdapter {
@@ -128,7 +169,6 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 			pager.setAdapter(mfa);
 			super.onPreExecute();
 		};
-
 	}
 
 	@Override

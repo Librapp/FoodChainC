@@ -50,7 +50,7 @@ public class OrderAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.text = (TextView) view.findViewById(R.id.case_name);
 			holder.text1 = (TextView) view.findViewById(R.id.case_price);
-			holder.text2 = (TextView) view.findViewById(R.id.count);
+			holder.text2 = (TextView) view.findViewById(R.id.case_count);
 			holder.pic = (ImageView) view.findViewById(R.id.case_pic);
 			holder.btn = (ImageButton) view.findViewById(R.id.plus);
 			holder.btn1 = (ImageButton) view.findViewById(R.id.minus);
@@ -59,14 +59,16 @@ public class OrderAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		holder.text1.setText(c.price + "元");
 		holder.text.setText(c.name);
-		holder.text2.setText(c.count);
+		holder.text2.setText(c.count + "");
 		holder.btn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				c.count++;
-				holder.text2.setText(c.count);
-				notifyDataSetChanged();
+				if (c.count < 20) {
+					c.count++;
+					holder.text2.setText(c.count + "");
+					notifyDataSetChanged();
+				}
 			}
 		});
 
@@ -74,9 +76,11 @@ public class OrderAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				c.count--;
-				holder.text2.setText(c.count);
-				notifyDataSetChanged();
+				if (c.count > 0) {
+					c.count--;
+					holder.text2.setText(c.count + "");
+					notifyDataSetChanged();
+				}
 			}
 		});
 

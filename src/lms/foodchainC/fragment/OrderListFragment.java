@@ -57,8 +57,13 @@ public class OrderListFragment extends Fragment implements OnClickListener {
 				bdb = new Bill_DBHelper(context);
 			list = bdb.getOrderList();
 			oa = new OrderAdapter(getActivity(), list);
-			listView.setAdapter(oa);
 			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			listView.setAdapter(oa);
+			super.onPostExecute(result);
 		}
 
 	}
@@ -74,7 +79,6 @@ public class OrderListFragment extends Fragment implements OnClickListener {
 	}
 
 	private class SendOrderTask extends AsyncTask<Object, Void, String> {
-
 		@Override
 		protected String doInBackground(Object... params) {
 			Context context = (Context) params[0];

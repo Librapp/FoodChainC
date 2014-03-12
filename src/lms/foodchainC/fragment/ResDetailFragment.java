@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 /**
@@ -24,6 +25,7 @@ import android.widget.TextView;
 public class ResDetailFragment extends Fragment implements OnClickListener {
 	private TextView name, address, tel, sms, intro;
 	private Button fav;
+	private NumberPicker numberPicker;
 	private ImageView logo;
 	private ListView comment;
 	private boolean isLocal;
@@ -46,6 +48,9 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 		intro = (TextView) v.findViewById(R.id.rd_intro_txt);
 		comment = (ListView) v.findViewById(R.id.comment);
 		fav = (Button) v.findViewById(R.id.rd_favorite);
+		numberPicker = (NumberPicker) v.findViewById(R.id.numberPicker1);
+		numberPicker.setMaxValue(12);
+		numberPicker.setMinValue(1);
 		v.findViewById(R.id.rd_menu).setOnClickListener(this);
 		v.findViewById(R.id.rd_hall).setOnClickListener(this);
 		isLocal = getArguments().getBoolean("isLocal");
@@ -58,7 +63,6 @@ public class ResDetailFragment extends Fragment implements OnClickListener {
 		tel.setText(resData.tel);
 		sms.setText(resData.sms);
 		intro.setText(resData.intro);
-
 		// TODO logo图片
 		super.onActivityCreated(savedInstanceState);
 	}

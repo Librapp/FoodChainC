@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lms.foodchainC.R;
-import lms.foodchainC.dao.Bill_DBHelper;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseData;
 import lms.foodchainC.data.CaseStyleData;
@@ -26,7 +25,6 @@ import android.widget.ListView;
 public class CaseStyleFragment extends ListFragment {
 	private CaseStyleData csd;
 	private Case_DBHelper cdb;
-	private Bill_DBHelper bdb;
 	private MenuAdapter ma;
 	private OnItemClickListener itemListener;
 
@@ -46,7 +44,6 @@ public class CaseStyleFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		cdb = new Case_DBHelper(getActivity());
-		bdb = new Bill_DBHelper(getActivity());
 		// if (cdb.getCaseStyleData(csd) && csd.getList().size() > 0) {
 		// ma = new MenuAdapter(getActivity(), csd.getList());
 		// setListAdapter(ma);
@@ -67,13 +64,6 @@ public class CaseStyleFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		CaseData c = csd.getList().get(position);
 		c.count++;
-		// if (c.orderId == 0) {
-		// c.orderId = 1;
-		// bdb.insertCase(c);
-		// } else {
-		// c.orderId = 0;
-		// bdb.deleteCase(c);
-		// }
 		itemListener.onItemClick(l, v, position, id);
 		ma.notifyDataSetChanged();
 	}

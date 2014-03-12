@@ -33,9 +33,10 @@
                 android:padding="5dp"
                 android:src="@drawable/user_headpic_default" />
             <TableLayout
+                android:id="@+id/tableLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/rd_follow"
+                android:layout_toLeftOf="@+id/rd_favorite"
                 android:layout_toRightOf="@+id/rd_logo"
                 android:orientation="vertical" >
                 <TableRow>
@@ -89,10 +90,32 @@
             </TableLayout>
         </RelativeLayout>
         <LinearLayout
-            android:id="@+id/rd_mid"
+            android:id="@+id/rd_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rd_up"
+            android:layout_margin="5dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/peoplenumber"
+                android:textSize="18sp" />
+            <NumberPicker
+                android:id="@+id/numberPicker1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:scaleX="0.5"
+                android:scaleY="0.5" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/rd_mid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rd_number"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingTop="5dp" >

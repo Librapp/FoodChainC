@@ -29,7 +29,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -43,13 +43,11 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	private Case_DBHelper cdb;
 	private Bill_DBHelper bdb;
 	private GetMenuTask getMenuTask;
-	private LinearLayout title;
 	private ViewPager pager;
 	private MenuFragAdapter mfa;
-
-	private int currentPage = 0;
+	private Button order;
+	private int orderCount = 0;
 	private List<CaseStyleData> styleList;
-	private List<CaseData> orderList = new ArrayList<CaseData>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,8 +94,8 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 
 	private void initView() {
 		pager = (ViewPager) getView().findViewById(R.id.pager);
-		title = (LinearLayout) getView().findViewById(R.id.title);
-		getView().findViewById(R.id.sendorder).setOnClickListener(this);
+		order = (Button) getView().findViewById(R.id.sendorder);
+		order.setOnClickListener(this);
 	}
 
 	private class MenuFragAdapter extends FragmentPagerAdapter {
@@ -143,7 +141,7 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 
 	@Override
 	public void onPageSelected(int arg0) {
-		currentPage = arg0;
+		// TODO
 	}
 
 	@Override
@@ -186,14 +184,15 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 				getData();
 			super.onPostExecute(result);
 		}
-
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
 		CaseData c = (CaseData) arg0.getAdapter().getItem(arg2);
-		bdb.insertCase(c);
+		if (bdb.insertCase(c)) {
+			orderCount++;
+			order.setText("已点" + orderCount + "个菜");
+		}
 	}
 
 }

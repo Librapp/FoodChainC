@@ -3,12 +3,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
-
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="3dp" >
-
         <ImageView
             android:id="@+id/tli_table_icon"
             android:layout_width="wrap_content"
@@ -17,7 +15,6 @@
             android:contentDescription="@string/app_name"
             android:scaleType="matrix"
             android:src="@drawable/icon" />
-
         <TextView
             android:id="@+id/tli_table_id"
             android:layout_width="wrap_content"
@@ -28,15 +25,12 @@
             android:textColor="@android:color/black"
             android:textSize="12sp" />
     </FrameLayout>
-
-    <GridView
+    <lms.foodchainC.widget.MyGridView
         android:id="@+id/tli_seat_grid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:numColumns="4"
         android:scrollbars="none"
-        android:scrollingCache="false" >
-    </GridView>
-
+        android:scrollingCache="false" />
 </LinearLayout>

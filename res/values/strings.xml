@@ -165,4 +165,6 @@
     <string name="sendorder">下订单</string>
     <string name="favorite">收藏</string>
     <string name="alreadyorder">已点0份</string>
+    <string name="takeaway">打包</string>
+    <string name="peoplenumber">用餐人数</string>
 </resources>
