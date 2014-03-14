@@ -2,6 +2,10 @@
 <resources>
     <string-array name="slidingmenu">
         <item>搜索</item>
+        <item>大厅</item>
+        <item>菜单</item>
+        <item>账单</item>
+        <item>聊天</item>
     </string-array>
     <string-array name="genders">
         <item>男</item>

@@ -25,9 +25,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,6 +49,9 @@ public class SearchFragment extends Fragment implements OnClickListener,
 	private ConnectivityManager connectivityManager;
 	private ListView resultList;
 	private RelativeLayout currentRes;
+	private Button searchCurrentBtn;
+	private ProgressBar progress;
+	private NumberPicker numberPicker;
 	private TextView name;
 	private EditText edit;
 	private ImageView clean;
@@ -85,8 +91,12 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		clean.setOnClickListener(this);
 		edit = (EditText) v.findViewById(R.id.edit);
 		edit.addTextChangedListener(this);
+		searchCurrentBtn = (Button) v.findViewById(R.id.search_current);
+		searchCurrentBtn.setOnClickListener(this);
+		progress = (ProgressBar) v.findViewById(R.id.search_progress);
 		currentRes = (RelativeLayout) v.findViewById(R.id.current_res);
 		currentRes.setOnClickListener(this);
+		numberPicker = (NumberPicker) v.findViewById(R.id.numberPicker1);
 		name = (TextView) v.findViewById(R.id.name);
 		resultList = (ListView) v.findViewById(R.id.result);
 		resultList.setOnItemClickListener(this);
@@ -113,6 +123,9 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.change:
 			// TODO
+			break;
+		case R.id.search_current:
+			// TODO 发送搜索命令
 			break;
 		default:
 			break;
@@ -200,8 +213,8 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		@Override
 		protected String doInBackground(Object... params) {
 			String result = NetUtil.executePost(getActivity()
-					.getApplicationContext(), JSONRequest
-					.restaurantInfo(), RestaurantData.local().localUrl);
+					.getApplicationContext(), JSONRequest.restaurantInfo(),
+					RestaurantData.local().localUrl);
 			String msg = JSONParser.restaurantInfoParse(result,
 					RestaurantData.local());
 			return msg;

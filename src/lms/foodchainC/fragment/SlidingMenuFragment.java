@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * 
@@ -19,7 +19,7 @@ import android.widget.ListView;
  * @description 左侧滑出菜单模块
  * @createTime 2013/12/20
  */
-public class SlidingMenuFragment extends Fragment implements OnClickListener,
+public class SlidingMenuFragment extends Fragment implements
 		OnItemClickListener {
 	private ListView list;
 
@@ -38,28 +38,31 @@ public class SlidingMenuFragment extends Fragment implements OnClickListener,
 				getActivity(), android.R.layout.simple_list_item_1,
 				android.R.id.text1, slidingmenu);
 		list.setAdapter(colorAdapter);
+		list.setOnItemClickListener(this);
 		super.onActivityCreated(savedInstanceState);
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-
-		default:
-			break;
-		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Fragment newContent = new Fragment();
+		Fragment newContent = null;
 		switch (position) {
 		case 0:
 			newContent = new SearchFragment();
 			break;
 		case 1:
-
+			newContent = new HallFragment();
+			break;
+		case 2:
+			newContent = new MenuFragment();
+			break;
+		case 3:
+			Toast.makeText(getActivity(), "跳转到账单页", Toast.LENGTH_SHORT).show();
+			// newContent = new BillFragment();
+			break;
+		case 4:
+			Toast.makeText(getActivity(), "跳转到聊天页", Toast.LENGTH_SHORT).show();
+			// newContent = new ChatFragment();
 			break;
 		default:
 			break;

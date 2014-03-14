@@ -11,15 +11,24 @@ import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.widget.TableAdapter;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-public class TableStyleFragment extends ListFragment {
+public class TableStyleFragment extends ListFragment implements
+		OnItemClickListener, OnItemLongClickListener {
 	private TableStyleData tsd;
 	private Table_DBHelper tdb;
 	private TableAdapter ta;
+	private SeatData seat;
+	private final int SIT = 0, SAYHI = 1, DETAIL = 2;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +73,41 @@ public class TableStyleFragment extends ListFragment {
 			lt.add(td);
 		}
 		tsd.setTable(lt);
+	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		switch (seat.state) {
+		case SeatData.AVAILIABLE:
+			menu.add(0, SIT, 0, "入座");
+			break;
+		case SeatData.OCCUPY:
+			menu.add(0, SAYHI, 1, "打招呼");
+			menu.add(0, DETAIL, 2, "查看");
+			break;
+		default:
+			break;
+		}
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case SIT:
+
+			break;
+		case SAYHI:
+
+			break;
+		case DETAIL:
+
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public static TableStyleFragment newInstance(String id) {
@@ -78,5 +121,18 @@ public class TableStyleFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		seat = (SeatData) arg0.getAdapter().getItem(arg2);
+		return false;
 	}
 }

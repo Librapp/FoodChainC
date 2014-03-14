@@ -3,6 +3,7 @@ package lms.foodchainC.widget;
 import java.util.List;
 
 import lms.foodchainC.R;
+import lms.foodchainC.data.SeatData;
 import lms.foodchainC.data.TableData;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TableAdapter extends BaseAdapter {
 	private Context context;
@@ -61,8 +63,22 @@ public class TableAdapter extends BaseAdapter {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO 跳转到顾客详情
-
+				SeatData data = (SeatData) parent.getAdapter()
+						.getItem(position);
+				switch (data.state) {
+				case SeatData.AVAILIABLE:
+					// TODO 入座
+					Toast.makeText(context, "添加订座位功能", Toast.LENGTH_SHORT)
+							.show();
+					break;
+				case SeatData.OCCUPY:
+					// TODO 跳转到顾客详情
+					Toast.makeText(context, "添加跳转到顾客详情功能", Toast.LENGTH_SHORT)
+							.show();
+					break;
+				default:
+					break;
+				}
 			}
 		});
 		// TODO 根据状态换图片

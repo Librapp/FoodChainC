@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
     <RelativeLayout
         android:id="@+id/input_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
         <ImageButton
@@ -17,30 +17,24 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/app_name"
             android:src="@drawable/voice" />
-        <ImageButton
-            android:id="@+id/input_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/input_voice"
-            android:contentDescription="@string/app_name" />
         <EditText
             android:id="@+id/input_ed"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/input_send"
-            android:layout_toRightOf="@+id/input_add"
+            android:layout_toLeftOf="@+id/input_add"
+            android:layout_toRightOf="@+id/input_voice"
             android:inputType="text"
             android:singleLine="true" />
-        <Button
-            android:id="@+id/input_send"
+        <ImageButton
+            android:id="@+id/input_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/send" />
+            android:contentDescription="@string/app_name" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/input_add_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
         android:orientation="horizontal"
@@ -60,8 +54,8 @@
     </LinearLayout>
     <GridView
         android:id="@+id/input_emotion_grid"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:columnWidth="15dp"
         android:gravity="center"
         android:horizontalSpacing="20dp"

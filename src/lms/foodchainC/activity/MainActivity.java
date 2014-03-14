@@ -35,8 +35,7 @@ public class MainActivity extends SlidingFragmentActivity {
 			setBehindContentView(R.layout.menu_frame);
 			getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 			getSlidingMenu().setSlidingEnabled(true);
-			getSlidingMenu()
-					.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+			getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 			// show home as up so we can toggle
 			// getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		} else {
@@ -66,7 +65,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		sm.setFadeDegree(0.35f);
 		sm.setBehindScrollScale(0);
-		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
 		getSlidingMenu().setSecondaryMenu(R.layout.menu_frame_two);
 		getSlidingMenu().setSecondaryShadowDrawable(R.drawable.shadowright);

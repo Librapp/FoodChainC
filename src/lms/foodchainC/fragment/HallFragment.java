@@ -17,17 +17,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 public class HallFragment extends Fragment implements OnPageChangeListener,
-		OnItemClickListener {
+		OnItemClickListener, OnItemLongClickListener {
 	private ViewPager pager;
 	private LinearLayout waitLayout;
 	private ArrayList<TableStyleData> styleList;
@@ -39,6 +43,21 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.hall, null);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		menu.add(0, 0, 0, "入座");
+		menu.add(0, 1, 1, "打招呼");
+		menu.add(0, 2, 2, "查看");
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -176,5 +195,12 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 			long id) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

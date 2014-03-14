@@ -10,14 +10,15 @@ import org.cybergarage.upnp.Device;
  */
 public class UserData {
 	private static UserData self;
+	public static UserData current = new UserData();
 	// ID
 	public int id = 0;
 	// 用户名
 	public String name = "";
 	/** 签名 */
-	public String signature;
+	public String signature = "";
 	/** 昵称 */
-	public String nickname;
+	public String nickname = "";
 	// 头像
 	public String headPic = "";
 	// 地址ַ
@@ -46,6 +47,8 @@ public class UserData {
 	public int sex = 0;
 	// 状态
 	public int state = 0;
+	/** 隐私设置 0不需要验证1需要 */
+	public int security = 0;
 	// 设备
 	public Device device;
 	// 评论

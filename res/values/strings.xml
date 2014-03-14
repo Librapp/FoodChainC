@@ -148,7 +148,7 @@
     <string name="nickname">昵称</string>
     <string name="username">用户名</string>
     <string name="birthdate">出生日期</string>
-    <string name="signature">签名</string>
+    <string name="signature">个性签名</string>
     <string name="resetpassword">重置密码</string>
     <string name="bitian">带星号的为必填项</string>
     <string name="ihavereadandagree">我已看过并同意</string>
@@ -167,4 +167,10 @@
     <string name="alreadyorder">已点0份</string>
     <string name="takeaway">打包</string>
     <string name="peoplenumber">用餐人数</string>
+    <string name="bindaccount">绑定账号</string>
+    <string name="gift">送点什么</string>
+    <string name="conversation">对话</string>
+    <string name="verification">验证</string>
+    <string name="currentrestaurant">所在店铺</string>
+    <string name="searchcurrentshop">搜索当前店铺</string>
 </resources>

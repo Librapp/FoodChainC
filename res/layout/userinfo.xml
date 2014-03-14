@@ -1,69 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f9f9f9"
     android:orientation="vertical" >
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentLeft="true"
-        android:layout_gravity="center"
-        android:background="@drawable/user_default_icon"
-        android:contentDescription="@string/app_name" />
-    <Button
-        android:id="@+id/edit"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/user_default_icon"
+            android:contentDescription="@string/app_name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/photo"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/photo"
+            android:layout_toRightOf="@+id/photo"
+            android:orientation="vertical"
+            android:padding="5dp" >
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:text="@string/username"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:text="@string/email"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:text="@string/nickname"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:text="@string/bindaccount"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/bindaccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:text="@string/bindaccount"
+                android:textSize="14sp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:text="@string/signature"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/signature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:text="@string/signature"
+                android:textSize="14sp" />
+        </TableRow>
+    </TableLayout>
+    <Gallery
+        android:id="@+id/pics"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/edit" />
-    <LinearLayout
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/sayhi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/photo"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/photo"
-        android:layout_toRightOf="@+id/photo"
-        android:orientation="vertical"
-        android:padding="5dp" >
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="@string/username"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="@string/email"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/nickname"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="@string/nickname"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/signature"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="@string/signature"
-            android:textSize="18sp" />
-    </LinearLayout>
-</RelativeLayout>
+        android:gravity="center"
+        android:text="@string/sayhi" />
+    <Button
+        android:id="@+id/gift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/gift" />
+</LinearLayout>

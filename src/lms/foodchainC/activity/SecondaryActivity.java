@@ -2,10 +2,12 @@ package lms.foodchainC.activity;
 
 import lms.foodchainC.R;
 import lms.foodchainC.fragment.AboutFragment;
+import lms.foodchainC.fragment.ConversationFragment;
 import lms.foodchainC.fragment.FeedbackFragment;
 import lms.foodchainC.fragment.LoginFragment;
 import lms.foodchainC.fragment.ResDetailFragment;
 import lms.foodchainC.fragment.SendCommentFragment;
+import lms.foodchainC.fragment.UserInfoFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -47,12 +49,15 @@ public class SecondaryActivity extends FragmentActivity implements
 			mContent = new FeedbackFragment();
 			break;
 		case R.string.userinfo:
-
+			mContent = new UserInfoFragment();
 			break;
 		case R.string.restaurantdetail:
 			mContent = new ResDetailFragment();
 			b.putBoolean("isLocal", getIntent()
 					.getBooleanExtra("isLocal", true));
+			break;
+		case R.string.conversation:
+			mContent = new ConversationFragment();
 			break;
 		default:
 			break;
