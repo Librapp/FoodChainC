@@ -55,7 +55,6 @@ public class JSONParser {
 		msg = "";
 		try {
 			if (result != null) {
-
 				JSONObject data = new JSONObject(result);
 				int code = data.getInt("code");
 				msg = data.getString("msg");

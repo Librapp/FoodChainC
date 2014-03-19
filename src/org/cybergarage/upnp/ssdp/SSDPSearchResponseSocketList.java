@@ -86,22 +86,9 @@ public class SSDPSearchResponseSocketList extends Vector {
 		}
 		try {
 			for (int j = 0; j < bindAddresses.length; j++) {
-				// for (int i = 0; i < 1; i++) {
-				// bindAddresses[i] = binds[i].getHostAddress();
-				// }
-				// } else {
-				// int nHostAddrs = HostInterface.getNHostAddresses();
-				// bindAddresses = new String[nHostAddrs];
-				// for (int n = 0; n < 1; n++) {
-				// bindAddresses[n] = HostInterface.getHostAddress(n);
-				// }
-				// }
-				// try {
-				// for (int j = 0; j < 1; j++) {
 				SSDPSearchResponseSocket socket = new SSDPSearchResponseSocket(
 						bindAddresses[j], port);
-				if (!socket.getLocalAddress().equals(""))
-					add(socket);
+				add(socket);
 			}
 		} catch (Exception e) {
 			stop();

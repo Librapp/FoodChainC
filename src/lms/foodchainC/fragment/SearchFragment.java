@@ -126,6 +126,7 @@ public class SearchFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.search_current:
 			// TODO 发送搜索命令
+			searchInLan();
 			break;
 		default:
 			break;

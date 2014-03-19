@@ -2,6 +2,9 @@ package lms.foodchainC.fragment;
 
 import lms.foodchainC.R;
 import lms.foodchainC.activity.MainActivity;
+import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.service.DlnaService;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -51,10 +54,18 @@ public class SlidingMenuFragment extends Fragment implements
 			newContent = new SearchFragment();
 			break;
 		case 1:
-			newContent = new HallFragment();
+			if (RestaurantData.current().isChoosen)
+				newContent = new HallFragment();
+			else
+				Toast.makeText(getActivity(), "请先选择餐厅", Toast.LENGTH_SHORT)
+						.show();
 			break;
 		case 2:
-			newContent = new MenuFragment();
+			if (RestaurantData.local().isMenuDownLoad)
+				newContent = new MenuFragment();
+			else if (DlnaService.getMenuTask.getStatus() != AsyncTask.Status.RUNNING)
+				Toast.makeText(getActivity(), "请先选择餐厅", Toast.LENGTH_SHORT)
+						.show();
 			break;
 		case 3:
 			Toast.makeText(getActivity(), "跳转到账单页", Toast.LENGTH_SHORT).show();

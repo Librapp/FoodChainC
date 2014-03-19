@@ -480,9 +480,11 @@ public class ControlPoint implements HTTPRequestListener {
 	}
 
 	public void searchResponseReceived(SSDPPacket packet) {
-		if (packet.isRootDevice() == true)
-			addDevice(packet);
-		performSearchResponseListener(packet);
+		if (packet.getST().equals("FC")) {
+			if (packet.isRootDevice() == true)
+				addDevice(packet);
+			performSearchResponseListener(packet);
+		}
 	}
 
 	// //////////////////////////////////////////////

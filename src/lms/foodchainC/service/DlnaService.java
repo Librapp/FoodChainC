@@ -1,6 +1,7 @@
 package lms.foodchainC.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,6 +45,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	private static boolean started = false;
 	// private lms.foodchainC.upnp.Device d;
 	private static SearchDeviceTask searchDeviceTask;
+	public static GetMenuTask getMenuTask = new GetMenuTask();
 
 	public class DlnaServiceBinder extends Binder {
 		public DlnaService getService() {
@@ -137,7 +139,10 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		c.addSearchResponseListener(new SearchResponseListener() {
 			@Override
 			public void deviceSearchResponseReceived(SSDPPacket ssdpPacket) {
-
+				if (ssdpPacket.getST().startsWith("FC")) {
+					Log.e("收到响应", Calendar.getInstance().getTime()
+							.toGMTString());
+				}
 			}
 		});
 	}
@@ -167,6 +172,7 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			EmployeeData c = new EmployeeData(dev, EmployeeData.COOKER);
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
+			Log.e("获取设备", Calendar.getInstance().getTime().toGMTString());
 			String l = dev.getLocation();
 			// if (!l.contains("%")) {
 			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
