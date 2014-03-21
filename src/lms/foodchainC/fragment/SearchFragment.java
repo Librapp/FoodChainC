@@ -77,6 +77,8 @@ public class SearchFragment extends Fragment implements OnClickListener,
 						OtherData.RESTAURANTDEVICETYPE)) {
 					name.setText(RestaurantData.local().name);
 					currentRes.setVisibility(View.VISIBLE);
+					progress.setVisibility(View.GONE);
+					searchCurrentBtn.setVisibility(View.GONE);
 				}
 			}
 		};
@@ -102,7 +104,6 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		resultList.setOnItemClickListener(this);
 
 		name.setText(RestaurantData.local().name);
-		currentRes.setVisibility(View.VISIBLE);
 	}
 
 	@Override

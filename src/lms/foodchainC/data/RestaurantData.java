@@ -27,8 +27,6 @@ public class RestaurantData extends UserData {
 	public int waitNumber = 0;
 	// 是否营业
 	public boolean isOpen = false;
-	/** 是否选择餐厅 */
-	public boolean isChoosen = false;
 	// 服务生
 	private List<EmployeeData> waiter;
 	// 厨师
@@ -45,6 +43,8 @@ public class RestaurantData extends UserData {
 	public boolean isLocal = true;
 	/** 菜单下载 */
 	public boolean isMenuDownLoad = false;
+	/** 大厅状态下载 */
+	public boolean isTableDownLoad = false;
 	/** 当前选择 */
 	private static RestaurantData current;
 	/** 本地 */
@@ -69,6 +69,7 @@ public class RestaurantData extends UserData {
 	public static RestaurantData local() {
 		if (local == null) {
 			local = new RestaurantData();
+			local.isLocal = true;
 		}
 		return local;
 	}

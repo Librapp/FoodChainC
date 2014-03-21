@@ -2,8 +2,13 @@ package lms.foodchainC.fragment;
 
 import lms.foodchainC.R;
 import lms.foodchainC.activity.MainActivity;
+import lms.foodchainC.dao.Case_DBHelper;
+import lms.foodchainC.dao.Table_DBHelper;
 import lms.foodchainC.data.RestaurantData;
-import lms.foodchainC.service.DlnaService;
+import lms.foodchainC.net.JSONParser;
+import lms.foodchainC.net.JSONRequest;
+import lms.foodchainC.net.NetUtil;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +30,8 @@ import android.widget.Toast;
 public class SlidingMenuFragment extends Fragment implements
 		OnItemClickListener {
 	private ListView list;
+	private GetMenuTask getMenuTask = new GetMenuTask();
+	private GetHallInfoTask getHallInfoTask = new GetHallInfoTask();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,17 +61,25 @@ public class SlidingMenuFragment extends Fragment implements
 			newContent = new SearchFragment();
 			break;
 		case 1:
-			if (RestaurantData.current().isChoosen)
+			if (RestaurantData.local().isTableDownLoad)
 				newContent = new HallFragment();
-			else
-				Toast.makeText(getActivity(), "请先选择餐厅", Toast.LENGTH_SHORT)
+			else if (getHallInfoTask.getStatus() != AsyncTask.Status.RUNNING) {
+				getHallInfoTask = new GetHallInfoTask();
+				getHallInfoTask.execute(getActivity(),
+						RestaurantData.local().localUrl);
+			} else
+				Toast.makeText(getActivity(), "正在获取大厅数据请稍候", Toast.LENGTH_SHORT)
 						.show();
 			break;
 		case 2:
 			if (RestaurantData.local().isMenuDownLoad)
 				newContent = new MenuFragment();
-			else if (DlnaService.getMenuTask.getStatus() != AsyncTask.Status.RUNNING)
-				Toast.makeText(getActivity(), "请先选择餐厅", Toast.LENGTH_SHORT)
+			else if (getMenuTask.getStatus() != AsyncTask.Status.RUNNING) {
+				getMenuTask = new GetMenuTask();
+				getMenuTask.execute(getActivity(),
+						RestaurantData.local().localUrl);
+			} else
+				Toast.makeText(getActivity(), "正在获取菜单数据请稍候", Toast.LENGTH_SHORT)
 						.show();
 			break;
 		case 3:
@@ -89,6 +104,48 @@ public class SlidingMenuFragment extends Fragment implements
 		if (getActivity() instanceof MainActivity) {
 			MainActivity ra = (MainActivity) getActivity();
 			ra.switchContent(fragment);
+		}
+	}
+
+	private class GetMenuTask extends AsyncTask<Object, Void, String> {
+
+		@Override
+		protected String doInBackground(Object... params) {
+			Context context = (Context) params[0];
+			String url = (String) params[1];
+			String result = NetUtil.executePost(context,
+					JSONRequest.menuData(), url);
+			return JSONParser.menuDataParse(result, new Case_DBHelper(context));
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result.equals("")) {
+				switchFragment(new MenuFragment());
+			}
+			super.onPostExecute(result);
+		}
+
+	}
+
+	private class GetHallInfoTask extends AsyncTask<Object, Void, String> {
+
+		@Override
+		protected String doInBackground(Object... params) {
+			Context context = (Context) params[0];
+			String url = (String) params[1];
+			String result = NetUtil.executePost(context,
+					JSONRequest.hallInfo(), url);
+			return JSONParser
+					.hallInfoParse(result, new Table_DBHelper(context));
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result.equals("")) {
+				switchFragment(new HallFragment());
+			}
+			super.onPostExecute(result);
 		}
 	}
 

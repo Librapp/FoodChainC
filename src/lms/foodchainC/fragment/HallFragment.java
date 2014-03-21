@@ -1,6 +1,7 @@
 package lms.foodchainC.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lms.foodchainC.R;
 import lms.foodchainC.dao.Table_DBHelper;
@@ -34,7 +35,7 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 		OnItemClickListener, OnItemLongClickListener {
 	private ViewPager pager;
 	private LinearLayout waitLayout;
-	private ArrayList<TableStyleData> styleList;
+	private List<TableStyleData> styleList;
 	private HallFragAdapter mfa;
 	private GetHallInfoTask getHallInfoTask;
 	private Table_DBHelper tdb;
@@ -63,38 +64,41 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		initView();
+		tdb = new Table_DBHelper(getActivity());
+		styleList = tdb.getTableStyleDataList();
+		// styleList = new ArrayList<TableStyleData>();
+		// TableStyleData tsd = new TableStyleData("A01", 10, 4);
+		// styleList.add(tsd);
+		for (TableStyleData tsd : styleList) {
+			Button btn = new Button(getActivity());
+			btn.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
+					+ tsd.tableCount + ")");
+			LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			btn.setLayoutParams(lp);
+			waitLayout.addView(btn);
+		}
 
-		styleList = new ArrayList<TableStyleData>();
-		TableStyleData tsd = new TableStyleData("A01", 10, 4);
-		styleList.add(tsd);
-		Button btn = new Button(getActivity());
-		btn.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
-				+ tsd.tableCount + ")");
-		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
-		btn.setLayoutParams(lp);
-		waitLayout.addView(btn);
-
-		tsd = new TableStyleData("A02", 8, 6);
-		styleList.add(tsd);
-		Button btn1 = new Button(getActivity());
-		btn1.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
-				+ tsd.tableCount + ")");
-		btn1.setLayoutParams(lp);
-		waitLayout.addView(btn1);
-
-		tsd = new TableStyleData("A03", 4, 8);
-		styleList.add(tsd);
-		Button btn2 = new Button(getActivity());
-		btn2.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
-				+ tsd.tableCount + ")");
-		btn2.setLayoutParams(lp);
-		waitLayout.addView(btn2);
-
-		Button btn3 = new Button(getActivity());
-		btn3.setText("空位(120/120)");
-		btn3.setLayoutParams(lp);
-		waitLayout.addView(btn3);
+		// tsd = new TableStyleData("A02", 8, 6);
+		// styleList.add(tsd);
+		// Button btn1 = new Button(getActivity());
+		// btn1.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
+		// + tsd.tableCount + ")");
+		// btn1.setLayoutParams(lp);
+		// waitLayout.addView(btn1);
+		//
+		// tsd = new TableStyleData("A03", 4, 8);
+		// styleList.add(tsd);
+		// Button btn2 = new Button(getActivity());
+		// btn2.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
+		// + tsd.tableCount + ")");
+		// btn2.setLayoutParams(lp);
+		// waitLayout.addView(btn2);
+		//
+		// Button btn3 = new Button(getActivity());
+		// btn3.setText("空位(120/120)");
+		// btn3.setLayoutParams(lp);
+		// waitLayout.addView(btn3);
 
 		mfa = new HallFragAdapter(getChildFragmentManager());
 		pager.setAdapter(mfa);
@@ -164,7 +168,7 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private class GetHallInfoTask extends
-			AsyncTask<Object, JSONRequest, ArrayList<TableStyleData>> {
+			AsyncTask<Object, JSONRequest, List<TableStyleData>> {
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
@@ -172,7 +176,7 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 		}
 
 		@Override
-		protected ArrayList<TableStyleData> doInBackground(Object... params) {
+		protected List<TableStyleData> doInBackground(Object... params) {
 
 			String result = NetUtil.executePost(getActivity()
 					.getApplicationContext(), JSONRequest.hallInfo(),
@@ -183,7 +187,7 @@ public class HallFragment extends Fragment implements OnPageChangeListener,
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<TableStyleData> styleList) {
+		protected void onPostExecute(List<TableStyleData> styleList) {
 			mfa = new HallFragAdapter(getChildFragmentManager());
 			pager.setAdapter(mfa);
 			super.onPreExecute();

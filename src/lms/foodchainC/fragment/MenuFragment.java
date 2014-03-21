@@ -1,6 +1,5 @@
 package lms.foodchainC.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lms.foodchainC.R;
@@ -81,12 +80,12 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private void getData() {
-		// styleList = cdb.getCaseStyleList();
-		styleList = new ArrayList<CaseStyleData>();
-		for (int i = 0; i < 10; i++) {
-			CaseStyleData csd = new CaseStyleData();
-			styleList.add(csd);
-		}
+		styleList = cdb.getCaseStyleList();
+		// styleList = new ArrayList<CaseStyleData>();
+		// for (int i = 0; i < 10; i++) {
+		// CaseStyleData csd = new CaseStyleData();
+		// styleList.add(csd);
+		// }
 		mfa = new MenuFragAdapter(getChildFragmentManager());
 		pager.setAdapter(mfa);
 		pager.setCurrentItem(0);

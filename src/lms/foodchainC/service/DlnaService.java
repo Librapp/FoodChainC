@@ -9,6 +9,7 @@ import lms.foodchainC.data.CustomerData;
 import lms.foodchainC.data.EmployeeData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.data.Self;
 import lms.foodchainC.net.GetMenuTask;
 
 import org.cybergarage.upnp.ControlPoint;
@@ -45,7 +46,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	private static boolean started = false;
 	// private lms.foodchainC.upnp.Device d;
 	private static SearchDeviceTask searchDeviceTask;
-	public static GetMenuTask getMenuTask = new GetMenuTask();
 
 	public class DlnaServiceBinder extends Binder {
 		public DlnaService getService() {
@@ -142,6 +142,20 @@ public class DlnaService extends Service implements DeviceChangeListener {
 				if (ssdpPacket.getST().startsWith("FC")) {
 					Log.e("收到响应", Calendar.getInstance().getTime()
 							.toGMTString());
+					String l = ssdpPacket.getLocation();
+					Intent intent = new Intent(NEW_RESTAURANT_FOUND);
+					intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
+					String address = "";
+					if (l.contains("%"))
+						address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
+					else
+						address = l.substring(0, l.lastIndexOf(":")) + ":4004";
+					intent.putExtra("address", address);
+					RestaurantData.local().isLocal = true;
+					RestaurantData.local().localUrl = address;
+					new GetMenuTask().execute(getApplicationContext(),
+							RestaurantData.local().localUrl);
+					sendBroadcast(intent);
 				}
 			}
 		});
@@ -173,24 +187,22 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
 			Log.e("获取设备", Calendar.getInstance().getTime().toGMTString());
-			String l = dev.getLocation();
-			// if (!l.contains("%")) {
-			Intent intent = new Intent(NEW_RESTAURANT_FOUND);
-			intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
-			String address = "";
-			if (l.contains("%"))
-				address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
-			else
-				address = l.substring(0, l.lastIndexOf(":")) + ":4004";
-			intent.putExtra("address", address);
-			// RestaurantData.local().id = (Integer) dev.getUserData();
-			RestaurantData.local().isLocal = true;
-			RestaurantData.local().localUrl = address;
-			RestaurantData.local().name = dev.getFriendlyName();
-			new GetMenuTask().execute(getApplicationContext(),
-					RestaurantData.local().localUrl);
-			sendBroadcast(intent);
-			// }
+			if (Self.current().isSelecting) {
+				Self.current().isSelecting = false;
+				String l = dev.getLocation();
+				Intent intent = new Intent(NEW_RESTAURANT_FOUND);
+				intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
+				String address = "";
+				if (l.contains("%"))
+					address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
+				else
+					address = l.substring(0, l.lastIndexOf(":")) + ":4004";
+				intent.putExtra("address", address);
+				RestaurantData.local().isLocal = true;
+				RestaurantData.local().localUrl = address;
+				RestaurantData.local().name = dev.getFriendlyName();
+				sendBroadcast(intent);
+			}
 		}
 	}
 

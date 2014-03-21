@@ -29,6 +29,8 @@ public class Self extends CustomerData {
 	private List<BillData> bill;
 	// 烹饪顺序
 	private List<CaseData> order;
+	/** 正在选择餐厅 */
+	public boolean isSelecting = true;
 
 	public static Self current() {
 		if (current == null) {
