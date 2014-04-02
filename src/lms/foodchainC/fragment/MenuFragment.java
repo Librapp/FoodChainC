@@ -64,6 +64,7 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		initView();
+		cdb = new Case_DBHelper(getActivity());
 		// getMenu();
 		getData();
 		bdb = new Bill_DBHelper(getActivity());

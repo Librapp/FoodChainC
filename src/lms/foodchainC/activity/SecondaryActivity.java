@@ -49,7 +49,8 @@ public class SecondaryActivity extends FragmentActivity implements
 			mContent = new FeedbackFragment();
 			break;
 		case R.string.userinfo:
-			mContent = new UserInfoFragment();
+			mContent = UserInfoFragment.newInstance(getIntent().getIntExtra("id",
+					0));
 			break;
 		case R.string.restaurantdetail:
 			mContent = new ResDetailFragment();

@@ -2,10 +2,12 @@ package lms.foodchainC.activity;
 
 import lms.foodchainC.R;
 import lms.foodchainC.fragment.AboutFragment;
+import lms.foodchainC.fragment.ConversationFragment;
 import lms.foodchainC.fragment.HallFragment;
 import lms.foodchainC.fragment.LoginFragment;
 import lms.foodchainC.fragment.MenuFragment;
 import lms.foodchainC.fragment.OrderListFragment;
+import lms.foodchainC.fragment.VerificationFragment;
 import lms.foodchainC.fragment.WebBrowserFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -59,6 +61,14 @@ public class DetailActivity extends FragmentActivity implements OnClickListener 
 			break;
 		case R.string.sendorder:
 			mContent = new OrderListFragment();
+			break;
+		case R.string.conversation:
+			mContent = ConversationFragment.newInstance(getIntent()
+					.getIntExtra("id", 0));
+			break;
+		case R.string.verification:
+			mContent = VerificationFragment.newInstance(getIntent()
+					.getIntExtra("id", 0));
 			break;
 		default:
 			break;

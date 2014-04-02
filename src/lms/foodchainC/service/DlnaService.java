@@ -10,7 +10,6 @@ import lms.foodchainC.data.EmployeeData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.Self;
-import lms.foodchainC.net.GetMenuTask;
 
 import org.cybergarage.upnp.ControlPoint;
 import org.cybergarage.upnp.Device;
@@ -35,8 +34,6 @@ import android.util.Log;
  * @changeLog
  */
 public class DlnaService extends Service implements DeviceChangeListener {
-
-	public static final String NEW_DEVICES_FOUND = "newDeviceFound";
 	public static final String NEW_RESTAURANT_FOUND = "newRestaurantFound";
 	public static final String SEARCH_DEVICE = "search_FC_device";
 
@@ -44,7 +41,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 	private static ControlPoint c;
 	// CP有没有启动
 	private static boolean started = false;
-	// private lms.foodchainC.upnp.Device d;
 	private static SearchDeviceTask searchDeviceTask;
 
 	public class DlnaServiceBinder extends Binder {
@@ -60,22 +56,13 @@ public class DlnaService extends Service implements DeviceChangeListener {
 
 	@Override
 	public void onCreate() {
-		// new Thread(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// initServer();
-		// }
-		// }).start();
 		initControlPoint();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-
 		if (SEARCH_DEVICE.equals(intent.getAction())) {
 			searchDevice();
-			// handler.postDelayed(task, 5000);
 		}
 		return Service.START_NOT_STICKY;
 	}
@@ -88,31 +75,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		searchDeviceTask = new SearchDeviceTask();
 		searchDeviceTask.execute(RestaurantData.local().isLocal);
 	}
-
-	// private void initServer() {
-	// Node root = new Node(RootDescription.ROOT_ELEMENT);
-	// root.setNameSpace("", RootDescription.ROOT_ELEMENT_NAMESPACE);
-	// Node spec = new Node(RootDescription.SPECVERSION_ELEMENT);
-	// Node maj = new Node(RootDescription.MAJOR_ELEMENT);
-	// maj.setValue("1");
-	// Node min = new Node(RootDescription.MINOR_ELEMENT);
-	// min.setValue("0");
-	// spec.addNode(maj);
-	// spec.addNode(min);
-	// root.addNode(spec);
-	//
-	// Node device = new Node(Device.ELEM_NAME);
-	// root.addNode(device);
-	//
-	// d = new lms.foodchainC.upnp.Device(root, device);
-	// d.setFriendlyName(Self.current().name);
-	// d.setUDN("uuid:" + getMyUUID());
-	// d.setDeviceType(OtherData.CUSTOMERDEVICETYPE);
-	// d.setDescriptionURI(OtherData.DESCRIPTIONURL);
-	// if (FileInfoUtils.writeFile(d.getRootNode().toString().getBytes(),
-	// "FCC", "description.xml"))
-	// d.start();
-	// }
 
 	private String getMyUUID() {
 		final TelephonyManager tm = (TelephonyManager) getBaseContext()
@@ -153,8 +115,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 					intent.putExtra("address", address);
 					RestaurantData.local().isLocal = true;
 					RestaurantData.local().localUrl = address;
-					new GetMenuTask().execute(getApplicationContext(),
-							RestaurantData.local().localUrl);
 					sendBroadcast(intent);
 				}
 			}
@@ -211,18 +171,6 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		// TODO Auto-generated method stub
 
 	}
-
-	// private Handler handler = new Handler();
-	//
-	// private Runnable task = new Runnable() {
-	// public void run() {
-	// // TODO Auto-generated method stub
-	// if (!RestaurantData.local().isLocal) {
-	// searchDevice();
-	// handler.postDelayed(this, 5000);// 设置延迟时间，此处是5秒
-	// }
-	// }
-	// };
 
 	private class SearchDeviceTask extends AsyncTask<Object, Void, Void> {
 

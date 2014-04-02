@@ -24,7 +24,8 @@ import android.widget.TextView;
 public class UserInfoFragment extends Fragment implements OnClickListener {
 	private TextView username, email, nickname, signature;
 	private ImageView photo;
-	private Button sayhi;
+	private Button sayhi, bill;
+	private UserData user;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +35,9 @@ public class UserInfoFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		user = new UserData();
+		user.id = getArguments().getInt("id");
+		// TODO 判断是否是好友
 		View v = getView();
 		username = (TextView) v.findViewById(R.id.username);
 		email = (TextView) v.findViewById(R.id.email);
@@ -41,7 +45,8 @@ public class UserInfoFragment extends Fragment implements OnClickListener {
 		signature = (TextView) v.findViewById(R.id.signature);
 		photo = (ImageView) v.findViewById(R.id.photo);
 		sayhi = (Button) v.findViewById(R.id.sayhi);
-		switch (UserData.current.security) {
+		bill = (Button) v.findViewById(R.id.helpbuybill);
+		switch (user.security) {
 		case 0:
 			sayhi.setText("发消息");
 			break;
@@ -52,6 +57,17 @@ public class UserInfoFragment extends Fragment implements OnClickListener {
 			break;
 		}
 		sayhi.setOnClickListener(this);
+		switch (user.gender) {
+		case 0:
+			bill.setText("帮她买单");
+			break;
+		case 1:
+			bill.setText("帮他买单");
+			break;
+		default:
+			break;
+		}
+		bill.setOnClickListener(this);
 		username.setText(UserData.self().name);
 		email.setText(UserData.self().email);
 		nickname.setText(UserData.self().nickname);
@@ -59,8 +75,6 @@ public class UserInfoFragment extends Fragment implements OnClickListener {
 		ImageLoaderHelper loaderHelper = new ImageLoaderHelper();
 		loaderHelper.loadImage(photo, UserData.self().headPic,
 				R.drawable.user_default_icon);
-		v.findViewById(R.id.sayhi).setOnClickListener(this);
-		v.findViewById(R.id.gift).setOnClickListener(this);
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -68,26 +82,36 @@ public class UserInfoFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.sayhi:
-			switch (UserData.current.security) {
+			switch (user.security) {
 			case 0:
 				Intent i = new Intent(getActivity(), DetailActivity.class);
 				i.putExtra("title", R.string.conversation);
+				i.putExtra("id", user.id);
 				getActivity().startActivity(i);
 				break;
 			case 1:
 				Intent iV = new Intent(getActivity(), DetailActivity.class);
 				iV.putExtra("title", R.string.verification);
+				iV.putExtra("id", user.id);
 				getActivity().startActivity(iV);
 				break;
 			default:
 				break;
 			}
 			break;
-		case R.id.gift:
-			// TODO 跳转到菜单界面，送礼物
+		case R.id.helpbuybill:
+			// TODO 跳转到当前客户账单界面
 			break;
 		default:
 			break;
 		}
+	}
+
+	public static UserInfoFragment newInstance(int id) {
+		UserInfoFragment f = new UserInfoFragment();
+		Bundle args = new Bundle();
+		args.putInt("id", id);
+		f.setArguments(args);
+		return f;
 	}
 }

@@ -43,4 +43,12 @@ public class VerificationFragment extends Fragment implements OnClickListener {
 		}
 	}
 
+	public static VerificationFragment newInstance(int id) {
+		VerificationFragment f = new VerificationFragment();
+		Bundle args = new Bundle();
+		args.putInt("id", id);
+		f.setArguments(args);
+		return f;
+	}
+
 }

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lms.foodchainC.R;
+import lms.foodchainC.activity.SecondaryActivity;
 import lms.foodchainC.dao.Table_DBHelper;
 import lms.foodchainC.data.SeatData;
 import lms.foodchainC.data.TableData;
 import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.widget.TableAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
@@ -28,7 +30,7 @@ public class TableStyleFragment extends ListFragment implements
 	private Table_DBHelper tdb;
 	private TableAdapter ta;
 	private SeatData seat;
-	private final int SIT = 0, SAYHI = 1, DETAIL = 2;
+	private final int SIT = 0, DETAIL = 2;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +85,6 @@ public class TableStyleFragment extends ListFragment implements
 			menu.add(0, SIT, 0, "入座");
 			break;
 		case SeatData.OCCUPY:
-			menu.add(0, SAYHI, 1, "打招呼");
 			menu.add(0, DETAIL, 2, "查看");
 			break;
 		default:
@@ -96,13 +97,13 @@ public class TableStyleFragment extends ListFragment implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case SIT:
-
-			break;
-		case SAYHI:
-
+			// TODO 发送入座请求
 			break;
 		case DETAIL:
-
+			Intent intent = new Intent(getActivity(), SecondaryActivity.class);
+			intent.putExtra("title", R.string.userinfo);
+			intent.putExtra("id", seat.customerId);
+			getActivity().startActivity(intent);
 			break;
 		default:
 			break;
