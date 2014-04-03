@@ -59,6 +59,7 @@ public class JSONParser {
 				int code = data.getInt("code");
 				msg = data.getString("msg");
 				if (code == 0) {
+					cdb.deleteDataBase();
 					JSONArray array = data.optJSONArray("caseStyleList");
 					ArrayList<CaseStyleData> list = new ArrayList<CaseStyleData>();
 					for (int i = 0; i < array.length(); i++) {

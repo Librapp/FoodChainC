@@ -44,9 +44,10 @@ public class NetUtil {
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
 			conn.setUseCaches(false);
-			conn.setInstanceFollowRedirects(true);
+			// conn.setInstanceFollowRedirects(true);
 			conn.setRequestProperty("Charset", "UTF-8");
-			conn.setRequestProperty("Content-Type", "application/x-javascript");
+			// conn.setRequestProperty("Content-Type",
+			// "application/x-javascript");
 			conn.setReadTimeout(20000);
 			conn.setConnectTimeout(15000);
 			conn.connect();

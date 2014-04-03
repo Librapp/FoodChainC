@@ -15,11 +15,18 @@ public abstract class Base_DBHelper extends SQLiteOpenHelper {
 	public static final String CREATE = "CREATE TABLE IF NOT EXISTS ";
 	public static final String DROP = "DROP TABLE IF EXISTS ";
 	public static final String AUTO_KEY = "id integer primary key autoincrement";
+	public String DATABASE_NAME;
 	public static String[] selectArgs;
+	public Context context;
 
 	public Base_DBHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
+		DATABASE_NAME = name;
+		this.context = context;
 	}
 
+	public boolean deleteDataBase() {
+		return context.deleteDatabase(DATABASE_NAME);
+	}
 }

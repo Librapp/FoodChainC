@@ -22,6 +22,9 @@ import java.util.Vector;
 
 import org.cybergarage.net.HostInterface;
 import org.cybergarage.upnp.ControlPoint;
+import org.cybergarage.util.Debug;
+
+import android.util.Log;
 
 public class SSDPSearchResponseSocketList extends Vector {
 	// //////////////////////////////////////////////
@@ -149,6 +152,8 @@ public class SSDPSearchResponseSocketList extends Vector {
 			// sock.joinGroup(ssdpAddr, SSDP.PORT, bindAddr);
 			if (sock.post(ssdpAddr, SSDP.PORT, req) == false)
 				ret = false;
+			if (Debug.isOn())
+				Log.e("搜索设备", req.toString());
 			// sock.leaveGroup(ssdpAddr, SSDP.PORT, bindAddr);
 		}
 		return ret;
