@@ -469,18 +469,20 @@ public class ControlPoint implements HTTPRequestListener {
 	// //////////////////////////////////////////////
 
 	public void notifyReceived(SSDPPacket packet) {
-		if (packet.isRootDevice() == true) {
-			if (packet.isAlive() == true) {
-				addDevice(packet);
-			} else if (packet.isByeBye() == true) {
-				removeDevice(packet);
+		if (packet.getST().equals("urn:schemas-upnp-org:device:FC")) {
+			if (packet.isRootDevice() == true) {
+				if (packet.isAlive() == true) {
+					addDevice(packet);
+				} else if (packet.isByeBye() == true) {
+					removeDevice(packet);
+				}
 			}
+			performNotifyListener(packet);
 		}
-		performNotifyListener(packet);
 	}
 
 	public void searchResponseReceived(SSDPPacket packet) {
-		if (packet.getST().equals("FC")) {
+		if (packet.getST().equals("urn:schemas-upnp-org:device:FC")) {
 			if (packet.isRootDevice() == true)
 				addDevice(packet);
 			performSearchResponseListener(packet);

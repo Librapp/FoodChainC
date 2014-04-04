@@ -69,7 +69,7 @@ public class RestaurantData extends UserData {
 	public static RestaurantData local() {
 		if (local == null) {
 			local = new RestaurantData();
-			local.isLocal = true;
+			local.isLocal = false;
 		}
 		return local;
 	}

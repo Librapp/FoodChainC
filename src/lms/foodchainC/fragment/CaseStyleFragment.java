@@ -1,8 +1,5 @@
 package lms.foodchainC.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lms.foodchainC.R;
 import lms.foodchainC.dao.Case_DBHelper;
 import lms.foodchainC.data.CaseData;
@@ -44,18 +41,18 @@ public class CaseStyleFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		cdb = new Case_DBHelper(getActivity());
-		// if (cdb.getCaseStyleData(csd) && csd.getList().size() > 0) {
+		if (cdb.getCaseStyleData(csd) && csd.getList().size() > 0) {
+			ma = new MenuAdapter(getActivity(), csd.getList());
+			setListAdapter(ma);
+		}
+		// List<CaseData> list = new ArrayList<CaseData>();
+		// for (int j = 0; j < 10; j++) {
+		// CaseData cd = new CaseData();
+		// list.add(cd);
+		// }
+		// csd.setList(list);
 		// ma = new MenuAdapter(getActivity(), csd.getList());
 		// setListAdapter(ma);
-		// }
-		List<CaseData> list = new ArrayList<CaseData>();
-		for (int j = 0; j < 10; j++) {
-			CaseData cd = new CaseData();
-			list.add(cd);
-		}
-		csd.setList(list);
-		ma = new MenuAdapter(getActivity(), csd.getList());
-		setListAdapter(ma);
 		itemListener = (MenuFragment) getParentFragment();
 		super.onActivityCreated(savedInstanceState);
 	}

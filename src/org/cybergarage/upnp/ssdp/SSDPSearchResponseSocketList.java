@@ -91,7 +91,8 @@ public class SSDPSearchResponseSocketList extends Vector {
 			for (int j = 0; j < bindAddresses.length; j++) {
 				SSDPSearchResponseSocket socket = new SSDPSearchResponseSocket(
 						bindAddresses[j], port);
-				add(socket);
+				if (HostInterface.isIPv4Address(bindAddresses[j]))
+					add(socket);
 			}
 		} catch (Exception e) {
 			stop();

@@ -182,18 +182,23 @@ public class JSONParser {
 		msg = "";
 		try {
 			JSONObject data = new JSONObject(result);
-			List<TableStyleData> tableStyleList = new ArrayList<TableStyleData>();
-			JSONArray array = data.optJSONArray("tableStyleList");
-			for (int i = 0; i < data.length(); i++) {
-				JSONObject item = array.getJSONObject(i);
-				TableStyleData ts = new TableStyleData();
-				msg = tableStyleDataParse(item.toString(), ts);
-				if (msg.equals(""))
-					tableStyleList.add(ts);
-				else
-					return msg;
+			int code = data.getInt("code");
+			msg = data.getString("msg");
+			if (code == 0) {
+				tdb.deleteDataBase();
+				List<TableStyleData> tableStyleList = new ArrayList<TableStyleData>();
+				JSONArray array = data.optJSONArray("tableStyleList");
+				for (int i = 0; i < data.length(); i++) {
+					JSONObject item = array.getJSONObject(i);
+					TableStyleData ts = new TableStyleData();
+					msg = tableStyleDataParse(item.toString(), ts);
+					if (msg.equals(""))
+						tableStyleList.add(ts);
+					else
+						return msg;
+				}
+				tdb.insertTableStyleList(tableStyleList);
 			}
-			tdb.insertTableStyleList(tableStyleList);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			msg = e.getMessage();

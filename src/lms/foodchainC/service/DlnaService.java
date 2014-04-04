@@ -177,10 +177,10 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		@Override
 		protected Void doInBackground(Object... params) {
 			if (!started) {
-				c.start("FC");
+				c.start("urn:schemas-upnp-org:device:FC");
 				started = true;
 			} else {
-				c.search("FC");
+				c.search("urn:schemas-upnp-org:device:FC");
 			}
 			return null;
 		}

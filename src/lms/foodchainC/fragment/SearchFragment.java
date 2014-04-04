@@ -102,8 +102,12 @@ public class SearchFragment extends Fragment implements OnClickListener,
 		name = (TextView) v.findViewById(R.id.name);
 		resultList = (ListView) v.findViewById(R.id.result);
 		resultList.setOnItemClickListener(this);
-
-		name.setText(RestaurantData.local().name);
+		if (RestaurantData.local().isLocal) {
+			name.setText(RestaurantData.local().name);
+			currentRes.setVisibility(View.VISIBLE);
+			progress.setVisibility(View.GONE);
+			searchCurrentBtn.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
