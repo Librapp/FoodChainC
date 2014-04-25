@@ -11,6 +11,8 @@ import org.cybergarage.upnp.Device;
 public class UserData {
 	private static UserData self;
 	public static UserData current = new UserData();
+	/** 就餐人数 */
+	public int peoplecount = 1;
 	// ID
 	public int id = 0;
 	// 用户名

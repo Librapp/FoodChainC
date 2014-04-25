@@ -4,6 +4,7 @@ import java.util.List;
 
 import lms.foodchainC.dao.Bill_DBHelper;
 import lms.foodchainC.data.CaseData;
+import lms.foodchainC.data.SeatData;
 import lms.foodchainC.data.UserData;
 
 import org.json.JSONArray;
@@ -24,6 +25,7 @@ public class JSONRequest {
 	public static final String CASEDETAIL = "caseDetail";
 	public static final String HALLINFO = "hallInfo";
 	public static final String ORDER = "order";
+	public static final String SETSEAT = "setSeat";
 
 	public static String restaurantInfo() {
 		JSONObject holder = new JSONObject();
@@ -95,5 +97,21 @@ public class JSONRequest {
 			e.printStackTrace();
 		}
 		return data;
+	}
+
+	/** 选座位 */
+	public static String setSeat(SeatData seatData) {
+		JSONObject data = new JSONObject();
+		try {
+			data.put(METHOD, SETSEAT);
+			data.putOpt("userId", UserData.self().id);
+			data.putOpt("userName", UserData.self().name);
+			data.putOpt("peopleCount", UserData.self().peoplecount);
+			data.putOpt("seatId", seatData.seatId);
+			data.putOpt("tableId", seatData.tableId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return data.toString();
 	};
 }

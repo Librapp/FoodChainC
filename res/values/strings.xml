@@ -174,4 +174,5 @@
     <string name="currentrestaurant">所在店铺</string>
     <string name="searchcurrentshop">搜索当前店铺</string>
     <string name="helpbuybill">帮她买单</string>
+    <string name="setseat">找座位</string>
 </resources>

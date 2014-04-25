@@ -6,6 +6,7 @@ import java.util.List;
 import lms.foodchainC.R;
 import lms.foodchainC.dao.Table_DBHelper;
 import lms.foodchainC.data.RestaurantData;
+import lms.foodchainC.data.SeatData;
 import lms.foodchainC.data.TableStyleData;
 import lms.foodchainC.net.JSONParser;
 import lms.foodchainC.net.JSONRequest;
@@ -20,15 +21,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 public class HallFragment extends Fragment implements OnPageChangeListener {
 	private ViewPager pager;
-	private LinearLayout waitLayout;
 	private List<TableStyleData> styleList;
+	private Button setSeat;
 	private HallFragAdapter mfa;
 	private GetHallInfoTask getHallInfoTask;
 	private Table_DBHelper tdb;
@@ -44,50 +45,22 @@ public class HallFragment extends Fragment implements OnPageChangeListener {
 		initView();
 		tdb = new Table_DBHelper(getActivity());
 		styleList = tdb.getTableStyleDataList();
-		// styleList = new ArrayList<TableStyleData>();
-		// TableStyleData tsd = new TableStyleData("A01", 10, 4);
-		// styleList.add(tsd);
-		for (TableStyleData tsd : styleList) {
-			Button btn = new Button(getActivity());
-			btn.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
-					+ tsd.tableCount + ")");
-			LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT);
-			btn.setLayoutParams(lp);
-			waitLayout.addView(btn);
-		}
-
-		// tsd = new TableStyleData("A02", 8, 6);
-		// styleList.add(tsd);
-		// Button btn1 = new Button(getActivity());
-		// btn1.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
-		// + tsd.tableCount + ")");
-		// btn1.setLayoutParams(lp);
-		// waitLayout.addView(btn1);
-		//
-		// tsd = new TableStyleData("A03", 4, 8);
-		// styleList.add(tsd);
-		// Button btn2 = new Button(getActivity());
-		// btn2.setText(tsd.seatCount + "人桌(" + tsd.tableCount + "/"
-		// + tsd.tableCount + ")");
-		// btn2.setLayoutParams(lp);
-		// waitLayout.addView(btn2);
-		//
-		// Button btn3 = new Button(getActivity());
-		// btn3.setText("空位(120/120)");
-		// btn3.setLayoutParams(lp);
-		// waitLayout.addView(btn3);
 
 		mfa = new HallFragAdapter(getChildFragmentManager());
 		pager.setAdapter(mfa);
-
-		// refresh();
 		super.onActivityCreated(savedInstanceState);
 	}
 
 	private void initView() {
 		pager = (ViewPager) getView().findViewById(R.id.pager);
-		waitLayout = (LinearLayout) getView().findViewById(R.id.waitlayout);
+		setSeat = (Button) getView().findViewById(R.id.setseat);
+		setSeat.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				new SetSeatTask().execute(new SeatData());
+			}
+		});
 	}
 
 	private class HallFragAdapter extends FragmentPagerAdapter {
@@ -170,5 +143,26 @@ public class HallFragment extends Fragment implements OnPageChangeListener {
 			pager.setAdapter(mfa);
 			super.onPreExecute();
 		};
+	}
+
+	private class SetSeatTask extends AsyncTask<Object, Void, String> {
+
+		@Override
+		protected String doInBackground(Object... params) {
+			return NetUtil.executePost(getActivity(),
+					JSONRequest.setSeat((SeatData) params[0]),
+					RestaurantData.local().localUrl);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result.equals("")) {
+				// TODO
+			} else {
+				Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT)
+						.show();
+			}
+			super.onPostExecute(result);
+		}
 	}
 }

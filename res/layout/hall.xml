@@ -7,16 +7,11 @@
         android:id="@+id/pager"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_above="@+id/hall_bottom" />
-    <HorizontalScrollView
-        android:id="@+id/hall_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true" >
-        <LinearLayout
-            android:id="@+id/waitlayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
+        android:layout_above="@+id/setseat" />
+    <Button
+        android:id="@+id/setseat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/setseat" />
 </RelativeLayout>
