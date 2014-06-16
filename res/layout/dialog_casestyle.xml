@@ -3,7 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
-
     <EditText
         android:id="@+id/name"
         android:layout_width="wrap_content"
@@ -13,26 +12,24 @@
         android:inputType="text"
         android:maxEms="6"
         android:minEms="6" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal" >
-
         <Button
             android:id="@+id/ok"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/ok" />
-
         <Button
             android:id="@+id/cancel"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cancel" />
     </LinearLayout>
-
 </LinearLayout>

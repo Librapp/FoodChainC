@@ -64,21 +64,21 @@
             android:layout_height="wrap_content" >
             <Button
                 android:id="@+id/login"
+                style="@style/TextBtn"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:padding="10dp"
                 android:text="@string/login"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
             <Button
                 android:id="@+id/register"
+                style="@style/TextBtn"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:padding="10dp"
                 android:text="@string/register"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </RelativeLayout>
         <LinearLayout

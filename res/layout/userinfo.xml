@@ -99,14 +99,16 @@
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/sayhi"
-        android:layout_width="match_parent"
+        style="@style/TextBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center_horizontal"
         android:text="@string/sayhi" />
     <Button
         android:id="@+id/helpbuybill"
-        android:layout_width="match_parent"
+        style="@style/TextBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center_horizontal"
         android:text="@string/helpbuybill" />
 </LinearLayout>

@@ -25,14 +25,12 @@
             android:text="@string/name" />
         <Button
             android:id="@+id/edit"
+            style="@style/TextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="3dp"
-            android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:text="@string/edit" />
     </RelativeLayout>
     <ListView

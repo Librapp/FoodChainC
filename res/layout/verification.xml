@@ -12,6 +12,7 @@
         android:inputType="text" />
     <Button
         android:id="@+id/send"
+        style="@style/TextBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ed"

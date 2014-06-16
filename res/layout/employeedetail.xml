@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="@string/state"
-            android:textSize="30dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/ed_middle_layout"
@@ -97,27 +97,27 @@
         android:orientation="horizontal" >
         <Button
             android:id="@+id/ed_call"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:padding="3dp"
             android:text="@string/call" />
         <Button
             android:id="@+id/ed_message"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:padding="3dp"
             android:text="@string/sendmessage" />
         <Button
             android:id="@+id/ed_duty"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:padding="3dp"
             android:text="@string/duty" />
     </LinearLayout>
     <LinearLayout

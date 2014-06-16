@@ -26,17 +26,17 @@
         android:orientation="horizontal" >
         <Button
             android:id="@+id/employee_code"
+            style="@style/TextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:gravity="center"
             android:text="@string/code" />
         <Button
             android:id="@+id/employee_name"
+            style="@style/TextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/employee_code"
-            android:gravity="center"
             android:text="@string/name" />
         <EditText
             android:id="@+id/employee_search_edit"
@@ -53,7 +53,7 @@
             android:maxLines="1"
             android:paddingLeft="15dp"
             android:paddingRight="35dp"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
         <ImageButton
             android:id="@+id/employee_search_clean"
             android:layout_width="wrap_content"
@@ -84,24 +84,24 @@
         android:orientation="horizontal" >
         <Button
             android:id="@+id/employee_cooker"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/cooker" />
         <Button
             android:id="@+id/employee_waiter"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/waiter" />
         <Button
             android:id="@+id/employee_cleaner"
+            style="@style/TextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/cleaner" />
     </LinearLayout>
     <ListView
