@@ -482,7 +482,7 @@ public class ControlPoint implements HTTPRequestListener {
 	}
 
 	public void searchResponseReceived(SSDPPacket packet) {
-		if (packet.getST().equals("urn:schemas-upnp-org:device:FC")) {
+		if (packet.getST().equals("FC")) {
 			if (packet.isRootDevice() == true)
 				addDevice(packet);
 			performSearchResponseListener(packet);

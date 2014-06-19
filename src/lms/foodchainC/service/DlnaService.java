@@ -101,22 +101,19 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		c.addSearchResponseListener(new SearchResponseListener() {
 			@Override
 			public void deviceSearchResponseReceived(SSDPPacket ssdpPacket) {
-				if (ssdpPacket.getST().startsWith("FC")) {
-					Log.e("收到响应", Calendar.getInstance().getTime()
-							.toGMTString());
-					String l = ssdpPacket.getLocation();
-					Intent intent = new Intent(NEW_RESTAURANT_FOUND);
-					intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
-					String address = "";
-					if (l.contains("%"))
-						address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
-					else
-						address = l.substring(0, l.lastIndexOf(":")) + ":4004";
-					intent.putExtra("address", address);
-					RestaurantData.local().isLocal = true;
-					RestaurantData.local().localUrl = address;
-					sendBroadcast(intent);
-				}
+				Log.e("收到响应", Calendar.getInstance().getTime().toGMTString());
+				String l = ssdpPacket.getLocation();
+				Intent intent = new Intent(NEW_RESTAURANT_FOUND);
+				intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
+				String address = "";
+				if (l.contains("%"))
+					address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
+				else
+					address = l.substring(0, l.lastIndexOf(":")) + ":4004";
+				intent.putExtra("address", address);
+				RestaurantData.local().isLocal = true;
+				RestaurantData.local().localUrl = address;
+				sendBroadcast(intent);
 			}
 		});
 	}
@@ -177,10 +174,10 @@ public class DlnaService extends Service implements DeviceChangeListener {
 		@Override
 		protected Void doInBackground(Object... params) {
 			if (!started) {
-				c.start("urn:schemas-upnp-org:device:FC");
+				c.start("FC");
 				started = true;
 			} else {
-				c.search("urn:schemas-upnp-org:device:FC");
+				c.search("FC");
 			}
 			return null;
 		}
