@@ -11,6 +11,7 @@ import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
 import lms.foodchainC.data.Self;
 
+import org.cybergarage.http.HTTPHeader;
 import org.cybergarage.upnp.ControlPoint;
 import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.device.DeviceChangeListener;
@@ -102,18 +103,17 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			@Override
 			public void deviceSearchResponseReceived(SSDPPacket ssdpPacket) {
 				Log.e("收到响应", Calendar.getInstance().getTime().toGMTString());
-				String l = ssdpPacket.getLocation();
-				Intent intent = new Intent(NEW_RESTAURANT_FOUND);
-				intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
-				String address = "";
-				if (l.contains("%"))
-					address = l.substring(0, l.lastIndexOf("%")) + "]:4004";
-				else
-					address = l.substring(0, l.lastIndexOf(":")) + ":4004";
-				intent.putExtra("address", address);
-				RestaurantData.local().isLocal = true;
-				RestaurantData.local().localUrl = address;
-				sendBroadcast(intent);
+				String name = HTTPHeader.getValue(ssdpPacket.getData(),
+						"MYNAME");
+				if (!RestaurantData.local().name.equals(name)) {
+					String l = ssdpPacket.getRemoteAddress();
+					RestaurantData.local().localUrl = "http://" + l + ":4004";
+					Intent intent = new Intent(NEW_RESTAURANT_FOUND);
+					intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);
+					intent.putExtra("address", RestaurantData.local().localUrl);
+					RestaurantData.local().isLocal = true;
+					sendBroadcast(intent);
+				}
 			}
 		});
 	}

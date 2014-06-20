@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -65,8 +64,8 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 		initView();
 		cdb = new Case_DBHelper(getActivity());
-		// getMenu();
-		getData();
+		getMenu();
+		// getData();
 		bdb = new Bill_DBHelper(getActivity());
 		super.onActivityCreated(savedInstanceState);
 	}
@@ -113,11 +112,6 @@ public class MenuFragment extends Fragment implements OnPageChangeListener,
 		@Override
 		public int getCount() {
 			return styleList.size();
-		}
-
-		@Override
-		public int getItemPosition(Object object) {
-			return PagerAdapter.POSITION_NONE;
 		}
 
 		@Override
