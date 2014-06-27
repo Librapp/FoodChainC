@@ -130,7 +130,7 @@ public class JSONParser {
 				cd.waiterId = data.optInt("waiterId");
 				cd.type = data.optInt("type");
 				cd.state = data.optInt("state");
-				cd.style = data.optInt("style");
+				cd.style = data.optInt("styleId");
 				cd.cookTime = data.optInt("cookTime");
 				cd.orderId = data.optInt("orderId");
 				cd.name = data.optString("name");
