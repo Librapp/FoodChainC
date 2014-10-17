@@ -5,11 +5,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
+import lms.foodchainC.activity.MyApplication;
 import lms.foodchainC.data.CustomerData;
 import lms.foodchainC.data.EmployeeData;
 import lms.foodchainC.data.OtherData;
 import lms.foodchainC.data.RestaurantData;
-import lms.foodchainC.data.Self;
 
 import org.cybergarage.http.HTTPHeader;
 import org.cybergarage.upnp.ControlPoint;
@@ -144,8 +144,8 @@ public class DlnaService extends Service implements DeviceChangeListener {
 			RestaurantData.current().getCooker().add(c);
 		} else if (OtherData.RESTAURANTDEVICETYPE.equals(dev.getDeviceType())) {
 			Log.e("获取设备", Calendar.getInstance().getTime().toGMTString());
-			if (Self.current().isSelecting) {
-				Self.current().isSelecting = false;
+			if (MyApplication.isSelecting) {
+				MyApplication.isSelecting = false;
 				String l = dev.getLocation();
 				Intent intent = new Intent(NEW_RESTAURANT_FOUND);
 				intent.putExtra("type", OtherData.RESTAURANTDEVICETYPE);

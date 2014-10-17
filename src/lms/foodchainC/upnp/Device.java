@@ -102,8 +102,8 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.util.Calendar;
 
+import lms.foodchainC.activity.MyApplication;
 import lms.foodchainC.data.MessageData;
-import lms.foodchainC.data.Self;
 import lms.foodchainC.net.JSONRequest;
 import lms.foodchainC.service.MessageService;
 
@@ -1484,7 +1484,7 @@ public class Device extends org.cybergarage.upnp.Device implements
 					ms.userName = user.optString("userName");
 					ms.sId = user.optInt("sId");
 					ms.userPic = user.optString("userPic");
-					ms.rId = Self.current().id;
+					ms.rId = MyApplication.self.id;
 					if (MessageService.insertMessage(ms))
 						httpReq.returnOK();
 					else

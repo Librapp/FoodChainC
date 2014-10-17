@@ -1,21 +1,11 @@
 package lms.foodchainC.activity;
 
 import lms.foodchainC.R;
-import lms.foodchainC.data.SystemData;
-import lms.foodchainC.net.NetMessageType;
-import lms.foodchainC.service.DlnaService;
-import lms.foodchainC.util.SharePerformanceUtil;
-
-import org.cybergarage.util.Debug;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 /**
  * @author 李梦思
@@ -32,24 +22,7 @@ public class SplashActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
-		SystemData.hasNet = getNetStatus();
-		// TODO 弹出对话框：是否打开网络，是，转到网络设置，否，进入单机版
-		// 在设置中加入网络设置
-		if (!SystemData.hasNet) {
-			Toast.makeText(this, NetMessageType.HAS_NO_NETWORK,
-					Toast.LENGTH_LONG).show();
-		} else {
-
-		}
-		SharePerformanceUtil.getLInfo(this);
-
-		// TODO 调试模式关闭
-		Debug.enabled = true;
-		// 启动服务
-		// startService(new Intent(this, MenuService.class));
-		// startService(new Intent(this, TableService.class));
-		startService(new Intent(DlnaService.SEARCH_DEVICE));
-		handler.sendEmptyMessage(INITDATAEND);
+		handler.sendEmptyMessageDelayed(INITDATAEND, 2000);
 	}
 
 	private Handler handler = new Handler() {
@@ -63,15 +36,6 @@ public class SplashActivity extends Activity {
 			}
 		}
 	};
-
-	private boolean getNetStatus() {
-		ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo networkinfo = manager.getActiveNetworkInfo();
-		if (networkinfo == null || !networkinfo.isAvailable()) {
-			return false;
-		}
-		return true;
-	}
 
 	private void openMainPageFast() {
 		Intent intent = new Intent(SplashActivity.this, MainActivity.class);
